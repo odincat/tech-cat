@@ -1,0 +1,50 @@
+// Theme Variables
+$blue: #1597E5;
+$black: #000000;
+$white: #fefffe;
+$grey: #212121;
+$green: #22c55e;
+
+$themes: (
+  dark: (
+    // Base UI
+    'text-color': white,
+    'background-color': #424242,
+    'header-background': rgb(38 38 38 / 30%),
+    'hamburgernav-background': rgb(38 38 38 / 80%),
+    'footer-background': $grey,
+    'button-background': #343a40,
+    'button-color': $white,
+    // Component styling
+    'github-link': #f0f6fc
+  ),
+  light: (
+    // Base UI
+    'text-color': black,
+    'background-color': #f5f5f5,
+    'header-background': rgba(255, 255, 255, .15),
+    'hamburgernav-background': rgba(255, 255, 255, 80%),
+    'footer-background': $white,
+    'button-background': #777777,
+    'button-color': $white,
+    // Component styling
+    'github-link': #15181e
+  )
+);
+
+// Theme implementation
+$theme-map: null;
+
+@mixin themed() {
+  @each $themed, $map in $themes {
+    $theme-map: $map !global;
+    [data-theme=#{$themed}] & {
+      @content;
+    }
+  }
+  $theme-map: null !global;
+}
+
+@function get-theme-attribute($key) {
+  @return map-get($theme-map, $key);
+}

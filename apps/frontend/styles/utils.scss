@@ -1,0 +1,17 @@
+@use 'sass:math';
+@mixin clamp($property, $min-viewport: 360px, $max-viewport: 840px, $min-size: 1rem, $max-size:3.5rem, $rem-size: 16px) {
+  $min-width: math.div($min-viewport, $rem-size);
+  $max-width: math.div($max-viewport, $rem-size);
+
+  @if math.unit($max-size) == 'px' {
+    $max-size: math.div($max-size * 1rem, $rem-size);
+  }
+
+  @if math.unit($min-size) == 'px' {
+    $min-size: math.div($min-size * 1rem, $rem-size);
+  }
+  
+  $slope: math.div(($max-size - $min-size), ($max-width - $min-width));
+  $yAxisIntersection: -$min-width * $slope + $min-size;
+  #{$property}: clamp(#{$min-size}, #{$yAxisIntersection} + #{math.div($slope, $slope * 0 + 1) * 100}vw, #{$max-size})
+}

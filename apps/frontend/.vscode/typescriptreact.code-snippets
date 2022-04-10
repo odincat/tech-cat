@@ -1,0 +1,52 @@
+{
+	 "Create a new page": {
+	 	"prefix": "npg",
+	 	"body": [
+	 		"import MetatagConfig from '@components/MetatagManager';",
+			"import type { NextPage } from 'next';",
+			" ",
+			"const ${1:PageName}: NextPage = () => {",
+			"  return (",
+			"      <>",
+			"        <MetatagConfig defaultTitleFormat={true} title='${1:Page }' />",
+			"        $0",
+			"      </>",
+			"  );",
+			"};",
+			"",
+			"export default ${1:Page };"
+
+	 	],
+	 	"description": "Generate a new page.",
+        "scope": "typescriptreact"
+	 },
+	 "Create a new Component": {
+		"prefix": "ncp",
+		"body": [
+		   "const ${1:ComponentName} = () => {",
+		   "",
+		   "  return (",
+		   "      <>",
+		   "        $0",
+		   "      </>",
+		   "  );",
+		   "};",
+		   "",
+		   "export default ${1:ComponentName};"
+
+		],
+		"description": "Generate a new component.",
+	   "scope": "typescriptreact"
+	},
+	 "Create an arrow function": {
+		"prefix": "af",
+		"body": [
+		   "const ${1:FunctionName} = () => {",
+		   "$0",
+		   "};"
+
+		],
+		"description": "Generate a new function.",
+	   "scope": "typescriptreact, typescript"
+	}
+}

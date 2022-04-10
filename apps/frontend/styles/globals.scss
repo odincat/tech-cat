@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind utilities;
+
+@import 'theme';
+@import 'fonts';
+@import 'animations';
+@import 'utils';
+
+$font-face-primary: 'Roboto', sans-serif;
+$font-face-secondary:  'Maven Pro', sans-serif;
+
+* {
+  margin: 0;
+}
+
+// Page structure
+body {
+  font-size: 16px;
+}
+
+.pagecontainer {
+  font-family: $font-face-primary;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  @include themed() {
+    color: get-theme-attribute('text-color');
+    background-color: get-theme-attribute('background-color');
+  }
+  transition: background 300ms ease-in-out, color 700ms ease-in-out;
+}
+
+.header {
+  @include themed() {
+    background-color: get-theme-attribute('header-background');
+  }
+  backdrop-filter: blur(5px);
+
+  .branding {
+    font-weight: bolder;
+    letter-spacing: 2.5px;
+    font-size: 30px;
+    font-family: $font-face-secondary;
+    background: linear-gradient(210deg, #22c55e, #1597e5, #15dae5);
+    background-size: 600% 600%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: branding-background 21s ease infinite;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .logo {
+    user-select: none;
+    pointer-events: none;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .navlinks-desktop {
+      display: none;
+    }
+
+    .hamburger-menu {
+      display: block !important;
+    }
+  }
+
+  .hamburger-menu {
+    display: none;
+
+    .nav-links-mobile-container {
+      @include themed() {
+        background-color: get-theme-attribute('hamburgernav-background');
+      }
+      backdrop-filter: blur(5px);
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 52px;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      visibility: hidden;
+      transition: all 300ms;
+    }
+
+    .nav-links-mobile-container.opened {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    a {
+      padding: 0.5rem 1rem;
+    }
+
+    .active {
+      text-decoration: underline;
+      color: $green;
+    }
+  }
+  .navlinks-desktop {
+    a {
+      position: relative;
+      text-decoration: none;
+      &:not(:last-child) {
+        margin-right: 0.7rem;
+      }
+
+      &::before{
+        content: " ";
+        position: absolute;
+        height: 1.5px;
+        bottom: 0;
+        right: 0;
+        width: 0;
+        background: linear-gradient(210deg, #22c55e, #1597e5, #15dae5);
+        transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover::before{
+          left: 0;
+          right: auto;
+          width: 100%;
+        }
+      }
+    }
+
+    .active {
+        color: $green;
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  margin-left: 10%;
+  margin-right: 10%;
+    // Text styling
+    h1, h2, h3 {
+      margin-bottom: 1rem;
+      font-family: $font-face-secondary;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, calc(1.2613rem + 2.8387vw), 3rem);
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, calc(1.1935rem + 1.8065vw), 2.3rem);
+    }
+
+    h3 {
+      font-size: clamp(1.5rem, calc(1.2097rem + 1.2903vw), 2rem);
+    }
+
+    a {
+      color: rgb(59 130 246);
+      text-decoration: none;
+      transition: all 200ms ease-in-out;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+}
+
+.footer {
+  @include themed() {
+      background-color: get-theme-attribute('footer-background');
+  }
+
+  .social-links {
+    .github {
+      @include themed() {
+          color: get-theme-attribute('github-link');
+      }
+      transition: all 200ms ease-in-out;
+
+      &:hover {
+        filter: brightness(80%);
+      }
+    }
+
+    .twitter {
+      color: #179cf0;
+      &:hover {
+        filter: brightness(80%);
+        transition: all 200ms ease-in-out;
+      }
+    }
+  }
+
+  .links {
+    @media only screen and (max-width: 560px) {
+      a {
+        display: block;
+      }
+    }
+  }
+}
+
+// Theme
+.theme-switch-button {
+  transition: all 150ms;
+}
+
+// Icons
+.global-icon {
+  display: inline-block;
+  vertical-align: -3px;
+  line-height: 1em;
+  height: 1em;
+}
+
+//buttons
+@mixin default-button($background: null, $text-color: null, $padding: 5px 10px) {
+    @if $text-color != null {
+      @include themed() {
+          color: get-theme-attribute('button-color');
+      }
+    } @else {
+      color: $text-color;
+    }
+    @if $background == null {
+      @include themed() {
+          background-color: get-theme-attribute('button-background');
+      }
+    } @else {
+      background-color: $background;
+    }
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: $padding;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 5px #212529;
+
+    &:hover {
+    box-shadow: 0 3px #212529;
+    top: 1px;
+    }
+
+    &:active {
+      box-shadow: 0 0 #212529;
+      top: 5px;
+    }
+}
+
+.btn-fancy {
+    @include default-button();
+}

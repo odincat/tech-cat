@@ -1,0 +1,20 @@
+{
+     "Get Theme attribute": {
+         "prefix": "attr",
+         "body": [
+             "get-theme-attribute('$0');",
+         ],
+         "description": "Get theme attr",
+        "scope": "scss"
+     },
+     "Use Theming": {
+        "prefix": "themed",
+        "body": [
+            "@include themed() {",
+            "    $0",
+            "}"
+        ],
+        "description": "Get theme attr",
+       "scope": "scss"
+    }
+}
