@@ -1,0 +1,55 @@
+.navbar {
+    position: relative;
+    background: #171010;
+    color: white;
+    padding: 5px;
+    display: flex;
+    align-content: center;
+    line-height: 1;
+
+    .todash {
+        text-decoration: none;
+    }
+
+    .brand {
+        color: white;
+        text-decoration: none;
+        .logo {
+            color: #30AADD;
+        }
+    }
+
+    .actions {
+        margin-left: 20px;
+
+        .actionview {
+            margin-right: 10px;
+            cursor: pointer;
+            color: #2FA4FF;
+        }
+
+        .actioncreate {
+            cursor: pointer;
+            color: #2EB086;
+        }
+    }
+
+    .end {
+        margin-left: auto;
+    }
+
+    .user {
+        color: #00FFC6;
+        margin-right: 10px;
+        cursor: not-allowed;
+
+        .name {
+            color: white;
+            font-weight: bold;
+        }
+    }
+
+    .menu {
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,60 @@
+.authscreen {
+    height: 100vh;
+    color: white;
+    padding-top: 20vh;
+    text-align: center;
+
+    background: linear-gradient(227deg, #000000, #000000, #0a8ada);
+    background-size: 600% 600%;
+    -webkit-animation: auth-background 20s ease infinite;
+    -moz-animation: auth-background 20s ease infinite;
+    animation: auth-background 20s ease infinite;
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+}
+
+@-webkit-keyframes auth-background {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+@-moz-keyframes auth-background {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+@keyframes auth-background {
+    0%{background-position:87% 0%}
+    50%{background-position:14% 100%}
+    100%{background-position:87% 0%}
+}
+
+.loginform {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .logininput {
+        margin: auto;
+        margin-bottom: 20px;
+        width: 300px;
+    }
+    .loginbutton {
+        margin: auto;
+        margin-top: 20px;
+    }
+    .error {
+        color: #F55353;
+        font-weight: bold;
+    }
+    .success {
+        color: #00C897;
+        font-weight: bold;
+    }
+}
