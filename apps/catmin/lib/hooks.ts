@@ -32,7 +32,7 @@ export const useUserData = () => {
         });
 
         return unsubscribe;
-    });
+    }, [user]);
 
     return { user, userObject, roles };
 };
