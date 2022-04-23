@@ -17,7 +17,7 @@ const Navbar = () => {
             <div className={styles.actions}><span className={styles.actionview}><RiStackLine /> View posts</span> <span className={styles.actioncreate}><RiQuillPenLine /> Create post</span></div>
 
             <div className={styles.end}></div>
-            {roles?.admin && <div className={styles.user}><RiLock2Line /> authenticated as <span className={styles.name}>{userObject?.name}</span></div>}
+            {roles?.admin && <div className={styles.user}><RiLock2Line /> authenticated as <span className={styles.name}>{userObject?.username}</span></div>}
             <div onClick={openSpotlight} className={styles.menu}><RiMenuFill /></div>
         </div>
     );

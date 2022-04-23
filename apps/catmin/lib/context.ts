@@ -12,6 +12,7 @@ interface UserObject {
     photourl: string;
     postcount: number;
     uid: string;
+    bio: string;
 }
 
 interface Roles {

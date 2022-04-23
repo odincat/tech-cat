@@ -1,0 +1,52 @@
+/* square-peg-regular - latin */
+@font-face {
+    font-family: 'Square Peg';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+         url('/fonts/square-peg/square-peg-v1-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('/fonts/square-peg/square-peg-v1-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+
+.hero {
+    text-align: center;
+    padding-top: 50px;
+    .emoji {
+        font-size: 50px;
+        margin-bottom: 20px;
+    }
+    .quote {
+        font-family: 'Square Peg';
+        width: 40%;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 30px;
+        padding: 10px;
+        border-radius: 7px;
+        background-color: #A1E3D8;
+        color: #005555;
+
+        span {
+            font-family: 'Work Sans';
+            font-size: 1rem;
+            display: block;
+            margin-top: 10px;
+        }
+    }
+}
+
+.latestposts {
+    text-align: center;
+
+    h2 {
+        margin-bottom: 30px;
+    }
+    .feed {
+        display: flex;
+        justify-content: center;
+    }
+    .morePosts {
+        margin-top: 50px;
+    }
+}
