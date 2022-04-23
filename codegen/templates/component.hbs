@@ -1,0 +1,18 @@
+import styles from './{{pascalCase name}}.module.scss'
+{{#if withauth}}
+import { useUser } from '@lib/utils';
+{{/if}}
+
+const {{pascalCase name}} = () => {
+    {{#if withauth}}
+    const { userObject, roles } = useUser();
+    {{/if}}
+
+    return (
+        <>
+        
+        </>
+    )
+};
+
+export default {{pascalCase name}};
