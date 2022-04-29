@@ -26,7 +26,7 @@ const devConfig = {
 
 var firebaseApp;
 
-if(!getApps.length) {
+if(!getApps().length) {
     if(process && process.env.NODE_ENV === 'development' || 'test') {
         firebaseLogger.initialize();
         firebaseLogger.log('Loading Firebase...', 'information');

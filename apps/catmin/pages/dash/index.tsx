@@ -1,12 +1,11 @@
 import { UserContext } from "@lib/context";
 import { useContext } from "react";
-import Navbar from '@components/Navbar';
 import styles from '@styles/Dashboard.module.scss';
-import AdminShell from "@components/auth/AdminShell";
-import MetatagConfig from "@components/MetaManager";
+import AdminShell from "@components/auth/adminshell/AdminShell";
+import MetatagConfig from "@components/metamanager/MetaManager";
 import { useQuery } from "react-query";
 import { Button } from "@mantine/core";
-import PostItem, { PostProperties } from "@components/post/PostItem";
+import PostItem, { PostProperties } from "@components/post/postitem/PostItem";
 
 const Dashboard = () => {
     const { userObject, roles } = useContext(UserContext);

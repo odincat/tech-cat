@@ -1,5 +1,5 @@
 import { Button } from '@mantine/core';
-import styles from '@styles/PostItem.module.scss';
+import styles from './PostItem.module.scss';
 import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill } from 'react-icons/ri';
 
 export interface PostProperties {

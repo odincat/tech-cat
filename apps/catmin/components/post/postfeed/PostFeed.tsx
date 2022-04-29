@@ -1,4 +1,4 @@
-import PostItem, { PostProperties } from "./PostItem";
+import PostItem, { PostProperties } from "../postitem/PostItem";
 
 const PostFeed = ({ posts }: any) => {
     return (

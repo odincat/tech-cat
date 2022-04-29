@@ -5,6 +5,7 @@ import { useUserData } from '@lib/hooks'
 import { NextComponentType } from 'next'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { MantineProvider } from '@mantine/core'
 
 interface AppProperties {
   Component: NextComponentType | any;
@@ -20,10 +21,12 @@ const MyApp = ({ Component, pageProps }: AppProperties) => {
     <>
     <UserContext.Provider value={userData}>
       <QueryClientProvider client={queryClient}>
-        <IconContext.Provider value={{ className: "global-icon" }}>
-          <Component {...pageProps} />
-          {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
-        </IconContext.Provider>
+        <MantineProvider>
+            <IconContext.Provider value={{ className: "global-icon" }}>
+              <Component {...pageProps} />
+              {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
+            </IconContext.Provider>
+        </MantineProvider>
       </QueryClientProvider>
     </UserContext.Provider>
     </>

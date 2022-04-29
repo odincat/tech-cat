@@ -1,7 +1,7 @@
 import { SpotlightAction } from "@mantine/spotlight";
 import { signOut } from "firebase/auth";
 import Router from "next/router";
-import { auth, firebaseLogger } from "../lib/firebase";
+import { auth, firebaseLogger } from "./firebase";
 import { RiDoorOpenLine, RiQuillPenLine, RiStackLine } from 'react-icons/ri';
 
 export const spotlightActions: SpotlightAction[] = [

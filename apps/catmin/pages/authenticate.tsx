@@ -1,5 +1,4 @@
-import LoginForm from "@components/auth/Login";
-import { Button } from "@mantine/core";
+import LoginForm from "@components/auth/login/Login";
 import { NextPage } from "next";
 
 import styles from '../styles/Authenticate.module.scss';
