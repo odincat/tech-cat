@@ -9,7 +9,9 @@ export const spotlightActions: SpotlightAction[] = [
         title: 'Create new Post',
         description: 'Compose a new masterpiece ✨',
         onTrigger: () => {
-            //TODO: create new post
+            Router.push({
+                pathname: '/dash/post/new'
+            });
         },
         icon: <RiQuillPenLine />
     },

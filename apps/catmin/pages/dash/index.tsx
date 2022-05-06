@@ -30,7 +30,8 @@ const Dashboard = () => {
         published: true,
         trashed: false,
         uid: "bla",
-        username: "odincat"
+        username: "odincat",
+        thumbnail: "null"
     }
 
     return(

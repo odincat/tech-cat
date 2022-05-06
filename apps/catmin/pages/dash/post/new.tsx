@@ -6,6 +6,8 @@ import CreatePost from '@components/post/createPost/CreatePost';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useModals } from '@mantine/modals';
+import AdminShell from '@components/auth/adminshell/AdminShell';
+import MetatagConfig from '@components/metamanager/MetaManager';
 
 const Create: NextPage = () => {
     const { userObject, roles } = useUser();
@@ -13,9 +15,10 @@ const Create: NextPage = () => {
     const router = useRouter();
 
     return (
-        <>
-            Create post
-        </>
+        <AdminShell>
+            <MetatagConfig title={`Create new post [${userObject?.username}]`} defaultTitleFormat={true} />
+            <CreatePost />
+        </AdminShell>
     )
 };
     

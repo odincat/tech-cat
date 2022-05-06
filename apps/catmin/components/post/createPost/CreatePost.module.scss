@@ -1,11 +1,24 @@
-.manageContainer {
+.container {
+    padding-top: 50px;
     color: black;
-}
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    margin: auto;
+    width: 30%;
 
-.title {
-    margin-bottom: 20px;
-}
+    .title {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .input, .tags {
+        margin: auto;
+        margin-bottom: 10px;
+        width: 100%;
+    }
 
-.input {
-    margin-bottom: 10px;
+    .button {
+        margin: auto;
+    }
 }

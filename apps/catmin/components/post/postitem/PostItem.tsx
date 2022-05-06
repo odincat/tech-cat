@@ -6,6 +6,7 @@ export interface PostProperties {
     title: string;
     content: string;
     slug: string;
+    thumbnail: string;
     uid: string;
     username: string;
     createdAt: string;
@@ -17,7 +18,7 @@ export interface PostProperties {
 }
 
 export interface PostItemProperties {
-    post: PostProperties
+    post: PostProperties;
 }
 
 const PostItem = ({ post }: PostItemProperties) => {

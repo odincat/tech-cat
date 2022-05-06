@@ -1,0 +1,16 @@
+{
+  "name": "fire-emu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "firebase emulators:start --import=./data",
+    "export": "firebase emulators:export ./data"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "firebase-tools": "^10.7.2"
+  }
+}
