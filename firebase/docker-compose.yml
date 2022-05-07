@@ -7,8 +7,9 @@ services:
   firebase:
     container_name: firebase-emulator
     build:
+      context: ./
       dockerfile: Dockerfile
-    image: techcat-firebase-development:emu
+    image: techcat-firebase-development
     volumes:
       - ./:/volcano
     ports:
