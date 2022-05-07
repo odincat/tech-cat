@@ -28,7 +28,8 @@
     "react-firebase-hooks": "5.0.3",
     "react-icons": "4.3.1",
     "react-query": "^3.38.0",
-    "ui": "workspace:*"
+    "ui": "workspace:*",
+    "pacman": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "16.11.26",

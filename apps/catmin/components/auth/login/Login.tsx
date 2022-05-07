@@ -1,7 +1,7 @@
-import { auth, firebaseLogger } from "@lib/firebase";
 import { Button, Input } from "@mantine/core";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Router from "next/router";
+import fire from "pacman/firebase";
 import { useEffect, useState } from "react";
 import { FaEnvelopeOpenText, FaLock } from 'react-icons/fa';
 
@@ -14,15 +14,15 @@ const LoginForm = ({ styles }: any) => {
 
     const handleLogin = (e: any) => {
         e.preventDefault();
-        signInWithEmailAndPassword(auth, emailValue, passwordValue).then(() => {
-            firebaseLogger.log('Successfully authenticated', 'sucess');
+        signInWithEmailAndPassword(fire.useAuth(), emailValue, passwordValue).then(() => {
+            fire.logger.log('Successfully authenticated', 'sucess');
             setError(false);
             setSuccess(true);
             Router.push({
                 pathname: '/dash'
             });
         }).catch(error => {
-            firebaseLogger.log(error, 'error');
+            fire.logger.log(error, 'error');
             setError(true);
         })
     };

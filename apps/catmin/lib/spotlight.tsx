@@ -1,7 +1,7 @@
 import { SpotlightAction } from "@mantine/spotlight";
 import { signOut } from "firebase/auth";
 import Router from "next/router";
-import { auth, firebaseLogger } from "./firebase";
+import fire from "pacman/firebase";
 import { RiDoorOpenLine, RiQuillPenLine, RiStackLine } from 'react-icons/ri';
 
 export const spotlightActions: SpotlightAction[] = [
@@ -27,8 +27,8 @@ export const spotlightActions: SpotlightAction[] = [
         title: 'Logout',
         description: 'Sign out of this account',
         onTrigger: () => {
-            signOut(auth);
-            firebaseLogger.log('Signed out', 'information');
+            signOut(fire.useAuth());
+            fire.logger.log('Signed out', 'information');
             Router.push({
                 pathname: '/authenticate'
             });

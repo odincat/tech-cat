@@ -1,0 +1,20 @@
+{
+  "name": "pacman",
+  "version": "1.0.0",
+  "description": "A collection of useful features that are being used throughout the project to make my life a lot easier.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "advanced-cl": "workspace:*",
+    "firebase": "9.6.10"
+  },
+  "devDependencies": {
+    "typescript": "4.6.3"
+  }
+}

@@ -1,10 +1,10 @@
 import { collection, doc, onSnapshot } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth, firestore } from './firebase';
+import fire from 'pacman/firebase';
 
 export const useUserData = () => {
-    const [user] = useAuthState(auth);
+    const [user] = useAuthState(fire.useAuth());
     const [userObject, setUserObject] = useState(null);
     const [roles, setRoles] = useState(null);
 
@@ -13,7 +13,7 @@ export const useUserData = () => {
 
         if(!user) return;
 
-        const ref = collection(firestore, 'users');
+        const ref = collection(fire.useFireStore(), 'users');
         const userDoc = doc(ref, user?.uid);
 
         unsubscribe = onSnapshot(userDoc, (doc) => {
@@ -21,7 +21,7 @@ export const useUserData = () => {
             setUserObject(doc.data());
         });
 
-        const userCollection = collection(firestore, 'users');
+        const userCollection = collection(fire.useFireStore(), 'users');
         const userDocument = doc(userCollection, user?.uid);
         const roleCollection = collection(userDocument, 'roles');
         const roleDocument = doc(roleCollection, user?.uid);

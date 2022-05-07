@@ -4,13 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "firebase emulators:start --import=./data",
-    "export": "firebase emulators:export ./data"
+    "develop": "firebase emulators:start --project=demo-techcat --import=./data",
+    "export": "firebase emulators:export ./data",
+    "docker:image": "docker build -t techcat-firebase-development:emu ./",
+    "docker:start": "docker-compose up --abort-on-container-exit"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "firebase-tools": "^10.7.2"
-  }
+  "license": "ISC"
 }

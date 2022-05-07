@@ -5,7 +5,6 @@ import { Button, Input, InputWrapper, MultiSelect } from '@mantine/core';
 import { RiLinkM, RiPriceTag3Fill, RiUserFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { collection, doc } from 'firebase/firestore';
-import { firestore } from '@lib/firebase';
 
 const CreatePost = () => {
     const { userObject, roles } = useUser();
