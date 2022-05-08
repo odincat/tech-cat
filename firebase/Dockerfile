@@ -14,4 +14,6 @@ EXPOSE 9089
 EXPOSE 4400
 EXPOSE 4500
 
+USER node
+
 CMD ["npm", "run", "develop"] 
