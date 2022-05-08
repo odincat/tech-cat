@@ -6,6 +6,7 @@ import { NextComponentType } from 'next'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 import { MantineProvider } from '@mantine/core'
+import AuthRoute from '@components/auth/authRoute/AuthRoute'
 
 interface AppProperties {
   Component: NextComponentType | any;
@@ -23,7 +24,13 @@ const MyApp = ({ Component, pageProps }: AppProperties) => {
       <QueryClientProvider client={queryClient}>
         <MantineProvider>
             <IconContext.Provider value={{ className: "global-icon" }}>
-              <Component {...pageProps} />
+              {Component.auth ? (
+                <AuthRoute>
+                  <Component {...pageProps} />    
+                </AuthRoute>
+              ) : (
+                <Component {...pageProps} />
+              )}
               {process.env.NODE_ENV === 'development' && <ReactQueryDevtools />}
             </IconContext.Provider>
         </MantineProvider>

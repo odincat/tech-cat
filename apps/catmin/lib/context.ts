@@ -4,6 +4,7 @@ export interface userDataProperties {
     user?: any;
     userObject: UserObject | null;
     roles: Roles | null;
+    fetching: boolean;
 }
 
 interface UserObject {
@@ -23,4 +24,4 @@ interface Roles {
     trusted: boolean;
 }
 
-export const UserContext = createContext<userDataProperties>({ user: null, userObject: null, roles: null });
+export const UserContext = createContext<userDataProperties>({ user: null, userObject: null, roles: null, fetching: true });

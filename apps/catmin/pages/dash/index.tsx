@@ -9,15 +9,6 @@ import PostItem, { PostProperties } from "@components/post/postitem/PostItem";
 
 const Dashboard = () => {
     const { userObject, roles } = useContext(UserContext);
-    
-    const fetchQuote = async () => {
-        const res = await fetch('https://motivational-quote-api.herokuapp.com/quotes/random');
-        return res.json();
-    };
-
-    const { data, status } = useQuery('quote', fetchQuote, {
-        refetchOnWindowFocus: false
-    })
 
     const mockPost: PostProperties = {
         title: "Titel",
@@ -41,10 +32,6 @@ const Dashboard = () => {
                 <div className={styles.emoji}>👋</div>
                 <h1>Hello {userObject?.name}!</h1>
                 What are you plans for today?
-                <blockquote className={styles.quote}>
-                    {data?.quote}
-                    <span>{data?.person}</span>
-                </blockquote>
             </div>
             <div className={styles.latestposts}>
                     <h2>Latest posts</h2>
@@ -57,4 +44,5 @@ const Dashboard = () => {
     );
 };
 
+Dashboard.auth = true;
 export default Dashboard;

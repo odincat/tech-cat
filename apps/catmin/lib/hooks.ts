@@ -7,11 +7,16 @@ export const useUserData = () => {
     const [user] = useAuthState(fire.useAuth());
     const [userObject, setUserObject] = useState(null);
     const [roles, setRoles] = useState(null);
+    const [fetching, setFetching] = useState(true);
 
     useEffect(() => {
+        setFetching(true);
         let unsubscribe;
-
-        if(!user) return;
+        
+        if(!user) {
+            setFetching(false);
+            return;
+        }
 
         const ref = collection(fire.useFireStore(), 'users');
         const userDoc = doc(ref, user?.uid);
@@ -31,9 +36,11 @@ export const useUserData = () => {
             setRoles(doc.data());
         });
 
+        setFetching(false);
+
         return unsubscribe;
     }, [user]);
 
-    return { user, userObject, roles };
+    return { user, userObject, roles, fetching };
 };
 
