@@ -1,11 +1,9 @@
-import type { NextPage } from 'next'
-
 import styles from '@styles/{{pascalCase name}}.module.scss'
 {{#if withauth}}
 import { useUser } from '@lib/utils';
 {{/if}}
 
-const {{pascalCase name}}: NextPage = () => {
+const {{pascalCase name}} = () => {
     {{#if withauth}}
     const { userObject, roles } = useUser();
     {{/if}}
@@ -16,5 +14,5 @@ const {{pascalCase name}}: NextPage = () => {
         </>
     )
 };
-    
+
 export default {{pascalCase name}};

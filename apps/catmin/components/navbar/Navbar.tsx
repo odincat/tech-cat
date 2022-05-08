@@ -10,6 +10,10 @@ const Navbar = () => {
     const { userObject, roles } = useContext(UserContext);
     const router = useRouter();
 
+    const handleViewPosts = () => {
+        router.push('/dash/post/overview');
+    }
+
     const handleNewPost = () => {
         router.push('/dash/post/new');
     }
@@ -21,7 +25,7 @@ const Navbar = () => {
             </a></Link>
 
             <div className={styles.actions}>
-                <span className={styles.actionview}><RiStackLine /> View posts</span>
+                <span className={styles.actionview} onClick={handleViewPosts}><RiStackLine /> View posts</span>
                 <span className={styles.actioncreate} onClick={handleNewPost}><RiQuillPenLine /> Create post</span>
             </div>
 

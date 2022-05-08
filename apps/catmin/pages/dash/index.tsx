@@ -3,7 +3,6 @@ import { useContext } from "react";
 import styles from '@styles/Dashboard.module.scss';
 import AdminShell from "@components/auth/adminshell/AdminShell";
 import MetatagConfig from "@components/metamanager/MetaManager";
-import { useQuery } from "react-query";
 import { Button } from "@mantine/core";
 import PostItem, { PostProperties } from "@components/post/postitem/PostItem";
 

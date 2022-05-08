@@ -23,13 +23,12 @@
     "advanced-cl": "workspace:*",
     "firebase": "9.6.10",
     "next": "12.1.4",
+    "pacman": "workspace:*",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-firebase-hooks": "5.0.3",
     "react-icons": "4.3.1",
-    "react-query": "^3.38.0",
-    "ui": "workspace:*",
-    "pacman": "workspace:*"
+    "ui": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "16.11.26",

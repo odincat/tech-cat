@@ -19,11 +19,12 @@ export interface PostProperties {
 
 export interface PostItemProperties {
     post: PostProperties;
+    className?: string;
 }
 
-const PostItem = ({ post }: PostItemProperties) => {
+const PostItem = ({ post, className }: PostItemProperties) => {
     return (
-        <div className={styles.postItem}>
+        <div className={`${styles.postItem} ${className}`}>
             <div className={styles.postMeta}>
                 <h3 className={styles.postTitle}>{post.title}</h3>
                 <span className={styles.postPublishDate}><RiCalendarFill /> {post.createdAt} ({post.updatedAt !== post.createdAt && (<span className={styles.postEditDate}><RiBallPenFill /> {post.updatedAt}</span>)})</span>
