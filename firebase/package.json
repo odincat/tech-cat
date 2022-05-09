@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "develop": "firebase emulators:start --project=demo-techcat --import=./data",
+    "develop": "firebase emulators:start --project=demo-tech-cat --import=./data",
     "export": "firebase emulators:export ./data",
     "docker:image": "docker build -t techcat-firebase-development:emu ./",
     "docker:start": "docker-compose up --abort-on-container-exit"

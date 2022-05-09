@@ -1,14 +1,41 @@
 rules_version = '2';
 service cloud.firestore {
     match /databases/{database}/documents {
-        match /{document=**} {
-            match /users/{userId} {
-                allow read;
-            }
-    
-            match /users/{userId}/roles/{userUid} {
-                allow read;
-            }
+
+        match /users/{userId} {
+            allow read;
         }
+
+        match /users/{userId}/roles/{userUid} {
+            allow read;
+        }
+
+        match /users/{userId}/posts/{postId} {
+            allow read;
+            allow create;
+            allow update;
+        }
+    }
+
+
+    function canCreatePost(userId) {
+        let isOwner = request.auth.uid == userId;
+        let isVerified = get(/databases/$(database)/documents/users/$(request.auth.uid)/roles/$(request.auth.uid)).data.author;
+        let isNow = request.time == request.resource.data.createdAt;
+        let isValidContent = request.resource.data.content.size() < 20000 && request.resource.data.heartCount == 0 && request.resource.data.commentCount == 0;
+        let username = get(/databases/$(database)/documents/users/$(request.auth.uid)).data.username;
+        let usernameMatches = username == request.resource.data.username;
+
+        return isVerified && isOwner && isNow && isValidContent && usernameMatches;
+    }
+
+    function canUpdatePost(userId) {
+        let isOwner = request.auth.uid == userId;
+        let isVerified = get(/databases/$(database)/documents/roles/$(request.auth.uid)).data.verified;
+        let isNow = request.time == request.resource.data.updatedAt;
+        let isValidContent = request.resource.data.content.size() < 20000;
+        let doesNotUpdateForbidden = !request.resource.data.diff(resource.data).affectedKeys().hasAny(['uid', 'username', 'heartCount']);
+        
+        return isVerified && isOwner && isNow && isValidContent && doesNotUpdateForbidden;
     }
 }

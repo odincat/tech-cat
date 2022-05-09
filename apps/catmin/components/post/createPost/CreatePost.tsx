@@ -2,19 +2,26 @@ import styles from './CreatePost.module.scss';
 import { toSlug, useUser } from '@lib/utils';
 import React, { createRef, useEffect, useState } from 'react';
 import { Button, Input, InputWrapper, MultiSelect } from '@mantine/core';
-import { RiLinkM, RiPriceTag3Fill, RiUserFill } from 'react-icons/ri';
+import { RiCheckboxCircleFill, RiLinkM, RiPriceTag3Fill, RiUserFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
-import { collection, doc } from 'firebase/firestore';
+import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import fire from 'pacman/firebase';
+import { showNotification } from '@mantine/notifications';
+import { CheckCircle } from 'phosphor-react';
+import { PostProperties } from '../postitem/PostItem';
+import utils from 'pacman/utils';
 
 const CreatePost = () => {
-    const { userObject, roles } = useUser();
+    const { userObject, user } = useUser();
     const titleField = createRef<HTMLInputElement>();
     const slugField = createRef<HTMLInputElement>();
+    const authorField = createRef<HTMLInputElement>();
 
     const router = useRouter();
 
     const [title, setTitle] = useState('');
     const [slug, setSlug] = useState('');
+    const [author, setAuthor] = useState('');
     const [dirty, setDirty] = useState(false);
     const [tags, setTags] = useState(['Type to add']);
 
@@ -28,6 +35,11 @@ const CreatePost = () => {
         slugField.current!.value = formattedSlug;
     }, [slug]);
 
+    useEffect(() => {
+        setAuthor(userObject?.name || '');
+        authorField.current!.value = userObject?.name || '';
+    }, [])
+
     const handleCreatePost = () => {
         if(title === '') {
             setDirty(true);
@@ -35,6 +47,8 @@ const CreatePost = () => {
         }
         if(slug === '') {
             setSlug(titleField.current!.value);
+            showNotification({title: 'Slug has been generated from title.', message: 'Check the slug and click on "create post" once again.', icon: <RiCheckboxCircleFill />})
+            return;
         }
 
         if(dirty) setDirty(false);
@@ -43,13 +57,30 @@ const CreatePost = () => {
     }
 
     const createPost = async () => {
-        const docName = slug + Date.now().toString();
+        const docName = `${slug}-${Date.now().toString()}`;
 
-        // const userRef = collection(firestore, 'users');
-        // const userRefPosts = collection(userRef, 'posts');
-        // const postDoc = doc(userRef, )
+        const userCollectionRef = collection(fire.useFireStore(), 'users');
+        const userRef = doc(userCollectionRef, user?.uid);
+        const userPosts = collection(userRef, 'posts');
+        const postDoc = doc(userPosts, docName);
 
-        console.log(docName);
+        const data: PostProperties = {
+            title: title,
+            slug: slug,
+            content: '# Start writing!',
+            thumbnail: '',
+            uid: user?.uid,
+            username: userObject!.username,
+            author: author,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+            published: false,
+            trashed: false,
+            commentCount: 0,
+            heartCount: 0
+        };
+
+        await setDoc(postDoc, data).then((e) => {console.log(e)});
     }
 
     return (
@@ -64,7 +95,7 @@ const CreatePost = () => {
                 </InputWrapper>
             </div>
             <InputWrapper label="Author" description="Name of the Author(s). Will be public, so watch out what you leak ;) Default: Account name">
-                <Input defaultValue={userObject?.name || ''} className={styles.input} placeholder="Author" icon={<RiUserFill />}></Input>
+                <Input className={styles.input} placeholder="Author" onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAuthor(e.target.value)} ref={authorField} icon={<RiUserFill />}></Input>
             </InputWrapper>
             <MultiSelect
                 className={styles.tags}

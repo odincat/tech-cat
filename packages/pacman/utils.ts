@@ -1,4 +1,4 @@
-import { browserLocalPersistence } from ".pnpm/@firebase+auth@0.19.11_@firebase+app@0.7.20/node_modules/@firebase/auth";
+import { Timestamp, serverTimestamp } from "firebase/firestore";
 
 class pUtils {
     /**
@@ -17,6 +17,19 @@ class pUtils {
             return true;
         }
     }
+
+    entryToJson(document: any) {
+        const data = document.data();
+        return {
+            ...data,
+            createdAt: data.createdAt.toMillis(),
+            updatedAt: data.updatedAt.toMillis(),
+        };
+    }
+
+    fromMillis = Timestamp.fromMillis;
+    
+    serverTimestamp = serverTimestamp();
 }
 
 const utils = new pUtils();

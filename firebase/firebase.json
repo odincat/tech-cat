@@ -2,9 +2,6 @@
   "storage": {
     "rules": "storage.rules"
   },
-  "firestore": {
-    "rules": "firestore.rules"
-  },
   "emulators": {
     "auth": {
       "port": 9099,
@@ -15,7 +12,8 @@
       "host": "0.0.0.0"
     },
     "storage": {
-      "port": 9079
+      "port": 9079,
+      "host": "0.0.0.0"
     },
     "ui": {
       "enabled": true,

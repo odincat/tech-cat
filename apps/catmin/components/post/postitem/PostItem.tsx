@@ -1,6 +1,7 @@
 import { Button } from '@mantine/core';
 import styles from './PostItem.module.scss';
 import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill } from 'react-icons/ri';
+import { FieldValue } from 'firebase/firestore';
 
 export interface PostProperties {
     title: string;
@@ -9,8 +10,9 @@ export interface PostProperties {
     thumbnail: string;
     uid: string;
     username: string;
-    createdAt: string;
-    updatedAt: string;
+    author: string;
+    createdAt: string | FieldValue;
+    updatedAt: string | FieldValue;
     published: boolean;
     trashed: boolean;
     commentCount: number;

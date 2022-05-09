@@ -31,15 +31,16 @@ class pFirebase {
     constructor() {
         this.logger = new advancedConsoleLog('Firebase', '#ffcb2d');
 
-        // It's fine to expose this, just restrict domains in the console. For development we use the local emulator suite.
+        const firebaseProject = process.env.NODE_ENV === 'production' ? 'tech-cat-devnet' : 'demo-tech-cat';
+
         this.config = {
-            apiKey: "AIzaSyD_g3M2k0woVFJ56-FuEaPjk1BiYtuRn40",
-            authDomain: "tech-cat.firebaseapp.com",
-            projectId: "tech-cat",
-            storageBucket: "tech-cat.appspot.com",
-            messagingSenderId: "741441122693",
-            appId: "1:741441122693:web:0e38208a4af8484846d4ec"
-        };
+            apiKey: "AIzaSyB5lMhQdr5Q-8f6EYa-cR2gL0vDypUb8mM",
+            authDomain: "tech-cat-devnet.firebaseapp.com",
+            projectId: firebaseProject,
+            storageBucket: "tech-cat-devnet.appspot.com",
+            messagingSenderId: "815597031106",
+            appId: "1:815597031106:web:018f22c14baeeefa02755b"
+        }; 
 
         if(!getApps().length) {
             this.firebaseApp = initializeApp(this.config);
