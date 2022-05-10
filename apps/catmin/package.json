@@ -23,6 +23,7 @@
     "advanced-cl": "workspace:*",
     "firebase": "9.6.10",
     "next": "12.1.4",
+    "nextjs-progressbar": "^0.0.14",
     "pacman": "workspace:*",
     "phosphor-react": "^1.4.1",
     "react": "18.0.0",
