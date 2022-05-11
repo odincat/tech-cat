@@ -9,7 +9,9 @@ const Overview = () => {
     
     const mockPost: PostProperties = {
         title: "Titel",
+        tags: [],
         content: "bla bla bla",
+        author: "odincat",
         slug: "ein-text",
         commentCount: 7,
         heartCount: 7,

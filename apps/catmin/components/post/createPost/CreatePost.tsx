@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import fire from 'pacman/firebase';
 import { showNotification } from '@mantine/notifications';
-import { CheckCircle } from 'phosphor-react';
 import { PostItemProperties, PostProperties } from '../postitem/PostItem';
 import utils from 'pacman/utils';
 
