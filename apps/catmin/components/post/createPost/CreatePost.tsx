@@ -2,13 +2,12 @@ import styles from './CreatePost.module.scss';
 import { toSlug, useUser } from '@lib/utils';
 import React, { createRef, useEffect, useState } from 'react';
 import { Button, Input, InputWrapper, MultiSelect } from '@mantine/core';
-import { RiCheckboxCircleFill, RiLinkM, RiPriceTag3Fill, RiUserFill } from 'react-icons/ri';
+import { RiAddBoxFill, RiCheckboxCircleFill, RiInformationFill, RiLinkM, RiPriceTag3Fill, RiUserFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import fire from 'pacman/firebase';
 import { showNotification } from '@mantine/notifications';
-import { CheckCircle } from 'phosphor-react';
-import { PostProperties } from '../postitem/PostItem';
+import { PostItemProperties, PostProperties } from '../postitem/PostItem';
 import utils from 'pacman/utils';
 
 const CreatePost = () => {
@@ -19,11 +18,13 @@ const CreatePost = () => {
 
     const router = useRouter();
 
-    const [title, setTitle] = useState('');
-    const [slug, setSlug] = useState('');
-    const [author, setAuthor] = useState('');
-    const [dirty, setDirty] = useState(false);
-    const [tags, setTags] = useState(['Type to add']);
+    const [title, setTitle] = useState<string>('');
+    const [slug, setSlug] = useState<string>('');
+    const [author, setAuthor] = useState<string>('');
+    const [tags, setTags] = useState<string[]>([]);
+
+    const [dirty, setDirty] = useState<boolean>(false);
+    const [error, setError] = useState();
 
     useEffect(() => {
         if(title !== '') setDirty(false);
@@ -47,7 +48,7 @@ const CreatePost = () => {
         }
         if(slug === '') {
             setSlug(titleField.current!.value);
-            showNotification({title: 'Slug has been generated from title.', message: 'Check the slug and click on "create post" once again.', icon: <RiCheckboxCircleFill />})
+            showNotification({title: 'Slug has been generated from title.', message: 'Check the slug and click on "create post" once again.', icon: <RiInformationFill />})
             return;
         }
 
@@ -67,6 +68,7 @@ const CreatePost = () => {
         const data: PostProperties = {
             title: title,
             slug: slug,
+            tags: tags,
             content: '# Start writing!',
             thumbnail: '',
             uid: user?.uid,
@@ -80,7 +82,18 @@ const CreatePost = () => {
             heartCount: 0
         };
 
-        await setDoc(postDoc, data).then((e) => {console.log(e)});
+        await setDoc(postDoc, data).then(() => {
+            showNotification({
+                title: 'Post has been successfully created',
+                message: 'You will be redirected...',
+                icon: <RiCheckboxCircleFill />,
+                color: 'green'
+            });
+
+            router.push(`/dash/post/@${userObject?.username}/${slug}`);
+        }).catch((error) => {
+            setError(error);
+        });
     }
 
     return (
@@ -108,7 +121,8 @@ const CreatePost = () => {
                 getCreateLabel={(query) => `+ Add ${query}`}
                 onCreate={(query) => setTags((current) => [...current, query])}
             />
-            <Button color="teal" className={styles.button} onClick={handleCreatePost}>
+            {error && (<b className={styles.error}>{error}</b>)}
+            <Button color="teal" className={styles.button} onClick={handleCreatePost} leftIcon={<RiAddBoxFill />}>
                 Create Post
             </Button>
         </div>
