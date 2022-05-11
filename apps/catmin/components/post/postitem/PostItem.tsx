@@ -5,6 +5,7 @@ import { FieldValue } from 'firebase/firestore';
 
 export interface PostProperties {
     title: string;
+    tags: string[];
     content: string;
     slug: string;
     thumbnail: string;
