@@ -1,11 +1,14 @@
 import styles from '@styles/Overview.module.scss'
 import { useUser } from '@lib/utils';
 import AdminShell from '@components/auth/adminshell/AdminShell';
-import PostItem, { PostProperties } from '@components/post/postitem/PostItem';
+import PostItem, { PostItemProperties, PostProperties } from '@components/post/postitem/PostItem';
 import { Button } from '@mantine/core';
+import { collection, doc, orderBy, query } from 'firebase/firestore';
+import { useCollection, useCollectionOnce } from "react-firebase-hooks/firestore";
+import fire from 'pacman/firebase';
 
 const Overview = () => {
-    const { userObject, roles } = useUser();
+    const { user, userObject, roles } = useUser();
     
     const mockPost: PostProperties = {
         title: "Titel",
@@ -24,6 +27,20 @@ const Overview = () => {
         thumbnail: "null"
     }
 
+    const PostList = () => {
+        const postsRef = collection(fire.useFireStore(), 'users', user.uid, 'posts');
+        const postQuery = query(postsRef, orderBy('createdAt', 'desc'));
+        const [snapshot, loading, error] = useCollectionOnce(postQuery);
+
+        const posts = snapshot?.docs.map((doc) => doc.data());
+
+        return (
+            <>
+                {posts ? posts.map((post: any) => <PostItem post={post} />) : null}
+            </>
+        );
+    };
+
     return (
         <AdminShell>
             <div className={styles.container}>
@@ -32,8 +49,7 @@ const Overview = () => {
                     <p>Have the total control over all of your posts.</p>
                 </div>
                 <div className={styles.feed}>
-                    <PostItem post={mockPost} className={styles.postItem} />
-                    <PostItem post={mockPost} className={styles.postItem} />
+                    <PostList />
                     <Button className={styles.loadMore}>Load more posts</Button>
                 </div>
             </div>
