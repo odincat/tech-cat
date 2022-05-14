@@ -12,7 +12,7 @@ service cloud.firestore {
             }
 
             match /users/{userId}/posts/{postId} {
-                allow read: if request.resource.data.published || !request.resource.data.published && request.resource.data.published == request.resource.data.uid;
+                allow read;
                 allow create: if canCreatePost(userId);
                 allow update: if canUpdatePost(userId);
             }

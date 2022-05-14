@@ -1,7 +1,8 @@
 import { Button } from '@mantine/core';
 import styles from './PostItem.module.scss';
-import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill } from 'react-icons/ri';
-import { FieldValue } from 'firebase/firestore';
+import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM } from 'react-icons/ri';
+import { FieldValue, Timestamp } from 'firebase/firestore';
+import { DateTime } from 'luxon';
 
 export interface PostProperties {
     title: string;
@@ -10,10 +11,11 @@ export interface PostProperties {
     slug: string;
     thumbnail: string;
     uid: string;
+    id: string;
     username: string;
     author: string;
-    createdAt: string | FieldValue;
-    updatedAt: string | FieldValue;
+    createdAt: any;
+    updatedAt: any;
     published: boolean;
     trashed: boolean;
     commentCount: number;
@@ -26,13 +28,20 @@ export interface PostItemProperties {
 }
 
 const PostItem = ({ post, className }: PostItemProperties) => {
+
+    const createdAtRaw = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
+    const createdAt = DateTime.fromJSDate(createdAtRaw).setLocale('de-DE').toLocaleString(DateTime.DATETIME_SHORT);
+
+    const updatedAtRaw = typeof post?.updatedAt === 'number' ? new Date(post.updatedAt) : post.updatedAt.toDate();
+    const updatedAt = DateTime.fromJSDate(updatedAtRaw).setLocale('de-DE').toLocaleString(DateTime.DATETIME_SHORT);
+
     return (
         <div className={`${styles.postItem} ${className}`}>
             <div className={styles.postMeta}>
                 <h3 className={styles.postTitle}>{post.title}</h3>
-                <span className={styles.postPublishDate}><RiCalendarFill /> {post.createdAt} ({post.updatedAt !== post.createdAt && (<span className={styles.postEditDate}><RiBallPenFill /> {post.updatedAt}</span>)})</span>
-                
-                <p>{post.content}</p>
+                <p><RiLinkM /> /{post.slug}</p>
+                <span className={styles.postPublishDate}><RiCalendarFill /> {createdAt} {updatedAt !== createdAt && (<span className={styles.postEditDate}>(<RiBallPenFill /> {updatedAt})</span>)}</span>
+                {/* <p>{post.content}</p> */}
             </div>
             <div className={styles.postNumbers}>
                 <span className={styles.postHeartCount}><RiHeart2Fill className={styles.icon} /> {post.heartCount}</span>
@@ -42,7 +51,7 @@ const PostItem = ({ post, className }: PostItemProperties) => {
                 <Button>Edit</Button>
             </div>
         </div>
-    )
+    );
 };
 
 export default PostItem;
