@@ -7,8 +7,7 @@ import { useRouter } from 'next/router';
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import fire from 'pacman/firebase';
 import { showNotification } from '@mantine/notifications';
-import { PostItemProperties, PostProperties } from '../postitem/PostItem';
-import utils from 'pacman/utils';
+import { PostProperties } from '../postitem/PostItem';
 
 const CreatePost = () => {
     const { userObject, user } = useUser();
@@ -71,6 +70,7 @@ const CreatePost = () => {
             tags: tags,
             content: '# Start writing!',
             thumbnail: '',
+            id: docName,
             uid: user?.uid,
             username: userObject!.username,
             author: author,

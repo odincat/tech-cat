@@ -27,6 +27,12 @@
     .feed {
         display: flex;
         justify-content: center;
+        flex-direction: column;
+        
+        .postItem {
+            margin: auto;
+            margin-bottom: 40px;
+        }
     }
     .morePosts {
         margin-top: 50px;

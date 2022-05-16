@@ -1,6 +1,7 @@
 .postItem {
     display: flex;
     align-items: center;
+    border: solid black 1px;
     background: #eee;
     box-shadow: 0 20px 50px hsla(0, 0%, 60%, 0.7);
     width: max-content;
@@ -12,6 +13,25 @@
         text-align: left;
         .postTitle {
             font-weight: normal;
+        }
+        .tags {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            .tagItem {
+                &::before {
+                    content: "# ";
+                }
+                display: inline-block;
+                font-weight: bold;
+                background-color: #d1d1d1;
+                margin-right: 10px;
+                padding: 3px;
+                border-radius: 3px;
+            }
+        }
+        .slug {
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
     }
 

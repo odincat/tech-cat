@@ -12,10 +12,17 @@ service cloud.firestore {
             }
 
             match /users/{userId}/posts/{postId} {
-                allow read: if request.resource.data.published || !request.resource.data.published && request.resource.data.published == request.resource.data.uid;
+                allow read: if canReadPost(userId);
                 allow create: if canCreatePost(userId);
                 allow update: if canUpdatePost(userId);
             }
+        }
+
+        function canReadPost(userId) {
+            let isPublic = request.resource.data.published;
+            let isOwner = request.auth.uid == userId;
+
+            return isPublic || isOwner;
         }
 
         function canCreatePost(userId) {

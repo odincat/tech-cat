@@ -3,25 +3,68 @@ import { useUser } from '@lib/utils';
 import AdminShell from '@components/auth/adminshell/AdminShell';
 import PostItem, { PostProperties } from '@components/post/postitem/PostItem';
 import { Button } from '@mantine/core';
+import { collection, getDocs, limit, orderBy, query, startAfter } from 'firebase/firestore';
+import { useCollection } from "react-firebase-hooks/firestore";
+import fire from 'pacman/firebase';
+import { useEffect, useState } from 'react';
+import { showNotification } from '@mantine/notifications';
+import { RiEmotionHappyFill, RiErrorWarningFill, RiMore2Line } from 'react-icons/ri';
+import utils from 'pacman/utils';
+import PostFeed from '@components/post/postfeed/PostFeed';
+
+const LIMIT = 3;
 
 const Overview = () => {
-    const { userObject, roles } = useUser();
-    
-    const mockPost: PostProperties = {
-        title: "Titel",
-        tags: [],
-        content: "bla bla bla",
-        author: "odincat",
-        slug: "ein-text",
-        commentCount: 7,
-        heartCount: 7,
-        createdAt: "1.1.2022",
-        updatedAt: "2.1.2022",
-        published: true,
-        trashed: false,
-        uid: "bla",
-        username: "odincat",
-        thumbnail: "null"
+    const { user, userObject, roles } = useUser();
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [posts, setPosts] = useState<any>();
+
+    const postQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt', 'desc'), limit(LIMIT));
+    const [querySnapshot] = useCollection(postQuery);
+    // const posts = querySnapshot?.docs.map((doc) => doc.data());
+
+    useEffect(() => {
+        const fetchedPosts = querySnapshot?.docs.map((doc) => doc.data());
+        setPosts(fetchedPosts);
+    }, [querySnapshot])
+
+    const PostList = () => {
+
+        return (
+            <>
+                <PostFeed posts={posts} styles={styles} />
+            </>
+        )
+    };
+
+    const loadMorePosts = async () => {
+        setLoading(true);
+
+        if(posts == null) {
+            showNotification({ title: 'Error occured while fetching posts', message: 'Post object is null', icon: <RiErrorWarningFill />, color: 'red' })
+            return;
+        }
+
+        const lastPost = posts[posts?.length - 1];
+        const cursor = typeof lastPost.createdAt === 'number' ? utils.fromMillis(lastPost.createdAt) : lastPost.createdAt;
+
+        const morePostsQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt', 'desc'), startAfter(cursor), limit(LIMIT));
+
+        const sdf = await getDocs(morePostsQuery);
+
+        const morePosts = sdf?.docs.map((doc) => doc.data());
+
+        setPosts(posts.concat(morePosts));
+
+        setLoading(false);
+
+        if(morePosts?.length != null && morePosts.length < LIMIT) {
+            showNotification({ title: 'You have reached the end', message: 'There is nothing there, honestly', icon: <RiErrorWarningFill />, color: 'red' })
+            return;
+        }
+
+        showNotification({ title: 'Success!', message: 'Posts have been fetched successfully!', icon: <RiEmotionHappyFill />, color: 'green'})
     }
 
     return (
@@ -32,9 +75,8 @@ const Overview = () => {
                     <p>Have the total control over all of your posts.</p>
                 </div>
                 <div className={styles.feed}>
-                    <PostItem post={mockPost} className={styles.postItem} />
-                    <PostItem post={mockPost} className={styles.postItem} />
-                    <Button className={styles.loadMore}>Load more posts</Button>
+                    <PostList />
+                    <Button onClick={loadMorePosts} className={styles.loadMore}>Load more posts</Button>
                 </div>
             </div>
         </AdminShell>

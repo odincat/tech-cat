@@ -1,10 +1,16 @@
 import PostItem, { PostProperties } from "../postitem/PostItem";
 
-const PostFeed = ({ posts }: any) => {
+const PostFeed = ({ posts, styles }: any) => {
     return (
-        <div>
-            {posts ? posts.map((post: PostProperties) => <PostItem post={post} />) : null}
-        </div>
+        <>
+            {posts ? posts.map((post: any) => {
+                const postData: PostProperties = {...post}
+                
+                return (
+                    <PostItem post={postData} key={postData.id} className={styles.postItem} />
+                );
+            }) : null}
+        </>
     );
 };
 
