@@ -1,30 +1,35 @@
 import { UserContext } from "@lib/context";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from '@styles/Dashboard.module.scss';
 import AdminShell from "@components/auth/adminshell/AdminShell";
 import MetatagConfig from "@components/metamanager/MetaManager";
 import { Button } from "@mantine/core";
 import PostItem, { PostProperties } from "@components/post/postitem/PostItem";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
+import fire from "pacman/firebase";
+import PostFeed from "@components/post/postfeed/PostFeed";
+import { useRouter } from "next/router";
 
 const Dashboard = () => {
-    const { userObject, roles } = useContext(UserContext);
+    const { userObject, roles, user } = useContext(UserContext);
+    const router = useRouter();
 
-    const mockPost: PostProperties = {
-        title: "Titel",
-        tags: [],
-        content: "bla bla bla",
-        author: "odincat",
-        slug: "ein-text",
-        commentCount: 7,
-        heartCount: 7,
-        createdAt: "1.1.2022",
-        updatedAt: "2.1.2022",
-        published: true,
-        trashed: false,
-        uid: "bla",
-        username: "odincat",
-        thumbnail: "null"
-    }
+    const [posts, setPosts] = useState<any>();
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            const morePostsQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt', 'desc'), limit(3));
+    
+            const result = await getDocs(morePostsQuery);
+    
+            const morePosts = result?.docs.map((doc) => doc.data());
+
+            setPosts(morePosts);
+        }
+
+        fetchPosts();
+        }, [])
+
 
     return(
         <AdminShell>
@@ -37,9 +42,9 @@ const Dashboard = () => {
             <div className={styles.latestposts}>
                     <h2>Latest posts</h2>
                     <div className={styles.feed}>
-                        <PostItem post={mockPost} />
+                        <PostFeed posts={posts} styles={styles} />
                     </div>
-                    <Button className={styles.morePosts}>View all posts</Button>
+                    <Button onClick={() => {router.push('/dash/post/overview')}} className={styles.morePosts}>View all posts</Button>
             </div>
         </AdminShell>
     );

@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core';
 import styles from './PostItem.module.scss';
-import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM } from 'react-icons/ri';
+import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM, RiHashtag, RiPriceTag2Fill, RiPriceTag3Fill } from 'react-icons/ri';
 import { FieldValue, Timestamp } from 'firebase/firestore';
 import { DateTime } from 'luxon';
 
@@ -39,8 +39,9 @@ const PostItem = ({ post, className }: PostItemProperties) => {
         <div className={`${styles.postItem} ${className}`}>
             <div className={styles.postMeta}>
                 <h3 className={styles.postTitle}>{post.title}</h3>
-                <p><RiLinkM /> /{post.slug}</p>
-                <span className={styles.postPublishDate}><RiCalendarFill /> {createdAt} {updatedAt !== createdAt && (<span className={styles.postEditDate}>(<RiBallPenFill /> {updatedAt})</span>)}</span>
+                {post.tags.length > 0 && (<p className={styles.tags}><RiPriceTag3Fill /> {post.tags.map((tag, i) => <span className={styles.tagItem} key={i}>{tag}</span>)}</p>)}
+                <p className={styles.slug}><RiLinkM /> /{post.slug}</p>
+                <p className={styles.postPublishDate}><RiCalendarFill /> {createdAt} {updatedAt !== createdAt && (<span className={styles.postEditDate}>(<RiBallPenFill /> {updatedAt})</span>)}</p>
                 {/* <p>{post.content}</p> */}
             </div>
             <div className={styles.postNumbers}>
