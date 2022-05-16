@@ -90,7 +90,7 @@ const CreatePost = () => {
                 color: 'green'
             });
 
-            //router.push(`/dash/post/@${userObject?.username}/${slug}`);
+            router.push(`/dash/post/@${userObject?.username}/${slug}`);
         }).catch((error) => {
             setError(error);
         });

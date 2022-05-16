@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
 import { RiEmotionHappyFill, RiErrorWarningFill, RiMore2Line } from 'react-icons/ri';
 import utils from 'pacman/utils';
+import PostFeed from '@components/post/postfeed/PostFeed';
 
 const LIMIT = 3;
 
@@ -19,7 +20,7 @@ const Overview = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [posts, setPosts] = useState<any>();
 
-    const postQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt'), limit(LIMIT));
+    const postQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt', 'desc'), limit(LIMIT));
     const [querySnapshot] = useCollection(postQuery);
     // const posts = querySnapshot?.docs.map((doc) => doc.data());
 
@@ -32,13 +33,7 @@ const Overview = () => {
 
         return (
             <>
-                {posts ? posts.map((post: any) => {
-                    const postData: PostProperties = {...post}
-                    
-                    return (
-                        <PostItem post={postData} className={styles.postItem} />
-                    );
-                }) : null}
+                <PostFeed posts={posts} styles={styles} />
             </>
         )
     };
@@ -54,7 +49,7 @@ const Overview = () => {
         const lastPost = posts[posts?.length - 1];
         const cursor = typeof lastPost.createdAt === 'number' ? utils.fromMillis(lastPost.createdAt) : lastPost.createdAt;
 
-        const morePostsQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt'), startAfter(cursor), limit(LIMIT));
+        const morePostsQuery = query(collection(fire.useFireStore(),'users', user.uid, 'posts'), orderBy('createdAt', 'desc'), startAfter(cursor), limit(LIMIT));
 
         const sdf = await getDocs(morePostsQuery);
 
