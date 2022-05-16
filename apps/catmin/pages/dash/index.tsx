@@ -4,7 +4,6 @@ import styles from '@styles/Dashboard.module.scss';
 import AdminShell from "@components/auth/adminshell/AdminShell";
 import MetatagConfig from "@components/metamanager/MetaManager";
 import { Button } from "@mantine/core";
-import PostItem, { PostProperties } from "@components/post/postitem/PostItem";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import fire from "pacman/firebase";
 import PostFeed from "@components/post/postfeed/PostFeed";

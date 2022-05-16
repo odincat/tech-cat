@@ -1,7 +1,6 @@
 import { Button } from '@mantine/core';
 import styles from './PostItem.module.scss';
-import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM, RiHashtag, RiPriceTag2Fill, RiPriceTag3Fill } from 'react-icons/ri';
-import { FieldValue, Timestamp } from 'firebase/firestore';
+import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM, RiPriceTag3Fill } from 'react-icons/ri';
 import { DateTime } from 'luxon';
 
 export interface PostProperties {
