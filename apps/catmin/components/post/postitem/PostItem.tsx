@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core';
 import styles from './PostItem.module.scss';
-import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM, RiPriceTag3Fill } from 'react-icons/ri';
+import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM, RiPriceTag3Fill, RiEarthFill } from 'react-icons/ri';
 import { DateTime } from 'luxon';
 
 export interface PostProperties {
@@ -37,7 +37,7 @@ const PostItem = ({ post, className }: PostItemProperties) => {
     return (
         <div className={`${styles.postItem} ${className}`}>
             <div className={styles.postMeta}>
-                <h3 className={styles.postTitle}>{post.title}</h3>
+                <h3 className={styles.postTitle}>{post.title} <span className={styles.published} style={{color: post.published ? '#2EB086' : '#9B0000'}}><RiEarthFill /></span></h3>
                 {post.tags.length > 0 && (<p className={styles.tags}><RiPriceTag3Fill /> {post.tags.map((tag, i) => <span className={styles.tagItem} key={i}>{tag}</span>)}</p>)}
                 <p className={styles.slug}><RiLinkM /> /{post.slug}</p>
                 <p className={styles.postPublishDate}><RiCalendarFill /> {createdAt} {updatedAt !== createdAt && (<span className={styles.postEditDate}>(<RiBallPenFill /> {updatedAt})</span>)}</p>
