@@ -18,8 +18,8 @@ const PostEdit = () => {
     const [originalPost, setOriginalPost] = useState<PostProperties>();
 
     useEffect(() => {
+        const postQuery = query(collection(fire.useFireStore(), 'users', user.uid, 'posts'), where('slug', '==', slug), limit(1));
         const getPost = async () => {
-            const postQuery = query(collection(fire.useFireStore(), 'users', user.uid, 'posts'), where('slug', '==', slug), limit(1));
             const currentPosts = await getDocs(postQuery);
             
             const originalPostData = currentPosts.docs[0].data() as PostProperties;

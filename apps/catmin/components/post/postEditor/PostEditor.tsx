@@ -1,18 +1,28 @@
 import { GLOBAL_statusMessage, useStore } from '@lib/store';
+import { useUser } from '@lib/utils';
 import { Button, Checkbox, Input, InputWrapper, Modal, NativeSelect } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { useRouter } from 'next/router';
+import fire from 'pacman/firebase';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { RiDeleteBin2Fill, RiDeleteBin2Line, RiEarthFill, RiSave2Fill } from 'react-icons/ri';
+import { RiCheckFill, RiDeleteBin2Fill, RiSave2Fill } from 'react-icons/ri';
 import { PostProperties } from '../postitem/PostItem';
 import styles from './PostEditor.module.scss'
 
 const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
+    const { user } = useUser();
+    const router = useRouter();
+
     const globalStatusMessage = useStore(GLOBAL_statusMessage);
+
     const [loading, setLoading] = useState(false);
     const [ePost, setEPost] = useState<PostProperties>();
 
     const { register, handleSubmit, reset, watch, formState: { errors }, formState } = useForm({ mode: 'onChange'});
 
+    // Update status bar
     useEffect(() => {
         if(!post?.title) return;
         if(post?.title.length > 85) {
@@ -48,16 +58,27 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
                 setValid(true);
             }
 
+            const handleDelete = () => {
+                if(!valid) return;
+
+                const postRef = doc(fire.useFireStore(), 'users', user.uid, 'posts', post!!.id);
+                deleteDoc(postRef).then(() => {
+                    showNotification({ title: 'Success!', message: 'Post has been deleted', color: 'teal', icon: <RiCheckFill /> });
+                    router.push('/dash');
+                });
+            }
+
             return(
                 <>
-                    <div className={styles.modal}>
-                        <Modal className={styles.deleteModal} opened={open} title="Delete this post?" onClose={() => setOpen(false)}>
+                    <Modal opened={open} title="Delete this post?" onClose={() => setOpen(false)}>
+                        <div className={styles.modalContent}>
                             <InputWrapper label="Validation" description='Please type the slug of this post in order to delete it.'>
                                 <Input onChange={handleChange} ref={validateRef} />
                             </InputWrapper>
-                            <Button className={styles.confirm} disabled={!valid} color="red">Apply</Button>
-                        </Modal>
-                    </div>
+                            <Button disabled={!valid} className={styles.confirm} onClick={handleDelete} color='red'><RiDeleteBin2Fill className={styles.icon} /> Delete post</Button>
+                            <b>I understand that this action cannot be reverted.</b>
+                        </div>
+                    </Modal>
                     <Button className={styles.deleteButton} onClick={handleClick} color='red' compact><RiDeleteBin2Fill className={styles.icon} /> Delete post</Button>
                 </>
             );

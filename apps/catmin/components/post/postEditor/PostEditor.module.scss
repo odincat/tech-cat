@@ -37,19 +37,28 @@
         .actions {
             display: flex;
             margin-top: 20px;
-            .modal {
-                background-color: red;
 
-            }
-            .confirm {
-                margin-top: 20px;
-            }
             .deleteButton {
                 margin-left: auto;
             }
         }
     }
 
+}
+
+// delete modal
+.modalContent {
+    .confirm {
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+    }
+    b {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        text-decoration: underline;
+    }
 }
 
 .icon {

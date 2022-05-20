@@ -13,9 +13,10 @@ const Navbar = () => {
     const globalMessage = useStore(GLOBAL_statusMessage);
 
     const dynamicRoute = useRouter().asPath;
+
     useEffect(() => {
         globalMessage.set('');
-    }, [dynamicRoute])
+    }, [dynamicRoute]);
 
     return(
         <div className={styles.navbar}>
