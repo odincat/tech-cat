@@ -1,4 +1,5 @@
 import AdminShell from '@components/auth/adminshell/AdminShell';
+import MetatagConfig from '@components/metamanager/MetaManager';
 import PostEditor from '@components/post/postEditor/PostEditor';
 import { PostItemProperties, PostProperties } from '@components/post/postitem/PostItem';
 import { useUser } from '@lib/utils';
@@ -31,6 +32,7 @@ const PostEdit = () => {
 
     return (
         <AdminShell>
+            <MetatagConfig title={`Editing "${originalPost?.title}"`} defaultTitleFormat={true} />
             <PostEditor post={originalPost} />
         </AdminShell>
     )

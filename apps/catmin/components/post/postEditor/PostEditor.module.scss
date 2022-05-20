@@ -31,12 +31,27 @@
         padding: 10px;
 
         .head {
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        .published {
+        .actions {
+            display: flex;
+            margin-top: 20px;
+            .modal {
+                background-color: red;
 
+            }
+            .confirm {
+                margin-top: 20px;
+            }
+            .deleteButton {
+                margin-left: auto;
+            }
         }
     }
 
+}
+
+.icon {
+    margin-right: 5px;
 }

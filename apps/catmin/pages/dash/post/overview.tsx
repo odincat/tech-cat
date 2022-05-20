@@ -11,6 +11,7 @@ import { RiEmotionHappyFill, RiErrorWarningFill, RiMore2Line } from 'react-icons
 import utils from 'pacman/utils';
 import PostFeed from '@components/post/postfeed/PostFeed';
 import { PostProperties } from '@components/post/postitem/PostItem';
+import MetatagConfig from '@components/metamanager/MetaManager';
 
 const LIMIT = 10;
 
@@ -68,6 +69,7 @@ const Overview = () => {
 
     return (
         <AdminShell>
+            <MetatagConfig title='Post control center' defaultTitleFormat={true} />
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h2>Post overview</h2>

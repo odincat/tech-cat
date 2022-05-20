@@ -13,7 +13,7 @@ const Create = () => {
 
     return (
         <AdminShell>
-            <MetatagConfig title={`Create new post [${userObject?.username}]`} defaultTitleFormat={true} />
+            <MetatagConfig title={`Create new post`} defaultTitleFormat={true} />
             <CreatePost />
         </AdminShell>
     )
