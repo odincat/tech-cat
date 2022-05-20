@@ -2,6 +2,7 @@ import { Button } from '@mantine/core';
 import styles from './PostItem.module.scss';
 import { RiCalendarFill, RiDiscussFill, RiBallPenFill, RiHeart2Fill, RiLinkM, RiPriceTag3Fill, RiEarthFill } from 'react-icons/ri';
 import { DateTime } from 'luxon';
+import { useRouter } from 'next/router';
 
 export interface PostProperties {
     title: string;
@@ -27,6 +28,7 @@ export interface PostItemProperties {
 }
 
 const PostItem = ({ post, className }: PostItemProperties) => {
+    const router = useRouter();
 
     const createdAtRaw = typeof post?.createdAt === 'number' ? new Date(post.createdAt) : post.createdAt.toDate();
     const createdAt = DateTime.fromJSDate(createdAtRaw).setLocale('de-DE').toLocaleString(DateTime.DATETIME_SHORT);
@@ -48,7 +50,7 @@ const PostItem = ({ post, className }: PostItemProperties) => {
                 <span className={styles.postCommentCount}><RiDiscussFill className={styles.icon} /> {post.commentCount}</span>
             </div>
             <div className={styles.postEdit}>
-                <Button>Edit</Button>
+                <Button onClick={() => {router.push(`/dash/post/@${post.username}/${post.slug}`)}}>Edit</Button>
             </div>
         </div>
     );

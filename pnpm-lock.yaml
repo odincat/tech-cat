@@ -16,6 +16,7 @@ importers:
 
   apps/catmin:
     specifiers:
+      '@hookstate/core': ^3.0.13
       '@mantine/core': ^4.1.3
       '@mantine/dropzone': ^4.1.3
       '@mantine/form': ^4.1.3
@@ -41,10 +42,12 @@ importers:
       react: 18.0.0
       react-dom: 18.0.0
       react-firebase-hooks: 5.0.3
+      react-hook-form: ^7.31.1
       react-icons: 4.3.1
       sass: 1.49.10
       typescript: 4.6.3
     dependencies:
+      '@hookstate/core': 3.0.13_react@18.0.0
       '@mantine/core': 4.1.3_36ikanlywdhmjw2m7jtf6r66v4
       '@mantine/dropzone': 4.1.3_ccv47y4kcazusfz6zzu7eckf7i
       '@mantine/form': 4.1.3_react@18.0.0
@@ -63,6 +66,7 @@ importers:
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
       react-firebase-hooks: 5.0.3_pw7k7qolfhqcptvv3tnvgaigma
+      react-hook-form: 7.31.1_react@18.0.0
       react-icons: 4.3.1_react@18.0.0
     devDependencies:
       '@types/luxon': 2.3.2
@@ -820,6 +824,15 @@ packages:
       long: 4.0.0
       protobufjs: 6.11.2
       yargs: 16.2.0
+    dev: false
+
+  /@hookstate/core/3.0.13_react@18.0.0:
+    resolution: {integrity: sha512-dzx6Rz1M5/c/F1zPEspnONMUvkJD1BzepuuGkqoh+KDNhgWrklGW9OVQAuK+DZFyamCTb3/1GW2Vu4IDhXMexA==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: ^16.8.6 || ^17.0.0
+    dependencies:
+      react: 18.0.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.5:
@@ -4140,6 +4153,15 @@ packages:
       react: '>= 16.8.0'
     dependencies:
       firebase: 9.6.10
+      react: 18.0.0
+    dev: false
+
+  /react-hook-form/7.31.1_react@18.0.0:
+    resolution: {integrity: sha512-QjtjZ8r8KtEBWWpcXLyQordCraTFxILtyQpaz5KLLxN2YzcC+FZ9LLtOnNGuOnzZo9gCoB+viK3ZHV9Mb2htmQ==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
       react: 18.0.0
     dev: false
 

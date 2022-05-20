@@ -2,21 +2,20 @@ import { UserContext } from '@lib/context';
 import { openSpotlight } from '@mantine/spotlight';
 import styles from './Navbar.module.scss';
 import Link from 'next/link';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { RiDashboard2Fill, RiMenuFill, RiQuillPenLine, RiShieldUserFill, RiStackLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
+import { GLOBAL_statusMessage, useStore } from '@lib/store';
 
 const Navbar = () => {
     const { userObject, roles } = useContext(UserContext);
     const router = useRouter();
+    const globalMessage = useStore(GLOBAL_statusMessage);
 
-    const handleViewPosts = () => {
-        router.push('/dash/post/overview');
-    }
-
-    const handleNewPost = () => {
-        router.push('/dash/post/new');
-    }
+    const dynamicRoute = useRouter().asPath;
+    useEffect(() => {
+        globalMessage.set('');
+    }, [dynamicRoute])
 
     return(
         <div className={styles.navbar}>
@@ -25,11 +24,11 @@ const Navbar = () => {
             </a></Link>
 
             <div className={styles.actions}>
-                <span className={styles.actionview} onClick={handleViewPosts}><RiStackLine /> View posts</span>
-                <span className={styles.actioncreate} onClick={handleNewPost}><RiQuillPenLine /> Create post</span>
+                <span className={styles.actionview} onClick={() => router.push('/dash/post/overview')}><RiStackLine /> View posts</span>
+                <span className={styles.actioncreate} onClick={() => router.push('/dash/post/new')}><RiQuillPenLine /> Create post</span>
             </div>
 
-            <div className={styles.end}></div>
+            <div className={styles.message}>{globalMessage.get() ?? ' '}</div>
             {roles?.admin && <div className={styles.user}><RiShieldUserFill /> authenticated as <span className={styles.name}>{userObject?.username}</span></div>}
             <div onClick={openSpotlight} className={styles.menu}><RiMenuFill /></div>
         </div>

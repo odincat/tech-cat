@@ -8,12 +8,15 @@ import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import fire from 'pacman/firebase';
 import { showNotification } from '@mantine/notifications';
 import { PostProperties } from '../postitem/PostItem';
+import { GLOBAL_statusMessage, useStore } from '@lib/store';
 
 const CreatePost = () => {
     const { userObject, user } = useUser();
     const titleField = createRef<HTMLInputElement>();
     const slugField = createRef<HTMLInputElement>();
     const authorField = createRef<HTMLInputElement>();
+
+    const globalStatusMessage = useStore(GLOBAL_statusMessage);
 
     const router = useRouter();
 
@@ -27,6 +30,15 @@ const CreatePost = () => {
 
     useEffect(() => {
         if(title !== '') setDirty(false);
+        if(!title) {
+            globalStatusMessage.set('');
+            return;
+        };
+        if(title.length > 75) {
+            globalStatusMessage.set('Creating new post');
+            return;
+        }
+        globalStatusMessage.set(`Creating new post named "${title}"`);
     }, [title]);
 
     useEffect(() => {

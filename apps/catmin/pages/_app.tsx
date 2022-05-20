@@ -4,7 +4,7 @@ import { UserContext } from '@lib/context'
 import { useUserData } from '@lib/hooks'
 import { NextComponentType } from 'next'
 import { MantineProvider } from '@mantine/core'
-import AuthRoute from '@components/auth/authRoute/AuthRoute'
+import AuthRoute from '@components/auth/authRoute/AuthRoute';
 
 interface AppProperties {
   Component: NextComponentType | any;

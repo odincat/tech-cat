@@ -1,0 +1,42 @@
+.editor {
+    padding: 20px;
+    .head {
+        h2 {
+            font-weight: normal;
+            max-width: 80%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .metaModal {
+            button {
+                margin: auto;
+            }
+        }
+
+        margin-bottom: 2rem;
+    }
+    
+    .container {
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 80% 20%;
+        column-gap: 20px;
+    }
+
+    .sidebar {
+        width: 100%;
+        border: solid black 1px;
+        border-radius: 3px;
+        padding: 10px;
+
+        .head {
+            margin-bottom: 10px;
+        }
+
+        .published {
+
+        }
+    }
+
+}
