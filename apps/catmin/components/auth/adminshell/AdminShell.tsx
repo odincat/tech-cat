@@ -11,7 +11,7 @@ const AdminShell = (props: any) => {
     return(
         <SpotlightProvider actions={spotlightActions} searchIcon={<RiSearch2Line />} shortcut="mod + SPACE" searchPlaceholder="Search..." nothingFoundMessage="No results">
             <NotificationsProvider>
-                <NextNProgress />
+                <NextNProgress options={{ showSpinner: false }} />
                 <Navbar />
                 {props.children}
             </NotificationsProvider>
