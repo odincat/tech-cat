@@ -1,9 +1,8 @@
 import Navbar from "@components/navbar/Navbar"
 import { spotlightActions } from "@lib/spotlight"
-import { Alert } from "@mantine/core";
 import { SpotlightProvider } from "@mantine/spotlight"
 import { NotificationsProvider } from '@mantine/notifications';
-import { RiAlarmWarningFill, RiSearch2Line } from "react-icons/ri"
+import { RiSearch2Line } from "react-icons/ri"
 import NextNProgress from "nextjs-progressbar";
 
 const AdminShell = (props: any) => {
