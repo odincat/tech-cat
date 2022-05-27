@@ -1,15 +1,19 @@
 import { GLOBAL_statusMessage, useStore } from '@lib/store';
 import { useUser } from '@lib/utils';
-import { Button, Checkbox, Input, InputWrapper, Modal, NativeSelect } from '@mantine/core';
+import { Button, Checkbox, Drawer, Input, InputWrapper, Modal, MultiSelect, NativeSelect } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { deleteDoc, doc } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import fire from 'pacman/firebase';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { RiCheckFill, RiDeleteBin2Fill, RiSave2Fill } from 'react-icons/ri';
+import { RiCheckFill, RiDeleteBin2Fill, RiLinkM, RiPriceTag3Fill, RiSave2Fill, RiUserFill } from 'react-icons/ri';
 import { PostProperties } from '../postitem/PostItem';
-import styles from './PostEditor.module.scss'
+
+import dynamic from 'next/dynamic';
+const CustomEditor = dynamic(() => import('./Editor'), { ssr: false });
+
+import styles from './PostEditor.module.scss';
 
 const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
     const { user } = useUser();
@@ -20,7 +24,14 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
     const [loading, setLoading] = useState(false);
     const [ePost, setEPost] = useState<PostProperties>();
 
-    const { register, handleSubmit, reset, watch, formState: { errors }, formState } = useForm({ mode: 'onChange'});
+    const [tags, setTags] = useState<string[]>(ePost?.tags ?? []);
+
+    // UI
+    const [metaDrawerOpen, setMetaDrawerOpen] = useState(false);
+
+    useEffect(() => {
+        setEPost(post);
+    }, [post])
 
     // Update status bar
     useEffect(() => {
@@ -90,7 +101,9 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
                 <div className={styles.head}>
                     <h4>Actions</h4>
                 </div>
-                <div className={styles.published}><Checkbox color='teal' label={post?.published ? 'Published' : 'Private'} /></div>
+                <div className={styles.published}>
+                    <Checkbox defaultChecked={ePost?.published} color='teal' label={post?.published ? 'Published' : 'Private'} />
+                </div>
                 <div className={styles.actions}>
                     <SaveButton />
                     <DeleteButton />
@@ -100,30 +113,47 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
     };
 
     const Main = () => {
-        return (
-            <>
-                <form onSubmit={handleSubmit(() => console.log('asd'))}>
+        const [content, setContent] = useState<any>();
 
-                </form>
-            </>
+        return (
+            <div className={styles.main}>
+                <div className={styles.editorContainer}>
+                    {CustomEditor && <CustomEditor />}
+                </div>
+            </div>
         )
     }
 
-    const MetaModal = () => {
-        const [open, setOpen] = useState(false);
+    const MetaDrawer = () => {
+        const handleClose = () => {
+            setMetaDrawerOpen(false);
+        };
 
         return(
             <>
-                <Modal className={styles.metaModal} opened={open} title="Set new title" onClose={() => setOpen(false)}>
-                    <InputWrapper defaultValue={post?.title} label="Title" description="This will only affect the display title, not the slug">
-                        <Input />
-                    </InputWrapper>
-                    <InputWrapper defaultValue={post?.slug} label="Slug" description="">
-                        <Input />
-                    </InputWrapper>
-                    <Button color="teal">Apply</Button>
-                </Modal>
-                <Button onClick={() => setOpen(true)} compact>Change meta</Button>
+            <Drawer opened={metaDrawerOpen} onClose={handleClose} title="Edit post meta" padding="xl" size="xl">
+                <InputWrapper label="Title" description="This will only affect the display title, not the slug">
+                    <Input defaultValue={ePost?.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)} icon={<RiPriceTag3Fill />} />
+                </InputWrapper>
+                <InputWrapper defaultValue={post?.slug} label="Slug" description="">
+                    <Input defaultValue={ePost?.slug} icon={<RiLinkM />} />
+                </InputWrapper>
+                <InputWrapper label="Author" description="Name of the Author(s). Will be public, so watch out what you leak ;) Default: Account name">
+                    <Input defaultValue={ePost?.author} icon={<RiUserFill />}></Input>
+                </InputWrapper>
+                <MultiSelect
+                    className={styles.tags}
+                    data={tags}
+                    defaultValue={ePost?.tags}
+                    label="Topics"
+                    description="Select topics or hashtags that match the content of your post "
+                    placeholder="Add tags"
+                    searchable
+                    creatable
+                    getCreateLabel={(query) => `+ Add ${query}`}
+                    onCreate={(query) => setTags((current) => [...current, query])}/>
+            </Drawer>
+                <Button onClick={() => setMetaDrawerOpen(true)} compact>Change meta</Button>
             </>
         );
     }
@@ -132,12 +162,12 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
         <div className={styles.editor}>
             {post == undefined && null}
             <div className={styles.head}>
-                <h2>{post?.title}</h2>
-                <MetaModal />
+                <h2>{ePost?.title}</h2>
+                <MetaDrawer />
             </div>
             <div className={styles.container}>
-                <div className={styles.main}><Main /></div>
-                <div><SideBar /></div>
+                <Main />
+                <SideBar />
             </div>
         </div>
     );

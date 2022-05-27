@@ -24,11 +24,18 @@
         column-gap: 20px;
     }
 
+    .main {
+        border: solid black 1px;
+        border-radius: 3px;
+        padding: 20px;
+    }
+
     .sidebar {
         width: 100%;
         border: solid black 1px;
         border-radius: 3px;
         padding: 10px;
+        height: max-content;
 
         .head {
             margin-bottom: 20px;

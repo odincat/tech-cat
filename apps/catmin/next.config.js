@@ -2,7 +2,8 @@
 const withTM = require("next-transpile-modules")(["advanced-cl", "pacman"]);
 
 module.exports = withTM({
-  reactStrictMode: true,
+  // React strict mode causes components to render twice, 2 editor instances will be spawned
+  reactStrictMode: false,
   swcMinify: true,
   async rewrites() {
     return [
