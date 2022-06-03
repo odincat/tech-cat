@@ -3,35 +3,35 @@ import { useUser } from '@lib/utils';
 import { Button, Checkbox, Drawer, Input, InputWrapper, Modal, MultiSelect, NativeSelect } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { deleteDoc, doc } from 'firebase/firestore';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import fire from 'pacman/firebase';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiCheckFill, RiDeleteBin2Fill, RiLinkM, RiPriceTag3Fill, RiSave2Fill, RiUserFill } from 'react-icons/ri';
 import { PostProperties } from '../postitem/PostItem';
+import pUtils from 'pacman/utils';
 
-import dynamic from 'next/dynamic';
-const CustomEditor = dynamic(() => import('./Editor'), { ssr: false });
+const RichTextEditor = dynamic(() => import('@mantine/rte'), { ssr: false});
 
 import styles from './PostEditor.module.scss';
 
 const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
     const { user } = useUser();
+
     const router = useRouter();
 
     const globalStatusMessage = useStore(GLOBAL_statusMessage);
 
     const [loading, setLoading] = useState(false);
-    const [ePost, setEPost] = useState<PostProperties>();
-
-    const [tags, setTags] = useState<string[]>(ePost?.tags ?? []);
-
-    // UI
-    const [metaDrawerOpen, setMetaDrawerOpen] = useState(false);
+    const [editingPost, setEditingPost] = useState<PostProperties>();
 
     useEffect(() => {
-        setEPost(post);
-    }, [post])
+        setLoading(true);
+        setEditingPost(post);
+        setLoading(false);
+    }, [post]);
+
 
     // Update status bar
     useEffect(() => {
@@ -102,7 +102,7 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
                     <h4>Actions</h4>
                 </div>
                 <div className={styles.published}>
-                    <Checkbox defaultChecked={ePost?.published} color='teal' label={post?.published ? 'Published' : 'Private'} />
+                    <Checkbox defaultChecked={editingPost?.published} color='teal' label={post?.published ? 'Published' : 'Private'} />
                 </div>
                 <div className={styles.actions}>
                     <SaveButton />
@@ -113,38 +113,70 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
     };
 
     const Main = () => {
-        const [content, setContent] = useState<any>();
+        const [content, setContent] = useState(editingPost?.content);
+
+        useEffect(() => {
+            setContent(editingPost?.content);
+        }, [editingPost]);
 
         return (
             <div className={styles.main}>
                 <div className={styles.editorContainer}>
-                    {CustomEditor && <CustomEditor />}
+                    <RichTextEditor value={content ?? ''} onChange={setContent} />
                 </div>
             </div>
         )
     }
 
     const MetaDrawer = () => {
+        const [metaDrawerOpen, setMetaDrawerOpen] = useState(false);
+        
+        const [tags, setTags] = useState(editingPost?.tags);
+        
         const handleClose = () => {
+            if(titleError) {
+                showNotification({ title: 'Invalid fields!', message: 'Make sure you check all of your fields.', color: 'red' });
+                return;
+            }
+
             setMetaDrawerOpen(false);
         };
+        
+        useEffect(() => {
+            setTitle(editingPost?.title);
+            setTags(editingPost?.tags);
+        }, [editingPost]);
+        
+        const [title, setTitle] = useState(editingPost?.title);
+        const [titleError, setTitleError] = useState(false);
+
+        const smartChange = (newValue: string, minLength: number, maxLength: number, setter: (content: string) => void, errorSetter: (isError: boolean) => void) => {
+            const valid = pUtils.validateString(newValue, minLength, maxLength, setter);
+
+            if(!valid) {
+                errorSetter(true);
+                return;
+            }
+
+            errorSetter(false);
+        }
 
         return(
             <>
             <Drawer opened={metaDrawerOpen} onClose={handleClose} title="Edit post meta" padding="xl" size="xl">
-                <InputWrapper label="Title" description="This will only affect the display title, not the slug">
-                    <Input defaultValue={ePost?.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => console.log(e.target.value)} icon={<RiPriceTag3Fill />} />
+                <InputWrapper label="Title" error={titleError ? 'Title needs to be at least 5 characters long (max. 200)!' : ''} description="This will only affect the display title, not the slug">
+                    <Input invalid={titleError} defaultValue={editingPost?.title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => smartChange(e.target.value, 5, 200, setTitle, setTitleError)} icon={<RiPriceTag3Fill />} />
                 </InputWrapper>
                 <InputWrapper defaultValue={post?.slug} label="Slug" description="">
-                    <Input defaultValue={ePost?.slug} icon={<RiLinkM />} />
+                    <Input defaultValue={editingPost?.slug} icon={<RiLinkM />} />
                 </InputWrapper>
                 <InputWrapper label="Author" description="Name of the Author(s). Will be public, so watch out what you leak ;) Default: Account name">
-                    <Input defaultValue={ePost?.author} icon={<RiUserFill />}></Input>
+                    <Input defaultValue={editingPost?.author} icon={<RiUserFill />}></Input>
                 </InputWrapper>
                 <MultiSelect
                     className={styles.tags}
                     data={tags}
-                    defaultValue={ePost?.tags}
+                    defaultValue={editingPost?.tags}
                     label="Topics"
                     description="Select topics or hashtags that match the content of your post "
                     placeholder="Add tags"
@@ -162,7 +194,7 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
         <div className={styles.editor}>
             {post == undefined && null}
             <div className={styles.head}>
-                <h2>{ePost?.title}</h2>
+                <h2>{editingPost?.title}</h2>
                 <MetaDrawer />
             </div>
             <div className={styles.container}>

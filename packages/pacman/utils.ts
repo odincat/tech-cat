@@ -27,6 +27,19 @@ class pUtils {
         };
     }
 
+    validateString(input: string, minLength: number, maxLength: number, action?: (input: any) => void) {
+        if(input.length === 5) return false;
+        console.log(input.length)
+
+        if(!(input.length > minLength) || !(input.length < maxLength)) return false;
+    
+        if(!action) return true;
+        
+        action(input);
+
+        return true;
+    }
+
     fromMillis = Timestamp.fromMillis;
     
     serverTimestamp = serverTimestamp();
