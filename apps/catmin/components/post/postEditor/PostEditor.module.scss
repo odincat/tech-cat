@@ -3,7 +3,7 @@
     .head {
         h2 {
             font-weight: normal;
-            max-width: 80%;
+            max-width: 70%;
             display: inline-block;
             margin-right: 10px;
         }
@@ -20,7 +20,7 @@
     .container {
         padding: 20px;
         display: grid;
-        grid-template-columns: 80% 20%;
+        grid-template-columns: 70% 30%;
         column-gap: 20px;
     }
 
@@ -28,6 +28,7 @@
         border: solid black 1px;
         border-radius: 3px;
         padding: 20px;
+        position: relative;
     }
 
     .sidebar {
@@ -39,6 +40,24 @@
 
         .head {
             margin-bottom: 20px;
+        }
+
+        .published {
+            p {
+                margin-bottom: 10px;
+            }
+
+            .option {
+                display: flex;
+
+                label {
+                    font-size: 14px;
+                }
+
+                a {
+                    margin-left: auto;
+                }
+            }
         }
 
         .actions {

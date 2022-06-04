@@ -1,11 +1,12 @@
 import styles from './CreatePost.module.scss';
-import { toSlug, useUser } from '@lib/utils';
+import { useUser } from '@lib/utils';
 import React, { createRef, useEffect, useState } from 'react';
 import { Button, Input, InputWrapper, MultiSelect } from '@mantine/core';
 import { RiAddBoxFill, RiCheckboxCircleFill, RiInformationFill, RiLinkM, RiPriceTag3Fill, RiUserFill } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import { collection, doc, serverTimestamp, setDoc } from 'firebase/firestore';
 import fire from 'pacman/firebase';
+import utils from 'pacman/utils';
 import { showNotification } from '@mantine/notifications';
 import { PostProperties } from '../postitem/PostItem';
 import { GLOBAL_statusMessage, useStore } from '@lib/store';
@@ -42,7 +43,7 @@ const CreatePost = () => {
     }, [title]);
 
     useEffect(() => {
-        const formattedSlug = toSlug(slug);
+        const formattedSlug = utils.toSlug(slug);
         setSlug(formattedSlug);
         slugField.current!.value = formattedSlug;
     }, [slug]);

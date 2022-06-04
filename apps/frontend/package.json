@@ -18,6 +18,7 @@
     "advanced-cl": "workspace:*",
     "firebase": "9.6.10",
     "next": "12.1.4",
+    "pacman": "workspace:*",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-firebase-hooks": "5.0.3",
