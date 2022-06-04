@@ -258,7 +258,7 @@ const useSettingsDrawer = ({ editingPost }: HookProps) => {
                     </InputWrapper>
                     <MultiSelect
                         className={styles.tags}
-                        data={tags}
+                        data={tags ?? ['']}
                         defaultValue={tags}
                         label="Topics"
                         description="Select topics or hashtags that match the content of your post "

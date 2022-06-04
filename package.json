@@ -10,7 +10,7 @@
     "build": "turbo run build",
     "dev": "concurrently -c bgGreen,bgBlue -n TURBO,DOCKER --kill-others \"turbo run dev --parallel\" \"pnpm --prefix firebase run docker:start\"",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md,js,jsx}\""
   },
   "devDependencies": {
     "concurrently": "^7.1.0",
