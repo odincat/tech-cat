@@ -11,4 +11,4 @@ export interface Post {
     postAuthor: string;
     postCreatedAt: Date;
     postUpdatedAt: Date;
-};
+}

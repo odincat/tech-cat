@@ -12,8 +12,8 @@ export const useUserData = () => {
     useEffect(() => {
         setFetching(true);
         let unsubscribe;
-        
-        if(!user) {
+
+        if (!user) {
             setFetching(false);
             return;
         }
@@ -43,4 +43,3 @@ export const useUserData = () => {
 
     return { user, userObject, roles, fetching };
 };
-

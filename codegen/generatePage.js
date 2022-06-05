@@ -5,20 +5,17 @@ module.exports = {
             type: 'list',
             name: 'project',
             message: 'In which project should the page be placed in?',
-            choices: [
-                'frontend',
-                'catmin'
-            ]
+            choices: ['frontend', 'catmin'],
         },
         {
             type: 'input',
             name: 'name',
-            message: 'What should the page be named?'
+            message: 'What should the page be named?',
         },
         {
             type: 'confirm',
             name: 'withauth',
-            default: false
+            default: false,
         },
         {
             type: 'input',
@@ -26,18 +23,18 @@ module.exports = {
             default: '/',
             prefix: '/',
             suffix: '/',
-            message: 'Should the page be placed in a subdirectory?'
-        }
+            message: 'Should the page be placed in a subdirectory?',
+        },
     ],
     actions: [
         {
             type: 'add',
             path: 'apps/{{project}}/pages/{{lowerCase subdir}}/{{lowerCase name}}.tsx',
-            templateFile: 'codegen/templates/page.hbs'
+            templateFile: 'codegen/templates/page.hbs',
         },
         {
             type: 'add',
-            path: 'apps/{{project}}/styles/{{pascalCase name}}.module.scss'
-        }
-    ]
-}
+            path: 'apps/{{project}}/styles/{{pascalCase name}}.module.scss',
+        },
+    ],
+};

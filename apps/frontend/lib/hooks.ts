@@ -6,4 +6,3 @@ export const useUserData = () => {
 
     return { user };
 };
-

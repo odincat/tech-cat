@@ -1,4 +1,4 @@
-import styles from '@styles/Index.module.scss'
+import styles from '@styles/Index.module.scss';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -7,7 +7,7 @@ const Index = () => {
 
     useEffect(() => {
         router.push('/dash/post/overview');
-    }, [])
+    }, []);
 
     return null;
 };

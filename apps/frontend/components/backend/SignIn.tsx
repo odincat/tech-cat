@@ -1,7 +1,7 @@
-import { UserContext } from "@lib/context";
-import { signInWithPopup } from "firebase/auth";
-import { useContext, useState } from "react";
-import { FaGoogle } from "react-icons/fa";
+import { UserContext } from '@lib/context';
+import { signInWithPopup } from 'firebase/auth';
+import { useContext, useState } from 'react';
+import { FaGoogle } from 'react-icons/fa';
 import fire from 'pacman/firebase';
 
 const SignIn = () => {
@@ -11,9 +11,11 @@ const SignIn = () => {
 
     return (
         <>
-        <button className="btn-fancy m-auto block" onClick={signInWithGoogle}>
-            <FaGoogle /> Login with Google
-        </button>
+            <button
+                className='btn-fancy m-auto block'
+                onClick={signInWithGoogle}>
+                <FaGoogle /> Login with Google
+            </button>
         </>
     );
 };
