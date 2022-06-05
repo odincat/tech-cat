@@ -37,17 +37,32 @@ class pFirebase {
 
         const firebaseProject =
             process.env.NODE_ENV === 'production'
-                ? 'tech-cat-devnet'
-                : 'demo-tech-cat';
+                ? 'prod'
+                : 'dev';
 
-        this.config = {
-            apiKey: 'AIzaSyB5lMhQdr5Q-8f6EYa-cR2gL0vDypUb8mM',
-            authDomain: 'tech-cat-devnet.firebaseapp.com',
-            projectId: firebaseProject,
-            storageBucket: 'tech-cat-devnet.appspot.com',
-            messagingSenderId: '815597031106',
-            appId: '1:815597031106:web:018f22c14baeeefa02755b',
-        };
+        switch(firebaseProject) {
+            case 'dev':
+                this.config = {
+                    apiKey: 'AIzaSyB5lMhQdr5Q-8f6EYa-cR2gL0vDypUb8mM',
+                    authDomain: 'demo-tech-cat.firebaseapp.com',
+                    projectId: 'demo-tech-cat',
+                    storageBucket: 'demo-tech-cat.appspot.com',
+                    messagingSenderId: '815597031106',
+                    appId: '1:815597031106:web:018f22c14baeeefa02755b',
+                };
+            break;
+
+            case 'prod':
+                this.config = {
+                    apiKey: 'AIzaSyB5lMhQdr5Q-8f6EYa-cR2gL0vDypUb8mM',
+                    authDomain: 'tech-cat-devnet.firebaseapp.com',
+                    projectId: 'tech-cat-devnet',
+                    storageBucket: 'tech-cat-devnet.appspot.com',
+                    messagingSenderId: '815597031106',
+                    appId: '1:815597031106:web:018f22c14baeeefa02755b',
+                };
+            break;
+        }
 
         if (!getApps().length) {
             this.firebaseApp = initializeApp(this.config);
