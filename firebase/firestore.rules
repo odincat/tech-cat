@@ -15,6 +15,7 @@ service cloud.firestore {
                 allow read: if canReadPost(userId);
                 allow create: if canCreatePost(userId);
                 allow update: if canUpdatePost(userId);
+                allow delete: if request.auth.uid == userId;
             }
         }
 
@@ -41,7 +42,7 @@ service cloud.firestore {
             let hasRole = get(/databases/$(database)/documents/users/$(request.auth.uid)/roles/$(request.auth.uid)).data.author;
             let isNow = request.time == request.resource.data.updatedAt;
             let isValidContent = request.resource.data.content.size() < 20000;
-            let doesNotUpdateForbidden = !request.resource.data.diff(resource.data).affectedKeys().hasAny(['uid', 'username', 'heartCount', 'commentCount']);
+            let doesNotUpdateForbidden = !request.resource.data.diff(resource.data).affectedKeys().hasAny(['uid', 'username', 'heartCount', 'commentCount', 'id']);
             return isOwner && hasRole && isNow && isValidContent && doesNotUpdateForbidden;
         }
     }

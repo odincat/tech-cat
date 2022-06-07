@@ -7,7 +7,7 @@
 @import 'utils';
 
 $font-face-primary: 'Roboto', sans-serif;
-$font-face-secondary:  'Maven Pro', sans-serif;
+$font-face-secondary: 'Maven Pro', sans-serif;
 
 * {
   margin: 0;
@@ -204,11 +204,6 @@ body {
   }
 }
 
-// Theme
-.theme-switch-button {
-  transition: all 150ms;
-}
-
 // Icons
 .global-icon {
   display: inline-block;
@@ -259,4 +254,53 @@ body {
 
 .btn-fancy {
     @include default-button();
+}
+
+// util classes
+.t-text-color {
+  @include themed() {
+    color: get-theme-attribute('text-color');
+  }
+}
+
+.t-background-color {
+  @include themed() {
+    background-color: get-theme-attribute('background-color');
+  }
+}
+
+.t-header-background {
+  @include themed() {
+    background-color: get-theme-attribute('header-background');
+  }
+}
+
+.t-hamburgernav-background {
+  @include themed() {
+    background-color: get-theme-attribute('hamburgernav-background');
+  }
+}
+
+.t-footer-background {
+  @include themed() {
+    background-color: get-theme-attribute('footer-background');
+  }
+}
+
+.t-button-background {
+  @include themed() {
+    background-color: get-theme-attribute('button-background');
+  }
+}
+
+.t-button-color {
+  @include themed() {
+    color: get-theme-attribute('button-color');
+  }
+}
+
+.t-github-link {
+  @include themed() {
+    color: get-theme-attribute('github-link');
+  }
 }

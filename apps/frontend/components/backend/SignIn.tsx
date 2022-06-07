@@ -1,19 +1,20 @@
-import { UserContext } from "@lib/context";
-import { auth, authProvider } from "@lib/firebase";
-import { signInWithPopup } from "firebase/auth";
-import { useContext, useState } from "react";
-import { FaGoogle } from "react-icons/fa";
+import { signInWithPopup } from 'firebase/auth';
+import { FaGoogle } from 'react-icons/fa';
+import fire from 'pacman/firebase';
+import { NextComponent } from '@lib/types';
 
-const SignIn = () => {
+const SignIn: NextComponent = () => {
     const signInWithGoogle = () => {
-        signInWithPopup(auth, authProvider);
+        signInWithPopup(fire.useAuth(), fire.useAuthProvider());
     };
 
     return (
         <>
-        <button className="btn-fancy m-auto block" onClick={signInWithGoogle}>
-            <FaGoogle /> Login with Google
-        </button>
+            <button
+                className='btn-fancy m-auto block'
+                onClick={signInWithGoogle}>
+                <FaGoogle /> Login with Google
+            </button>
         </>
     );
 };

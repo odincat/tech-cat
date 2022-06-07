@@ -1,4 +1,4 @@
-import styles from '@styles/Create.module.scss'
+import styles from '@styles/Create.module.scss';
 import { useUser } from '@lib/utils';
 import CreatePost from '@components/post/createPost/CreatePost';
 import { useEffect, useState } from 'react';
@@ -13,10 +13,13 @@ const Create = () => {
 
     return (
         <AdminShell>
-            <MetatagConfig title={`Create new post [${userObject?.username}]`} defaultTitleFormat={true} />
+            <MetatagConfig
+                title={`Create new post`}
+                defaultTitleFormat={true}
+            />
             <CreatePost />
         </AdminShell>
-    )
+    );
 };
 
 Create.auth = true;

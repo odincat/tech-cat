@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 export interface userDataProperties {
     user?: any;
@@ -24,4 +24,9 @@ interface Roles {
     trusted: boolean;
 }
 
-export const UserContext = createContext<userDataProperties>({ user: null, userObject: null, roles: null, fetching: true });
+export const UserContext = createContext<userDataProperties>({
+    user: null,
+    userObject: null,
+    roles: null,
+    fetching: true,
+});

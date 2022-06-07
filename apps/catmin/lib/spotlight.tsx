@@ -1,8 +1,13 @@
-import { SpotlightAction } from "@mantine/spotlight";
-import { signOut } from "firebase/auth";
-import Router from "next/router";
-import fire from "pacman/firebase";
-import { RiDashboard3Line, RiDoorOpenLine, RiQuillPenLine, RiStackLine } from 'react-icons/ri';
+import { SpotlightAction } from '@mantine/spotlight';
+import { signOut } from 'firebase/auth';
+import Router from 'next/router';
+import fire from 'pacman/firebase';
+import {
+    RiDashboard3Line,
+    RiDoorOpenLine,
+    RiQuillPenLine,
+    RiStackLine,
+} from 'react-icons/ri';
 
 export const spotlightActions: SpotlightAction[] = [
     {
@@ -10,30 +15,30 @@ export const spotlightActions: SpotlightAction[] = [
         description: 'Compose a new masterpiece ✨',
         onTrigger: () => {
             Router.push({
-                pathname: '/dash/post/new'
+                pathname: '/dash/post/new',
             });
         },
-        icon: <RiQuillPenLine />
+        icon: <RiQuillPenLine />,
     },
     {
         title: 'View existing posts',
         description: 'Have a view over your art collection',
         onTrigger: () => {
             Router.push({
-                pathname: '/dash/post/overview'
+                pathname: '/dash/post/overview',
             });
         },
-        icon: <RiStackLine />
+        icon: <RiStackLine />,
     },
     {
         title: 'Go to Dashboard',
         description: 'Return home',
         onTrigger: () => {
             Router.push({
-                pathname: '/dash'
+                pathname: '/dash',
             });
         },
-        icon: <RiDashboard3Line />
+        icon: <RiDashboard3Line />,
     },
     {
         title: 'Logout',
@@ -42,9 +47,9 @@ export const spotlightActions: SpotlightAction[] = [
             signOut(fire.useAuth());
             fire.logger.log('Signed out', 'information');
             Router.push({
-                pathname: '/authenticate'
+                pathname: '/authenticate',
             });
         },
-        icon: <RiDoorOpenLine />
-    }
+        icon: <RiDoorOpenLine />,
+    },
 ];

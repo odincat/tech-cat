@@ -1,6 +1,5 @@
-// #region MetatagTitleFormat
-var titleSeperator: string = "|";
-var siteName: string = "TechCat";
+var titleSeperator: string = '|';
+var siteName: string = 'TechCat';
+
 // leave this alone ;)
-export var titleFormat: string = " " + titleSeperator + " " + siteName;
-// #endregion
+export var titleFormat: string = ` ${titleSeperator} ${siteName}`;

@@ -16,27 +16,27 @@
   },
   "dependencies": {
     "advanced-cl": "workspace:*",
-    "firebase": "9.6.10",
-    "next": "12.1.4",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "firebase": "9.8.2",
+    "next": "12.1.6",
+    "pacman": "workspace:*",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-firebase-hooks": "5.0.3",
-    "react-icons": "4.3.1",
-    "ui": "workspace:*"
+    "react-icons": "4.4.0"
   },
   "devDependencies": {
-    "@tailwindcss/forms": "0.5.0",
-    "@types/node": "16.11.26",
-    "@types/react": "17.0.43",
-    "autoprefixer": "^10.4.4",
+    "@tailwindcss/forms": "0.5.2",
+    "@types/node": "17.0.40",
+    "@types/react": "18.0.12",
+    "autoprefixer": "^10.4.7",
     "config": "workspace:*",
-    "eslint": "8.12.0",
-    "eslint-config-next": "12.1.4",
+    "eslint": "8.17.0",
+    "eslint-config-next": "12.1.6",
     "next-transpile-modules": "9.0.0",
-    "postcss": "8.4.12",
-    "sass": "1.49.10",
-    "tailwindcss": "3.0.23",
+    "postcss": "8.4.14",
+    "sass": "1.52.2",
+    "tailwindcss": "3.0.24",
     "tsconfig": "workspace:*",
-    "typescript": "4.6.3"
+    "typescript": "4.7.3"
   }
 }

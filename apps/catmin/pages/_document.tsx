@@ -4,23 +4,21 @@ import { createGetInitialProps } from '@mantine/next';
 const getInitialProps = createGetInitialProps();
 
 class MyDocument extends Document {
+    static getInitialProps = getInitialProps;
 
-  static getInitialProps = getInitialProps;
-
-  render() {
-    return (
-      <Html>
-        <Head>
-          <link rel="shortcut icon" href="/favicon.png" />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
-    )
-  }
+    render() {
+        return (
+            <Html>
+                <Head>
+                    <link rel='shortcut icon' href='/favicon.png' />
+                </Head>
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        );
+    }
 }
 
-
-export default MyDocument
+export default MyDocument;
