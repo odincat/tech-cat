@@ -5,4 +5,7 @@ module.exports = withTM({
     reactStrictMode: true,
     swcMinify: true,
     swcLoader: true,
+    compiler: {
+        emotion: true
+    }
 });

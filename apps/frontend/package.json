@@ -15,6 +15,7 @@
     "buildDocker": ""
   },
   "dependencies": {
+    "@emotion/react": "^11.9.0",
     "advanced-cl": "workspace:*",
     "firebase": "9.8.2",
     "next": "12.1.6",
