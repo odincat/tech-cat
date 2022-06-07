@@ -6,6 +6,10 @@ module.exports = {
     ],
     theme: {
         extend: {},
+        fontFamily: {
+            primary: ['Roboto', 'sans-serif'],
+            secondary: ['Maven Pro', 'sans-serif'],
+        },
     },
     plugins: [require('@tailwindcss/forms')],
 };

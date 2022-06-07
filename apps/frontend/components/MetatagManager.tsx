@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { titleFormat } from '@lib/static';
+import { NextComponent } from '@lib/types';
 
 interface MetaTags {
     title: string;
@@ -9,13 +10,13 @@ interface MetaTags {
     color?: string;
 }
 
-const MetatagConfig = ({
+const MetatagConfig: NextComponent<MetaTags> = ({
     title,
     defaultTitleFormat,
     description,
     image,
     color,
-}: MetaTags) => {
+}) => {
     var titleString: string;
     if (!defaultTitleFormat) {
         titleString = title;

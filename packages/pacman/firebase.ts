@@ -36,11 +36,9 @@ class pFirebase {
         this.logger = new advancedConsoleLog('Firebase', '#ffcb2d');
 
         const firebaseProject =
-            process.env.NODE_ENV === 'production'
-                ? 'prod'
-                : 'dev';
+            process.env.NODE_ENV === 'production' ? 'prod' : 'dev';
 
-        switch(firebaseProject) {
+        switch (firebaseProject) {
             case 'dev':
                 this.config = {
                     apiKey: 'AIzaSyB5lMhQdr5Q-8f6EYa-cR2gL0vDypUb8mM',
@@ -50,7 +48,7 @@ class pFirebase {
                     messagingSenderId: '815597031106',
                     appId: '1:815597031106:web:018f22c14baeeefa02755b',
                 };
-            break;
+                break;
 
             case 'prod':
                 this.config = {
@@ -61,7 +59,7 @@ class pFirebase {
                     messagingSenderId: '815597031106',
                     appId: '1:815597031106:web:018f22c14baeeefa02755b',
                 };
-            break;
+                break;
         }
 
         if (!getApps().length) {

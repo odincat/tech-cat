@@ -11,7 +11,13 @@ import {
     MultiSelect,
 } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
-import { deleteDoc, doc, serverTimestamp, snapshotEqual, updateDoc } from 'firebase/firestore';
+import {
+    deleteDoc,
+    doc,
+    serverTimestamp,
+    snapshotEqual,
+    updateDoc,
+} from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import fire from 'pacman/firebase';
 import { createRef, useEffect, useRef, useState } from 'react';
@@ -29,7 +35,12 @@ import utils from 'pacman/utils';
 
 import styles from './PostEditor.module.scss';
 import RichTextEditor from './RichTextEditor';
-import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
+import {
+    getDownloadURL,
+    ref,
+    uploadBytes,
+    uploadBytesResumable,
+} from 'firebase/storage';
 import { UserProfile } from 'firebase/auth';
 
 interface HookProps {
@@ -112,28 +123,40 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
     );
 };
 
-const useMain = ({ editingPost, user }: { editingPost: PostProperties | undefined; user: any }) => {
+const useMain = ({
+    editingPost,
+    user,
+}: {
+    editingPost: PostProperties | undefined;
+    user: any;
+}) => {
     const [content, setContent] = useState(editingPost?.content);
 
     useEffect(() => {
         setContent(editingPost?.content);
     }, [editingPost]);
 
-    const handleImageUpload = (file: File): Promise<string> => new Promise((resolve, reject) => {
-        const currentYear = new Date().getFullYear();
-        const currentTimestamp = Date.now();
+    const handleImageUpload = (file: File): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const currentYear = new Date().getFullYear();
+            const currentTimestamp = Date.now();
 
-        const storageRef = ref(fire.useStorage(), `uploads/${currentYear}/${user?.uid}/${currentTimestamp}`);
+            const storageRef = ref(
+                fire.useStorage(),
+                `uploads/${currentYear}/${user?.uid}/${currentTimestamp}`,
+            );
 
-        uploadBytes(storageRef, file).then(() => {
-            getDownloadURL(storageRef).then((url) => {
-                console.log(url)
-                resolve(url.toString());
-            })
-        }).catch(() => {
-            reject(new Error('File upload failed'));
+            uploadBytes(storageRef, file)
+                .then(() => {
+                    getDownloadURL(storageRef).then((url) => {
+                        console.log(url);
+                        resolve(url.toString());
+                    });
+                })
+                .catch(() => {
+                    reject(new Error('File upload failed'));
+                });
         });
-    });
 
     return {
         content,
@@ -141,7 +164,11 @@ const useMain = ({ editingPost, user }: { editingPost: PostProperties | undefine
             <div className={styles.main}>
                 <div className={styles.editorContainer}>
                     {content ? (
-                        <RichTextEditor value={content} onChange={setContent} onImageUpload={handleImageUpload} />
+                        <RichTextEditor
+                            value={content}
+                            onChange={setContent}
+                            onImageUpload={handleImageUpload}
+                        />
                     ) : (
                         <LoadingOverlay visible={true} />
                     )}

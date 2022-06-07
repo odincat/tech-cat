@@ -1,10 +1,9 @@
-import { UserContext } from '@lib/context';
 import { signInWithPopup } from 'firebase/auth';
-import { useContext, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import fire from 'pacman/firebase';
+import { NextComponent } from '@lib/types';
 
-const SignIn = () => {
+const SignIn: NextComponent = () => {
     const signInWithGoogle = () => {
         signInWithPopup(fire.useAuth(), fire.useAuthProvider());
     };

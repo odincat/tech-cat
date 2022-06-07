@@ -1,9 +1,9 @@
 import { getLocalStorageItem, setTheme } from '@lib/theme';
-import { NextComponentType } from 'next';
+import { NextComponent } from '@lib/types';
 import { useEffect, useState } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
-const ToggleThemeSwitch: NextComponentType = () => {
+const ToggleThemeSwitch: NextComponent = () => {
     var [currentTheme, setCurrentTheme] = useState('');
 
     useEffect(() => {
@@ -23,20 +23,22 @@ const ToggleThemeSwitch: NextComponentType = () => {
 
     return (
         <>
-            <button
-                title='Switch between light and dark appearance'
-                onClick={handleButtonClick}
-                className={`p-2 ml-2 bg-white rounded-[50%] theme-switch-button ${
-                    currentTheme === 'dark'
-                        ? 'bg-zinc-300 text-blue-500'
-                        : 'bg-zinc-700 text-yellow-500'
-                }`}>
-                {currentTheme === 'dark' ? (
-                    <FaMoon style={{ display: 'block' }} />
-                ) : (
-                    <FaSun style={{ display: 'block' }} />
-                )}
-            </button>
+            {currentTheme && (
+                <button
+                    title='Switch between light and dark appearance'
+                    onClick={handleButtonClick}
+                    className={`p-2 ml-2 bg-white rounded-[50%] transition-all ${
+                        currentTheme !== 'dark'
+                            ? 'bg-zinc-300 text-blue-500'
+                            : 'bg-zinc-700 text-yellow-500'
+                    }`}>
+                    {currentTheme !== 'dark' ? (
+                        <FaMoon style={{ display: 'block' }} />
+                    ) : (
+                        <FaSun style={{ display: 'block' }} />
+                    )}
+                </button>
+            )}
         </>
     );
 };

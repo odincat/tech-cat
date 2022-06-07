@@ -1,9 +1,9 @@
-import { NextComponentType } from 'next';
-import React from 'react';
 import { SkipNavigation } from './Accessibility';
 import Navbar from './Navbar';
 import ToggleThemeSwitch from './ToggleThemeSwitch';
 import { FaGithubSquare, FaTwitterSquare } from 'react-icons/fa';
+import { NextComponent } from '@lib/types';
+import { ReactNode } from 'react';
 
 /*
     This file is supposed to be edited. Rather change stuff in here than in _app.tsx.
@@ -13,7 +13,7 @@ import { FaGithubSquare, FaTwitterSquare } from 'react-icons/fa';
  * Sets the content and / or logic of the 'header'.
  * @returns JSX
  */
-export const Header: NextComponentType = () => {
+export const Header: NextComponent = () => {
     return (
         <header className='header'>
             <SkipNavigation />
@@ -26,9 +26,9 @@ export const Header: NextComponentType = () => {
  * Sets the content and / or logic of the main page container.
  * @returns JSX
  */
-export const Content: NextComponentType = (props) => {
+export const Content: NextComponent<{ children: ReactNode }> = (props) => {
     return (
-        <div className='content' id='main-content'>
+        <div className='content pt-[2rem]' id='main-content'>
             {props.children}
         </div>
     );
@@ -38,7 +38,7 @@ export const Content: NextComponentType = (props) => {
  * Sets the content and / or logic of the Footer. The footer will be sticky by default.
  * @returns JSX
  */
-export const Footer: NextComponentType = () => {
+export const Footer: NextComponent = () => {
     const currentYear: number = new Date().getFullYear();
     return (
         <footer className='footer w-full flex pt-2 pb-2 pr-3 pl-3 items-center'>
@@ -82,6 +82,8 @@ export const Footer: NextComponentType = () => {
  * Wraps the whole structure (Header, Content, Footer).
  * @returns JSX
  */
-export const PageContainer: NextComponentType = (props) => {
+export const PageContainer: NextComponent<{ children: ReactNode }> = (
+    props,
+) => {
     return <div className='pagecontainer'>{props.children}</div>;
 };

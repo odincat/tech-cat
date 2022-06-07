@@ -1,9 +1,9 @@
-import { NextComponentType } from 'next';
+import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
-const Navbar: NextComponentType = () => {
+const Navbar: NextComponent = () => {
     const menuItems = [
         {
             name: 'Home',
@@ -23,7 +23,8 @@ const Navbar: NextComponentType = () => {
         target: string;
         displayName: string;
     }
-    const NavLink = ({ target, displayName }: NavLinkArgs) => {
+
+    const NavLink: NextComponent<NavLinkArgs> = ({ target, displayName }) => {
         const router = useRouter();
 
         return (
@@ -35,7 +36,7 @@ const Navbar: NextComponentType = () => {
         );
     };
 
-    const HamburgerMenu = () => {
+    const HamburgerMenu: NextComponent = () => {
         const [open, setOpen] = useState(false);
 
         const handleButtonClick = () => {
