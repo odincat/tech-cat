@@ -2,6 +2,17 @@ import { ThemeProvider, useTheme } from "@emotion/react";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { darkTheme, lightTheme, Theme } from "./Theme";
 
+interface ThemeContextProps {
+    currentTheme: Themes;
+    setTheme: React.Dispatch<React.SetStateAction<Themes>>;
+}
+
+const initialThemeContextData: ThemeContextProps = { currentTheme: 'dark', setTheme: () => {} }
+
+const ThemeContext = createContext(initialThemeContextData);
+
+export const useThemeManager = () => useContext(ThemeContext);
+
 export type Themes = 'dark' | 'light';
 
 const useThemeHelper = () => {
@@ -47,12 +58,13 @@ const useThemeHelper = () => {
 
     return {
         theme,
+        setTheme,
         themeHasLoaded
     };
 }
 
 export const TechCatThemeProvider = (props: { children: ReactNode }) => {
-    const { theme, themeHasLoaded } = useThemeHelper();
+    const { theme, setTheme, themeHasLoaded } = useThemeHelper();
 
     const getTheme = (theme: Themes) => {
         switch (theme) {
@@ -67,9 +79,11 @@ export const TechCatThemeProvider = (props: { children: ReactNode }) => {
     if (!themeHasLoaded) return null;
 
     return (
-        <ThemeProvider theme={getTheme(theme)}>
-            { props.children }
-        </ThemeProvider>
+        <ThemeContext.Provider value={{ currentTheme: theme, setTheme: setTheme }}>
+            <ThemeProvider theme={getTheme(theme)}>
+                { props.children }
+            </ThemeProvider>
+        </ThemeContext.Provider>
     );
 }
 
