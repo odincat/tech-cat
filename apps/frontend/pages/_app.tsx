@@ -30,7 +30,8 @@ const MyApp = ({ Component, pageProps }: AppProperties) => {
             <TechCatThemeProvider>
                 <PageContainer>
                     <UserContext.Provider value={userData}>
-                        <IconContext.Provider value={{ className: 'global-icon' }}>
+                        <IconContext.Provider
+                            value={{ className: 'global-icon' }}>
                             <Header />
 
                             <Content>

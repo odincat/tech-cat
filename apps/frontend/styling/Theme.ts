@@ -1,4 +1,4 @@
-import { colors } from "./variables";
+import { colors } from './variables';
 
 export interface Theme {
     background: string;
@@ -19,7 +19,7 @@ export const darkTheme: Theme = {
     githubLink: '#f0f6fc',
     hamburgerBackground: '#262626cc',
     headerBackground: '#2626264d',
-    text: colors.white
+    text: colors.white,
 };
 
 export const lightTheme: Theme = {
@@ -30,5 +30,5 @@ export const lightTheme: Theme = {
     githubLink: '#15181e',
     hamburgerBackground: '#ffffffcc',
     headerBackground: '#ffffff26',
-    text: colors.black
+    text: colors.black,
 };

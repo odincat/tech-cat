@@ -1,13 +1,13 @@
-import { ThemeProvider, useTheme } from "@emotion/react";
-import { ReactNode, useEffect, useState } from "react";
-import { darkTheme, lightTheme, Theme } from "./Theme";
-import {GLOBAL_theme, useStore} from "@lib/store";
+import { ThemeProvider, useTheme } from '@emotion/react';
+import { ReactNode, useEffect, useState } from 'react';
+import { darkTheme, lightTheme, Theme } from './Theme';
+import { GLOBAL_theme, useStore } from '@lib/store';
 
 export type Themes = 'dark' | 'light' | '';
 
 const useThemeHelper = () => {
     const theme = useStore(GLOBAL_theme);
-    
+
     const [themeHasLoaded, setThemeHasLoaded] = useState<boolean>(false);
 
     const parseSavedTheme = (input: string) => {
@@ -31,8 +31,12 @@ const useThemeHelper = () => {
     useEffect(() => {
         const getStoredTheme = localStorage.getItem('theme');
 
-        if(!getStoredTheme) {
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches || window.matchMedia('(prefers-color-scheme: no-preference)').matches) {
+        if (!getStoredTheme) {
+            if (
+                window.matchMedia('(prefers-color-scheme: dark)').matches ||
+                window.matchMedia('(prefers-color-scheme: no-preference)')
+                    .matches
+            ) {
                 theme.set('dark');
                 setThemeHasLoaded(true);
                 return;
@@ -49,9 +53,9 @@ const useThemeHelper = () => {
 
     return {
         theme,
-        themeHasLoaded
+        themeHasLoaded,
     };
-}
+};
 
 export const TechCatThemeProvider = (props: { children: ReactNode }) => {
     const { theme, themeHasLoaded } = useThemeHelper();
@@ -70,11 +74,11 @@ export const TechCatThemeProvider = (props: { children: ReactNode }) => {
 
     return (
         <ThemeProvider theme={() => loadTheme(theme.get())}>
-            { props.children }
+            {props.children}
         </ThemeProvider>
     );
-}
+};
 
 export const useThemed = () => {
     return useTheme() as Theme;
-}
+};

@@ -37,7 +37,6 @@ export const Header: NextComponent = () => {
  * @returns JSX
  */
 export const Content: NextComponent<{ children: ReactNode }> = (props) => {
-
     const styledContent = css`
         flex: 1;
         margin-inline: 10%;
@@ -132,18 +131,10 @@ export const Footer: NextComponent = () => {
                 </a>
             </div>
             <div css={styledLinks}>
-                <a
-                    href='/privacy'>
-                    Datenschutzerklärung
-                </a>
-                <a
-                    href='/about-site'>
-                    Über diese Seite
-                </a>
+                <a href='/privacy'>Datenschutzerklärung</a>
+                <a href='/about-site'>Über diese Seite</a>
             </div>
-            <div css={styledCopyright}>
-                &copy;{currentYear} TechCat
-            </div>
+            <div css={styledCopyright}>&copy;{currentYear} TechCat</div>
             <ToggleThemeSwitch />
         </footer>
     );
@@ -168,5 +159,9 @@ export const PageContainer: NextComponent<{ children: ReactNode }> = (
         transition: background 300ms ease-in-out, color 700ms ease-in-out;
     `;
 
-    return <div className='pagecontainer' css={styledPageContainer}>{props.children}</div>;
+    return (
+        <div className='pagecontainer' css={styledPageContainer}>
+            {props.children}
+        </div>
+    );
 };

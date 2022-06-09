@@ -10,24 +10,24 @@ const ToggleThemeSwitch: NextComponent = () => {
 
     const setTheme = (newTheme: Themes, save: boolean) => {
         theme.set(newTheme);
-    
+
         if (!save) return;
         if (localStorage.getItem('theme') === newTheme) {
             return;
         }
-    
+
         localStorage.setItem('theme', newTheme);
     };
 
     const handleButtonClick = () => {
         switch (theme.get()) {
             case 'dark':
-                setTheme('light', true)
-            break;
+                setTheme('light', true);
+                break;
 
             case 'light':
-                setTheme('dark', true)
-            break;
+                setTheme('dark', true);
+                break;
         }
     };
 
@@ -36,11 +36,13 @@ const ToggleThemeSwitch: NextComponent = () => {
         margin-left: 0.5rem;
         border-radius: 50%;
         transition: all 150ms;
-        ${theme.get() === 'light' && css`
+        ${theme.get() === 'light' &&
+        css`
             background-color: #d4d4d8;
             color: #3b82f6;
         `}
-        ${theme.get() === 'dark' && css`
+        ${theme.get() === 'dark' &&
+        css`
             background-color: #3f3f46;
             color: ${colors.yellow};
         `}
@@ -53,8 +55,12 @@ const ToggleThemeSwitch: NextComponent = () => {
                     title='Switch between light and dark appearance'
                     onClick={handleButtonClick}
                     css={styledThemeSwitch}>
-                    {theme.get() === 'light' && ( <FaMoon style={{ display: 'block' }} /> )}
-                    {theme.get() === 'dark' && ( <FaSun style={{ display: 'block' }} /> )}
+                    {theme.get() === 'light' && (
+                        <FaMoon style={{ display: 'block' }} />
+                    )}
+                    {theme.get() === 'dark' && (
+                        <FaSun style={{ display: 'block' }} />
+                    )}
                 </button>
             )}
         </>

@@ -69,19 +69,18 @@ const Navbar: NextComponent = () => {
                 visibility: hidden;
                 transition: all 300ms;
 
-                
                 &.opened {
                     opacity: 1;
                     visibility: visible;
                 }
 
                 a {
-                   padding: 0.5rem 1rem;
+                    padding: 0.5rem 1rem;
 
-                   &.active {
-                    text-decoration: underline;
-                    color: ${colors.green};
-                   }
+                    &.active {
+                        text-decoration: underline;
+                        color: ${colors.green};
+                    }
                 }
             }
         `;
@@ -124,12 +123,12 @@ const Navbar: NextComponent = () => {
         display: flex;
         align-items: center;
         cursor: pointer;
-        
+
         .logo {
             margin-right: 0.5rem;
             max-width: 50px;
         }
-        
+
         .branding {
             user-select: none;
             font-weight: bolder;
@@ -144,9 +143,15 @@ const Navbar: NextComponent = () => {
             animation: branding-background 21s ease infinite;
 
             @keyframes branding-background {
-                0%{ background-position:100% 0% }
-                50%{ background-position:0% 100% }
-                100%{ background-position:100% 0% }
+                0% {
+                    background-position: 100% 0%;
+                }
+                50% {
+                    background-position: 0% 100%;
+                }
+                100% {
+                    background-position: 100% 0%;
+                }
             }
         }
     `;
@@ -164,8 +169,8 @@ const Navbar: NextComponent = () => {
                 margin-right: 0.7rem;
             }
 
-            &::before{
-                content: " ";
+            &::before {
+                content: ' ';
                 position: absolute;
                 height: 1.5px;
                 bottom: 0;
@@ -176,10 +181,10 @@ const Navbar: NextComponent = () => {
             }
 
             @media (hover: hover) and (pointer: fine) {
-                &:hover::before{
-                left: 0;
-                right: auto;
-                width: 100%;
+                &:hover::before {
+                    left: 0;
+                    right: auto;
+                    width: 100%;
                 }
             }
 

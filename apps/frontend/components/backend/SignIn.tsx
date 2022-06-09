@@ -10,8 +10,7 @@ const SignIn: NextComponent = () => {
 
     return (
         <>
-            <button
-                onClick={signInWithGoogle}>
+            <button onClick={signInWithGoogle}>
                 <FaGoogle /> Login with Google
             </button>
         </>

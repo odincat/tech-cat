@@ -6,7 +6,7 @@ import { useThemed } from '@styling/ThemeProvider';
 import { colors } from '@styling/variables';
 import type { NextPage } from 'next';
 import { useContext } from 'react';
-import {GLOBAL_theme, useStore} from "@lib/store";
+import { GLOBAL_theme, useStore } from '@lib/store';
 
 const Home: NextPage = () => {
     const { user } = useContext(UserContext);

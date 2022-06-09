@@ -6,6 +6,6 @@ module.exports = withTM({
     swcMinify: true,
     swcLoader: true,
     compiler: {
-        emotion: true
-    }
+        emotion: true,
+    },
 });
