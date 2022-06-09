@@ -1,22 +1,13 @@
 import { ThemeProvider, useTheme } from "@emotion/react";
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { darkTheme, lightTheme, Theme } from "./Theme";
+import {GLOBAL_theme, useStore} from "@lib/store";
 
-interface ThemeContextProps {
-    currentTheme: Themes;
-    setTheme: React.Dispatch<React.SetStateAction<Themes>>;
-}
-
-const initialThemeContextData: ThemeContextProps = { currentTheme: 'dark', setTheme: () => {} }
-
-const ThemeContext = createContext(initialThemeContextData);
-
-export const useThemeManager = () => useContext(ThemeContext);
-
-export type Themes = 'dark' | 'light';
+export type Themes = 'dark' | 'light' | '';
 
 const useThemeHelper = () => {
-    const [theme, setTheme] = useState<Themes>('dark');
+    const theme = useStore(GLOBAL_theme);
+    
     const [themeHasLoaded, setThemeHasLoaded] = useState<boolean>(false);
 
     const parseSavedTheme = (input: string) => {
@@ -42,31 +33,30 @@ const useThemeHelper = () => {
 
         if(!getStoredTheme) {
             if (window.matchMedia('(prefers-color-scheme: dark)').matches || window.matchMedia('(prefers-color-scheme: no-preference)').matches) {
-                setTheme('dark');
+                theme.set('dark');
                 setThemeHasLoaded(true);
                 return;
             } else {
-                setTheme('light');
+                theme.set('light');
                 setThemeHasLoaded(true);
                 return;
             }
         }
 
-        setTheme(parseSavedTheme(getStoredTheme));
+        theme.set(parseSavedTheme(getStoredTheme));
         setThemeHasLoaded(true);
     }, []);
 
     return {
         theme,
-        setTheme,
         themeHasLoaded
     };
 }
 
 export const TechCatThemeProvider = (props: { children: ReactNode }) => {
-    const { theme, setTheme, themeHasLoaded } = useThemeHelper();
+    const { theme, themeHasLoaded } = useThemeHelper();
 
-    const getTheme = (theme: Themes) => {
+    const loadTheme = (theme: Themes) => {
         switch (theme) {
             case 'dark':
                 return darkTheme;
@@ -74,16 +64,14 @@ export const TechCatThemeProvider = (props: { children: ReactNode }) => {
             case 'light':
                 return lightTheme;
         }
-    }
+    };
 
     if (!themeHasLoaded) return null;
 
     return (
-        <ThemeContext.Provider value={{ currentTheme: theme, setTheme: setTheme }}>
-            <ThemeProvider theme={getTheme(theme)}>
-                { props.children }
-            </ThemeProvider>
-        </ThemeContext.Provider>
+        <ThemeProvider theme={() => loadTheme(theme.get())}>
+            { props.children }
+        </ThemeProvider>
     );
 }
 

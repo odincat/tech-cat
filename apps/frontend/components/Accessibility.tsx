@@ -1,10 +1,26 @@
+import { css } from '@emotion/react';
 import { NextComponent } from '@lib/types';
+import { colors } from '@styling/variables';
 
 export const SkipNavigation: NextComponent = () => {
+    const styledSkipNavigationButton = css`
+        position: absolute;
+        transform: translateX(-200%) translateY(-200%);
+        padding: 0.5rem;
+        margin-top: 0.5rem;
+        margin-left: 0.5rem;
+        border-radius: 4px;
+        transition: all 100ms ease-in;
+        background-color: ${colors.gray};
+        color: ${colors.white};
+
+        &:focus {
+            transform: translateX(0) translateY(0);
+        }
+    `;
+
     return (
-        <a
-            className='absolute translate-y-[-200%] translate-x-[-200%] bg-black text-white p-2 mt-2 ml-2 rounded-[4px] transition-all duration-100 ease-in focus:translate-y-[0] focus:translate-x-[0]'
-            href='#main-content'>
+        <a css={styledSkipNavigationButton} href='#main-content'>
             Skip Navigation
         </a>
     );
