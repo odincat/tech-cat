@@ -11,7 +11,6 @@ const SignIn: NextComponent = () => {
     return (
         <>
             <button
-                className='btn-fancy m-auto block'
                 onClick={signInWithGoogle}>
                 <FaGoogle /> Login with Google
             </button>

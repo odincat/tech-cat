@@ -2,11 +2,11 @@
 
 ## Technologies
 
-Project: [Turborepo](https://turborepo.org/)
+Project Management (monorepo): [Turborepo](https://turborepo.org/)
 
 Actual Backend (Database + Auth): [Firebase](https://firebase.google.com/)
 
-Frontend: [NextJS](https://nextjs.org/), [Tailwind](https://tailwindcss.com/) (not used as heavily as it's supposed to)
+Frontend: [NextJS](https://nextjs.org/), [Emotion](https://emotion.sh/docs/introduction)
 
 Graphical Blog backend: [NextJS](https://nextjs.org/), [Mantine](https://mantine.dev/)
 
