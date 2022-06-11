@@ -7,6 +7,7 @@ import { colors } from '@styling/variables';
 import type { NextPage } from 'next';
 import { useContext } from 'react';
 import { GLOBAL_theme, useStore } from '@lib/store';
+import { TButton } from '@components/ui/Button';
 
 const Home: NextPage = () => {
     const { user } = useContext(UserContext);
@@ -20,6 +21,9 @@ const Home: NextPage = () => {
             <MetatagConfig defaultTitleFormat={true} title='Home' />
             <h1>Hello world!</h1>
             <SignIn />
+            <TButton color='blue' href='https://www.google.com/'>
+                HI
+            </TButton>
         </div>
     );
 };
