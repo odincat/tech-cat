@@ -7,7 +7,7 @@ import { advancedConsoleLog } from 'advanced-cl';
 import { useEffect } from 'react';
 import utils from 'pacman/utils';
 import { NextComponentType } from 'next';
-import { TechCatThemeProvider } from '@styling/ThemeProvider';
+import { injectGlobalStyles } from '@styling/global';
 
 export const logger = new advancedConsoleLog('main');
 
@@ -17,6 +17,8 @@ interface AppProperties {
 }
 
 const MyApp = ({ Component, pageProps }: AppProperties) => {
+    injectGlobalStyles();
+
     const userData: userDataProperties = useUserData();
 
     useEffect(() => {
@@ -27,22 +29,19 @@ const MyApp = ({ Component, pageProps }: AppProperties) => {
 
     return (
         <>
-            <TechCatThemeProvider>
-                <PageContainer>
-                    <UserContext.Provider value={userData}>
-                        <IconContext.Provider
-                            value={{ className: 'global-icon' }}>
-                            <Header />
+            <PageContainer>
+                <UserContext.Provider value={userData}>
+                    <IconContext.Provider value={{ className: 'global-icon' }}>
+                        <Header />
 
-                            <Content>
-                                <Component {...pageProps} />
-                            </Content>
+                        <Content>
+                            <Component {...pageProps} />
+                        </Content>
 
-                            <Footer />
-                        </IconContext.Provider>
-                    </UserContext.Provider>
-                </PageContainer>
-            </TechCatThemeProvider>
+                        <Footer />
+                    </IconContext.Provider>
+                </UserContext.Provider>
+            </PageContainer>
         </>
     );
 };

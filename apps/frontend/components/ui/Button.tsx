@@ -1,9 +1,6 @@
-import { css } from "@emotion/react";
-import { NextComponent } from "@lib/types";
-import { useThemed } from "@styling/ThemeProvider";
-import { colors } from "@styling/variables";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { NextComponent } from '@lib/types';
+import { useRouter } from 'next/router';
+import { styled } from 'stitches.config';
 
 type Colors = 'primary' | 'secondary' | 'blue' | 'green';
 
@@ -14,55 +11,63 @@ interface Button extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     href?: string;
 }
 
-export const TButton: NextComponent<Button> = ({ color = 'primary', compact = false, icon = null, href = '', ...props}) => {
+export const TButton: NextComponent<Button> = ({
+    color = 'primary',
+    compact = false,
+    icon = null,
+    href = '',
+    ...props
+}) => {
     const router = useRouter();
 
     const openLink = () => {
         if (href === '') return;
 
-        if(href.startsWith('/')) {
+        if (href.startsWith('/')) {
             router.push(href);
         } else {
             window.open(href, '_blank', 'noopener,noreferrer');
         }
-    }
-
-    const theme = useThemed();
-
-    const getBackgroundColor = () => {
-        switch (color) {
-            case 'primary':
-                return theme.buttonBackground;
-            case 'secondary':
-                return theme.buttonBackground;
-            case 'blue':
-                return colors.blue;
-            case 'green':
-                return colors.green;
-        }
     };
 
-    const styledButton = css`
-        background-color: ${getBackgroundColor()};
-        border-radius: 3px;
-        position: relative;
-        cursor: pointer;
-        color: white;
-        
-        ${compact ? 'padding: 0.1em 0.5em;' : 'padding: 0.3em 1em;'}
-        
-        &:hover {
-            text-decoration: none;
-        }
-
-        &:disabled {
-            cursor: not-allowed;
-        }
-    `;
+    const Button = styled('button', {
+        backgroundColor: '$',
+        borderRadius: '3px',
+        position: 'relative',
+        cursor: 'pointer',
+        color: 'white',
+        variants: {
+            compact: {
+                true: {
+                    padding: '0.1em 0.5em',
+                },
+                false: {
+                    padding: '0.3em 1em',
+                },
+            },
+            color: {
+                primary: {
+                    backgroundColor: '$buttonBackground',
+                },
+                secondary: {
+                    backgroundColor: '$buttonBackground',
+                },
+                blue: {
+                    backgroundColor: '$blue',
+                },
+                green: {
+                    backgroundColor: '$green',
+                },
+            },
+        },
+        '&:disabled': {
+            cursor: 'not-allowed',
+        },
+    });
 
     return (
-        <button onClick={openLink} css={styledButton} {...props}>
-            { props.children }
-        </button>
+        <Button onClick={openLink} compact={compact} color={color} {...props}>
+            {props.children}
+        </Button>
     );
 };

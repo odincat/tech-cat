@@ -1,34 +1,96 @@
 import { SkipNavigation } from './Accessibility';
-import Navbar from './Navbar';
-import ToggleThemeSwitch from './ToggleThemeSwitch';
+import Navbar from './navbar/Navbar';
+import ThemeSwitcher from './ThemeSwitcher';
 import { FaGithubSquare, FaTwitterSquare } from 'react-icons/fa';
 import { NextComponent } from '@lib/types';
 import { ReactNode } from 'react';
-import { css } from '@emotion/react';
-import { useThemed } from '@styling/ThemeProvider';
-import { colors, fonts, responsive } from '@styling/variables';
+import { styled } from 'stitches.config';
 
 /*
     This file is supposed to be edited. Rather change stuff in here than in _app.tsx.
 */
+
+const PageContent = styled('div', {
+    flex: '1',
+    marginInline: '10%',
+    paddingTop: '2rem',
+});
+
+const PageHeader = styled('header', {
+    backgroundColor: '$headerBackground',
+    backdropFilter: 'blur(5px)',
+});
+
+const PageFooter = {
+    Container: styled('footer', {
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '$footerBackground',
+        padding: '0.5rem 0.75rem',
+        width: '100%',
+    }),
+    SocialLinkContainer: styled('div', {
+        marginRight: '16px',
+    }),
+    SocialLink: styled('a', {
+        transition: 'all 200ms ease-in-out',
+        fontSize: '1.5rem',
+        '&:hover': {
+            filter: 'brightness(80%)',
+        },
+        '&:not(:last-child)': {
+            marginRight: '0.5rem',
+        },
+        variants: {
+            network: {
+                github: {
+                    color: '$githubLink',
+                },
+                twitter: {
+                    color: '#179cf0',
+                },
+            },
+        },
+    }),
+    Link: styled('a', {
+        color: '$blue',
+        marginRight: '1rem',
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'underline',
+        },
+        '@small': {
+            display: 'block',
+        },
+    }),
+    Copyright: styled('div', {
+        marginLeft: 'auto',
+        marginRight: '0.5rem',
+        alignSelf: 'center',
+        textAlign: 'right',
+    }),
+};
+
+const PageWrapper = styled('div', {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
+    fontFamily: '$primary',
+    color: '$text',
+    backgroundColor: '$background',
+    transition: 'background 300ms ease-in-out, color 700ms ease-in-out',
+});
 
 /**
  * Sets the content and / or logic of the 'header'.
  * @returns JSX
  */
 export const Header: NextComponent = () => {
-    const theme = useThemed();
-
-    const styledHeader = css`
-        background-color: ${theme.headerBackground};
-        backdrop-filter: blur(5px);
-    `;
-
     return (
-        <header className='header' css={styledHeader}>
+        <PageHeader>
             <SkipNavigation />
             <Navbar />
-        </header>
+        </PageHeader>
     );
 };
 
@@ -37,16 +99,10 @@ export const Header: NextComponent = () => {
  * @returns JSX
  */
 export const Content: NextComponent<{ children: ReactNode }> = (props) => {
-    const styledContent = css`
-        flex: 1;
-        margin-inline: 10%;
-        padding-top: 2rem;
-    `;
-
     return (
-        <div className='content' css={styledContent} id='main-content'>
+        <PageContent className='content' id='main-content'>
             {props.children}
-        </div>
+        </PageContent>
     );
 };
 
@@ -57,86 +113,37 @@ export const Content: NextComponent<{ children: ReactNode }> = (props) => {
 export const Footer: NextComponent = () => {
     const currentYear: number = new Date().getFullYear();
 
-    const theme = useThemed();
-
-    const styledFooter = css`
-        display: flex;
-        align-items: center;
-        background-color: ${theme.footerBackground};
-        padding: 0.5rem 0.75rem;
-        width: 100%;
-    `;
-
-    const styledSocialLinks = css`
-        margin-right: 16px;
-
-        a {
-            transition: all 200ms ease-in-out;
-            font-size: 1.5rem;
-
-            &:hover {
-                filter: brightness(80%);
-            }
-        }
-
-        .github {
-            margin-right: 0.5rem;
-            color: ${theme.githubLink};
-        }
-
-        .twitter {
-            color: #179cf0;
-        }
-    `;
-
-    const styledLinks = css`
-        a {
-            color: ${colors.blue};
-            margin-right: 1rem;
-            text-decoration: none;
-
-            &:hover {
-                text-decoration: underline;
-            }
-
-            ${responsive('small')} {
-                display: block;
-            }
-        }
-    `;
-
-    const styledCopyright = css`
-        margin-left: auto;
-        margin-right: 0.5rem;
-        align-self: center;
-        text-align: right;
-    `;
-
     return (
-        <footer className='footer' css={styledFooter}>
-            <div className='social-links' css={styledSocialLinks}>
-                <a
+        <PageFooter.Container>
+            <PageFooter.SocialLinkContainer>
+                <PageFooter.SocialLink
                     href='https://github.com/odincat'
                     target='_blank'
                     rel='noreferrer'
-                    className='github'>
+                    network='github'>
                     <FaGithubSquare />
-                </a>
-                <a
+                </PageFooter.SocialLink>
+                <PageFooter.SocialLink
                     href='https://twitter.com/theodincat'
                     target='_blank'
                     rel='noreferrer'
-                    className='twitter'>
+                    network='twitter'>
                     <FaTwitterSquare />
-                </a>
+                </PageFooter.SocialLink>
+            </PageFooter.SocialLinkContainer>
+            <div>
+                <PageFooter.Link href='/privacy'>
+                    Datenschutzerklärung
+                </PageFooter.Link>
+                <PageFooter.Link href='/about-site'>
+                    Über diese Seite
+                </PageFooter.Link>
             </div>
-            <div css={styledLinks}>
-                <a href='/privacy'>Datenschutzerklärung</a>
-                <a href='/about-site'>Über diese Seite</a>
-            </div>
-            <div css={styledCopyright}>&copy;{currentYear} TechCat</div>
-            <ToggleThemeSwitch />
-        </footer>
+            <PageFooter.Copyright>
+                &copy;{currentYear} TechCat
+            </PageFooter.Copyright>
+            <ThemeSwitcher />
+        </PageFooter.Container>
     );
 };
 
@@ -147,21 +154,5 @@ export const Footer: NextComponent = () => {
 export const PageContainer: NextComponent<{ children: ReactNode }> = (
     props,
 ) => {
-    const theme = useThemed();
-
-    const styledPageContainer = css`
-        display: flex;
-        min-height: 100vh;
-        font-family: ${fonts.primary};
-        flex-direction: column;
-        color: ${theme.text};
-        background-color: ${theme.background};
-        transition: background 300ms ease-in-out, color 700ms ease-in-out;
-    `;
-
-    return (
-        <div className='pagecontainer' css={styledPageContainer}>
-            {props.children}
-        </div>
-    );
+    return <PageWrapper>{props.children}</PageWrapper>;
 };

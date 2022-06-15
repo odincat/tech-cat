@@ -16,8 +16,8 @@
     "storybook": "start-storybook -p 7003 --quiet"
   },
   "dependencies": {
-    "@emotion/react": "^11.9.0",
     "@hookstate/core": "^3.0.13",
+    "@stitches/react": "^1.2.8",
     "advanced-cl": "workspace:*",
     "firebase": "9.8.2",
     "next": "12.1.6",

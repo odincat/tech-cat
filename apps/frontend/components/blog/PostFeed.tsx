@@ -22,7 +22,7 @@ const PostFeed = () => {
                         <img src={postThumbnail} alt={postThumbnailAlt} />
                         <h3>{postTitle}</h3>
                         <p>{postExerpt}</p>
-                        <span>Veröffentlich am {postCreatedAt}</span>
+                        <span>sad</span>
                     </footer>
                 </div>
             </>
