@@ -1,5 +1,5 @@
 import { NextComponent } from '@lib/types';
-import { styled } from 'stitches.config';
+import { styled } from '@stitches';
 
 export const SkipNavigation: NextComponent = () => {
     const SkipNavigationLink = styled('a', {

@@ -1,4 +1,4 @@
-import { globalCss } from 'stitches.config';
+import { globalCss } from '@stitches';
 import { colors } from './variables';
 
 export type Themes = 'dark' | 'light' | '';

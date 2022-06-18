@@ -4,7 +4,7 @@ import ThemeSwitcher from './ThemeSwitcher';
 import { FaGithubSquare, FaTwitterSquare } from 'react-icons/fa';
 import { NextComponent } from '@lib/types';
 import { ReactNode } from 'react';
-import { styled } from 'stitches.config';
+import { styled } from '@stitches';
 
 /*
     This file is supposed to be edited. Rather change stuff in here than in _app.tsx.

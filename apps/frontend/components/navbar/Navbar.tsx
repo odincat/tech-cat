@@ -1,5 +1,5 @@
 import { NextComponent } from '@lib/types';
-import { css, keyframes, styled } from 'stitches.config';
+import { css, keyframes, styled } from '@stitches';
 import Link from 'next/link';
 import { NavLink } from './NavLink';
 import { navMenuItems } from './static';

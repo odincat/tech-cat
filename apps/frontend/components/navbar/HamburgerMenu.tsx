@@ -1,7 +1,7 @@
 import { NextComponent } from '@lib/types';
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { css, styled } from 'stitches.config';
+import { css, styled } from '@stitches';
 import { NavLink } from './NavLink';
 import { navMenuItems } from './static';
 

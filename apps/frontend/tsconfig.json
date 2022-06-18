@@ -18,6 +18,9 @@
       "@styling/*": [
         "styling/*"
       ],
+      "@stitches": [
+        "stitches.config.ts"
+      ],
       "@pages/*": [
         "pages/*"
       ]
