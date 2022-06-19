@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 import { styled } from '@stitches';
 import { TokenVariant, tokenVariants } from '@styling/tokenVariants';
-import { $$ThemeValue, VariantProps } from '@stitches/react';
+import { VariantProps } from '@stitches/react';
 
 const Button = styled('button', {
     backgroundColor: '$buttonBackground',
@@ -79,10 +79,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     compact?: boolean;
     href?: string;
     leftIcon?: ReactNode;
-    leftIconColor?: VariantProps<typeof Icon>;
+    leftIconColor?: TokenVariant<'colors'>;
     noEffect?: boolean;
     rightIcon?: ReactNode;
-    rightIconColor?: string;
+    rightIconColor?: TokenVariant<'colors'>;
 }
 
 export const TButton: NextComponent<ButtonProps> = ({

@@ -11,6 +11,7 @@
 !.yarn/plugins
 !.yarn/sdks
 !.yarn/versions
+auto-imports.d.ts
 .pnp.*
 
 # testing

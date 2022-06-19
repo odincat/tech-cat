@@ -5,7 +5,15 @@ module.exports = withTM({
     reactStrictMode: true,
     swcMinify: true,
     swcLoader: true,
-    compiler: {
-        emotion: true,
-    },
+    webpack(config) {
+        config.plugins.push(require('unplugin-auto-import/webpack')({
+            include: [/\.[tj]sx?$/],
+            dts: true,
+            imports: [
+                'react'
+            ]
+        }))
+
+        return config;
+    }
 });

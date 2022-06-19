@@ -1,6 +1,5 @@
 import { NextComponent } from '@lib/types';
 import { Themes } from '@styling/global';
-import { useEffect, useState } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { styled } from '@stitches';
 
