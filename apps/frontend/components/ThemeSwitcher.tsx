@@ -2,6 +2,7 @@ import { NextComponent } from '@lib/types';
 import { Themes } from '@styling/global';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import { styled } from '@stitches';
+import { useEffect, useState } from 'react';
 
 const ThemeSwitchButton = styled('button', {
     padding: '0.5rem',

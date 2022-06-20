@@ -20,7 +20,7 @@ import {
 } from 'firebase/firestore';
 import { useRouter } from 'next/router';
 import fire from 'pacman/firebase';
-import { createRef, useEffect, useRef, useState } from 'react';
+import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 import {
     RiCheckFill,
     RiDeleteBin2Fill,
@@ -34,14 +34,20 @@ import { PostProperties } from '../postitem/PostItem';
 import utils from 'pacman/utils';
 
 import styles from './PostEditor.module.scss';
-import RichTextEditor from './RichTextEditor';
 import {
     getDownloadURL,
     ref,
     uploadBytes,
     uploadBytesResumable,
 } from 'firebase/storage';
-import { UserProfile } from 'firebase/auth';
+
+import dynamic from 'next/dynamic';
+
+const RichTextEditor = dynamic(() => import('@mantine/rte'), {
+    ssr: false,
+    loading: () => null,
+});
+
 
 interface HookProps {
     editingPost: PostProperties | undefined;
@@ -71,6 +77,7 @@ const PostEditor = ({ post }: { post: PostProperties | undefined }) => {
 
         await updateDoc(postRef, {
             title: title,
+            content: content,
             slug: slug,
             author: author,
             tags: tags,
@@ -136,7 +143,7 @@ const useMain = ({
         setContent(editingPost?.content);
     }, [editingPost]);
 
-    const handleImageUpload = (file: File): Promise<string> =>
+    const handleImageUpload = useCallback((file: File): Promise<string> =>
         new Promise((resolve, reject) => {
             const currentYear = new Date().getFullYear();
             const currentTimestamp = Date.now();
@@ -150,13 +157,14 @@ const useMain = ({
                 .then(() => {
                     getDownloadURL(storageRef).then((url) => {
                         console.log(url);
-                        resolve(url.toString());
+                        resolve(url);
+                        return (url);
                     });
                 })
                 .catch(() => {
                     reject(new Error('File upload failed'));
                 });
-        });
+        }), []);
 
     return {
         content,

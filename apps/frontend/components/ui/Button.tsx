@@ -11,6 +11,7 @@ const Button = styled('button', {
     position: 'relative',
     cursor: 'pointer',
     color: 'white',
+    fontFamily: '$primary',
 
     variants: {
         compact: {
@@ -90,10 +91,10 @@ export const TButton: NextComponent<ButtonProps> = ({
     compact = false,
     href = '',
     leftIcon = null,
-    leftIconColor = '',
+    leftIconColor,
     noEffect = false,
     rightIcon = null,
-    rightIconColor = '',
+    rightIconColor,
     ...props
 }) => {
     const router = useRouter();

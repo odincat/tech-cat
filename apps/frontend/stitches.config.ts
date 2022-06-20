@@ -13,17 +13,18 @@ export const {
 } = createStitches({
     theme: {
         colors: {
-            background: 'var(--theme-background)',
-            buttonBackground: 'var(--theme-buttonBackground)',
-            buttonText: `var(--theme-buttonText)`,
-            footerBackground: `var(--theme-footerBackground)`,
-            githubLink: 'var(--theme-githubLink, #f0f6fc)',
-            hamburgerBackground: 'var(--theme-hamburgerBackground)',
-            headerBackground: 'var(--theme-headerBackground)',
-            text: `var(--theme-text)`,
+            pageBackground: 'var(--colors-background)',
+            buttonBackground: 'var(--colors-buttonBackground)',
+            buttonText: `var(--colors-buttonText)`,
+            footerBackground: `var(--colors-footerBackground)`,
+            githubLink: 'var(--colors-githubLink, #f0f6fc)',
+            hamburgerBackground: 'var(--colors-hamburgerBackground)',
+            headerBackground: 'var(--colors-headerBackground)',
+            text: `var(--colors-text)`,
 
             black: '#000000',
             blue: '#1597E5',
+            linkBlue: '#3b82f6',
             gray: '#212121',
             green: '#22c55e',
             white: '#fefffe',

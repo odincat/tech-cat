@@ -13,7 +13,7 @@ const Home: NextPage = () => {
             <br></br>
             <br>
             </br>
-            <TButton color='blue' leftIcon={<FaTwitterSquare />} leftIconColor='' rightIcon={<FaTwitterSquare />}>
+            <TButton color='blue' leftIcon={<FaTwitterSquare />} leftIconColor='yellow' rightIcon={<FaTwitterSquare />}>
                 asdasd
             </TButton>
             <br></br>

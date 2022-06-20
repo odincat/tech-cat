@@ -77,7 +77,7 @@ const PageWrapper = styled('div', {
     minHeight: '100vh',
     fontFamily: '$primary',
     color: '$text',
-    backgroundColor: '$background',
+    backgroundColor: '$pageBackground',
     transition: 'background 300ms ease-in-out, color 700ms ease-in-out',
 });
 

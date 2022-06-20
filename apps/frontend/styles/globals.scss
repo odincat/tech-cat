@@ -1,6 +1,9 @@
 @use 'reset';
 
-@import 'fonts';
+// @import "~@fontsource/roboto/index.css";
+// @import "~@fontsource/maven-pro/700.css";
+
+// @import 'fonts';
 @import 'utils';
 
 $font-face-primary: 'Roboto', sans-serif;
@@ -39,7 +42,7 @@ body {
     }
 
     a {
-      color: rgb(59 130 246);
+      color: #3b82f6;
       text-decoration: none;
       transition: all 200ms ease-in-out;
 
@@ -47,12 +50,4 @@ body {
         text-decoration: underline;
       }
     }
-}
-
-// Icons
-.global-icon {
-  display: inline-block;
-  vertical-align: -3px;
-  line-height: 1em;
-  height: 1em;
 }

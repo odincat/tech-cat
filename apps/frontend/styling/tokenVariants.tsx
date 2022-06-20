@@ -1,11 +1,12 @@
-import { CSS, theme, css, config as stitchesConfig } from "@stitches";
+import { theme, css } from "@stitches";
+import type { CSS, config as stitchesConfig } from "@stitches";
 import type * as Stitches from '@stitches/react';
 
 // https://github.com/stitchesjs/stitches/issues/314
 
 export const tokenVariants = <T extends keyof typeof theme>(config: {
     token: T;
-    css: (value: Stitches.ScaleValue<T, typeof stitchesConfig> | string) => CSS;
+    css: (value: Stitches.ScaleValue<T, typeof stitchesConfig>) => CSS;
   }): Record<keyof typeof theme[T], CSS> =>
     Object.entries(theme[config.token]).reduce(
       (previousValue, [key, value]) => ({
@@ -16,4 +17,4 @@ export const tokenVariants = <T extends keyof typeof theme>(config: {
       {} as Record<keyof typeof theme[T], CSS>
 );
 
-export type TokenVariant<T extends keyof typeof theme> = T;
+export type TokenVariant<T extends keyof typeof theme> = keyof typeof theme[T];
