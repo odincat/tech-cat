@@ -1,5 +1,5 @@
 import { createStitches } from '@stitches/react';
-import type * as Stitches from '@stitches/react'
+import type * as Stitches from '@stitches/react';
 
 export const {
     styled,
@@ -33,7 +33,7 @@ export const {
         fonts: {
             primary: `'Roboto', sans-serif`,
             secondary: `'Maven Pro', sans-serif`,
-        }
+        },
     },
     media: {
         small: '(max-width: 560px)',

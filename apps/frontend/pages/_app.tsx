@@ -9,6 +9,9 @@ import utils from 'pacman/utils';
 import { NextComponentType } from 'next';
 import { injectGlobalStyles } from '@styling/global';
 
+import '@fontsource/maven-pro/700.css';
+import '@fontsource/roboto/index.css';
+
 export const logger = new advancedConsoleLog('main');
 
 interface AppProperties {

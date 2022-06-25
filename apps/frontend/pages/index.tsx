@@ -11,16 +11,25 @@ const Home: NextPage = () => {
             <h1>Hello world!</h1>
             <SignIn />
             <br></br>
-            <br>
-            </br>
-            <TButton color='blue' leftIcon={<FaTwitterSquare />} leftIconColor='yellow' rightIcon={<FaTwitterSquare />}>
+            <br></br>
+            <TButton
+                color='blue'
+>
                 asdasd
             </TButton>
             <br></br>
             <br />
-            <TButton color='blue' href='https://www.google.com/' compact>
+            <TButton
+                disabled
+                color='blue'
+                href='https://www.google.com/'
+                compact
+                leftIcon={<FaTwitterSquare />}
+                leftIconColor='yellow'
+                rightIcon={<FaTwitterSquare />}>
                 HI
             </TButton>
+            <a href='#dsa'>sdads</a>
         </div>
     );
 };

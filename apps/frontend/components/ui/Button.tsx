@@ -1,9 +1,11 @@
 import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';
-import { ReactNode } from 'react';
-import { styled } from '@stitches';
+import { ReactNode, useEffect, useState } from 'react';
+import { css, keyframes, styled } from '@stitches';
 import { TokenVariant, tokenVariants } from '@styling/tokenVariants';
-import { VariantProps } from '@stitches/react';
+
+// Resources:
+// https://dev.to/jashgopani/windows-10-button-hover-effect-using-css-and-vanilla-js-1io4#additional-resources (amazing article)
 
 const Button = styled('button', {
     backgroundColor: '$buttonBackground',
@@ -12,7 +14,7 @@ const Button = styled('button', {
     cursor: 'pointer',
     color: 'white',
     fontFamily: '$primary',
-
+    
     variants: {
         compact: {
             true: {
@@ -31,6 +33,7 @@ const Button = styled('button', {
             },
             blue: {
                 backgroundColor: '$blue',
+                '--button-background': '$colors$blue'
             },
             green: {
                 backgroundColor: '$green',
@@ -38,44 +41,53 @@ const Button = styled('button', {
         },
         noEffect: {
             false: {
-                'transition': 'all 150ms cubic-bezier(.42,.43,1,.53)',
+                transition: 'all 150ms cubic-bezier(.42,.43,1,.53)',
+                
                 '&:hover': {
                     $$shadowColor: '$colors$buttonBackground',
                     transform: 'translateY(-0.25em)',
                     boxShadow: '0 0.5em 0.5em -0.4em inherit'
-                }
-            }
-        }
+                },
+            },
+        },
     },
     
     '&:disabled': {
         cursor: 'not-allowed',
+        pointerEvents: 'none',
+        filter: 'brightness(70%)',
+        userSelect: 'none',
+        
+        '&:hover': {
+            transform: 'translateY(0)',
+        },
     },
 });
 
 const Icon = styled('div', {
     display: 'inline',
+    pointerEvents: 'inherit',
     variants: {
         position: {
-            'left': {
-                marginRight: '0.5em'
+            left: {
+                marginRight: '0.5em',
             },
-            'right': {
-                marginLeft: '0.5em'
-            }
+            right: {
+                marginLeft: '0.5em',
+            },
         },
         iconColor: tokenVariants({
             token: 'colors',
             css: (value) => ({
-                color: value
-            })
-        })
-    }
+                color: value,
+            }),
+        }),
+    },
 });
 
 type Colors = 'primary' | 'secondary' | 'blue' | 'green';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface TButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     color?: Colors;
     compact?: boolean;
     href?: string;
@@ -86,7 +98,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     rightIconColor?: TokenVariant<'colors'>;
 }
 
-export const TButton: NextComponent<ButtonProps> = ({
+export const TButton: NextComponent<TButtonProps> = ({
     color = 'primary',
     compact = false,
     href = '',
@@ -96,7 +108,12 @@ export const TButton: NextComponent<ButtonProps> = ({
     rightIcon = null,
     rightIconColor,
     ...props
-}) => {
+}) => { 
+    const [coordinates, setCoordinates] = useState<{ x: number; y: number; }>();
+    const [isOnButton, setIsOnButton] = useState<boolean>(false);
+
+    const backgroundMagic = css({})
+
     const router = useRouter();
 
     const openLink = () => {
@@ -109,11 +126,41 @@ export const TButton: NextComponent<ButtonProps> = ({
         }
     };
 
+    const handleMouseLeave = () => {
+        setIsOnButton(false);
+    }
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setIsOnButton(true);
+
+        const rect = e.target.getBoundingClientRect();
+
+        setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    }
+
     return (
-        <Button onClick={openLink} compact={compact} color={color} noEffect={noEffect} {...props}>
-            {leftIcon && <Icon position='left' iconColor={leftIconColor}>{leftIcon}</Icon>}
-                {props.children}
-            {rightIcon && <Icon position='right' iconColor={rightIconColor}>{rightIcon}</Icon>}
+        <Button
+            onClick={openLink}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
+            compact={compact}
+            color={color}
+            noEffect={noEffect}
+            style={isOnButton ? { backgroundImage: `radial-gradient(circle at ${coordinates?.x}px ${coordinates?.y}px , rgba(255,255,255, 0.2) 10%, var(--button-background) 100% )`} : {}}
+            {...props}>
+            {leftIcon && (
+                <Icon position='left' iconColor={leftIconColor}>
+                    {leftIcon}
+                </Icon>
+            )}
+
+            {props.children}
+
+            {rightIcon && (
+                <Icon position='right' iconColor={rightIconColor}>
+                    {rightIcon}
+                </Icon>
+            )}
         </Button>
     );
 };

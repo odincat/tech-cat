@@ -48,7 +48,6 @@ const RichTextEditor = dynamic(() => import('@mantine/rte'), {
     loading: () => null,
 });
 
-
 interface HookProps {
     editingPost: PostProperties | undefined;
 }
@@ -143,28 +142,31 @@ const useMain = ({
         setContent(editingPost?.content);
     }, [editingPost]);
 
-    const handleImageUpload = useCallback((file: File): Promise<string> =>
-        new Promise((resolve, reject) => {
-            const currentYear = new Date().getFullYear();
-            const currentTimestamp = Date.now();
+    const handleImageUpload = useCallback(
+        (file: File): Promise<string> =>
+            new Promise((resolve, reject) => {
+                const currentYear = new Date().getFullYear();
+                const currentTimestamp = Date.now();
 
-            const storageRef = ref(
-                fire.useStorage(),
-                `uploads/${currentYear}/${user?.uid}/${currentTimestamp}`,
-            );
+                const storageRef = ref(
+                    fire.useStorage(),
+                    `uploads/${currentYear}/${user?.uid}/${currentTimestamp}`,
+                );
 
-            uploadBytes(storageRef, file)
-                .then(() => {
-                    getDownloadURL(storageRef).then((url) => {
-                        console.log(url);
-                        resolve(url);
-                        return (url);
+                uploadBytes(storageRef, file)
+                    .then(() => {
+                        getDownloadURL(storageRef).then((url) => {
+                            console.log(url);
+                            resolve(url);
+                            return url;
+                        });
+                    })
+                    .catch(() => {
+                        reject(new Error('File upload failed'));
                     });
-                })
-                .catch(() => {
-                    reject(new Error('File upload failed'));
-                });
-        }), []);
+            }),
+        [],
+    );
 
     return {
         content,

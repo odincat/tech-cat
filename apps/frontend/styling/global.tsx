@@ -1,9 +1,6 @@
 import { globalCss } from '@stitches';
 import { colors } from './variables';
 
-import '@fontsource/maven-pro/700.css';
-import '@fontsource/roboto/index.css'
-
 export type Themes = 'dark' | 'light' | '';
 
 export const injectGlobalStyles = globalCss({
@@ -12,25 +9,24 @@ export const injectGlobalStyles = globalCss({
         display: 'inline-block',
         verticalAlign: '-3px',
         lineHeight: '1em',
-        height: '1em'
+        height: '1em',
     },
 
-    '.content': { 
+    '.content': {
         'h1, h2, h3': {
-            'marginBottom': '1rem',
+            marginBottom: '1rem',
             fontFamily: '$secondary',
-            lineHeight: '1'
+            lineHeight: '1',
         },
 
-
-        'a': {
+        a: {
             color: '$linkBlue',
             textDecoration: 'none',
-            transition: 'all 200ms ease-in-out',
-    
+            transition: 'all 250ms ease-out',
+
             '&:hover': {
-                textDecoration: 'underline'
-            }
+                textDecoration: 'underline',
+            },
         },
     },
 
