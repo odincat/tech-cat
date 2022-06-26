@@ -40,6 +40,7 @@ class MyDocument extends Document {
                         }}></script>
                     <Main />
                     <NextScript />
+                    <div id='hamburgerPortal'></div>
                 </body>
             </Html>
         );

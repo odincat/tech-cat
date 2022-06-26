@@ -1,9 +1,10 @@
 import { NextComponent } from '@lib/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { css, styled } from '@stitches';
 import { NavLink } from './NavLink';
 import { navMenuItems } from './static';
+import { createPortal } from 'react-dom';
 
 const Mobile = {
     Menu: styled('nav', {
@@ -31,6 +32,7 @@ const Mobile = {
     }),
     SingleNavLink: css({
         padding: '0.5rem',
+        color: '$text',
         '&.active': {
             textDecoration: 'underline',
             color: '$green',
@@ -40,6 +42,11 @@ const Mobile = {
 
 export const HamburgerMenu: NextComponent = () => {
     const [open, setOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     const handleButtonClick = () => {
         setOpen(!open);
@@ -50,6 +57,7 @@ export const HamburgerMenu: NextComponent = () => {
             <button onClick={handleButtonClick} className='nav-mobile-button'>
                 {open ? <FaTimes /> : <FaBars />}
             </button>
+            {mounted ? createPortal(
             <Mobile.NavLinks className={`${open ? ' opened' : ''}`}>
                 {navMenuItems.map((entry) => (
                     <NavLink
@@ -60,7 +68,7 @@ export const HamburgerMenu: NextComponent = () => {
                         activeClassSelector={entry.activeClassSelector}
                     />
                 ))}
-            </Mobile.NavLinks>
+            </Mobile.NavLinks>, document.getElementById('hamburgerPortal') as HTMLDivElement) : ''}
         </Mobile.Menu>
     );
 };

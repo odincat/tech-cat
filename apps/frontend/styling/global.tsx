@@ -4,6 +4,11 @@ import { colors } from './variables';
 export type Themes = 'dark' | 'light' | '';
 
 export const injectGlobalStyles = globalCss({
+    body: {
+        fontFamily: '$primary',
+        fontSize: '16px',
+        color: '$text'
+    },
     // Icons
     '.global-icon': {
         display: 'inline-block',

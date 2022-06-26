@@ -19,6 +19,7 @@ const PageContent = styled('div', {
 const PageHeader = styled('header', {
     backgroundColor: '$headerBackground',
     backdropFilter: 'blur(5px)',
+    zIndex: '5'
 });
 
 const PageFooter = {
@@ -154,5 +155,5 @@ export const Footer: NextComponent = () => {
 export const PageContainer: NextComponent<{ children: ReactNode }> = (
     props,
 ) => {
-    return <PageWrapper>{props.children}</PageWrapper>;
+    return <PageWrapper>{ props.children }</PageWrapper>;
 };

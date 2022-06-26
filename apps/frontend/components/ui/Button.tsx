@@ -1,11 +1,21 @@
 import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { css, keyframes, styled } from '@stitches';
 import { TokenVariant, tokenVariants } from '@styling/tokenVariants';
 
 // Resources:
 // https://dev.to/jashgopani/windows-10-button-hover-effect-using-css-and-vanilla-js-1io4#additional-resources (amazing article)
+
+const rippleOutAnimation = keyframes({
+    '100%': {
+        top: '-12px',
+        right: '-12px',
+        bottom: '-12px',
+        left: '-12px',
+        opacity: '0'
+    }
+});
 
 const Button = styled('button', {
     backgroundColor: '$buttonBackground',
@@ -27,9 +37,11 @@ const Button = styled('button', {
         color: {
             primary: {
                 backgroundColor: '$buttonBackground',
+                '--button-background': '$colors$buttonBackground'
             },
             secondary: {
                 backgroundColor: '$buttonBackground',
+                '--button-background': '$colors$buttonBackground'
             },
             blue: {
                 backgroundColor: '$blue',
@@ -37,35 +49,61 @@ const Button = styled('button', {
             },
             green: {
                 backgroundColor: '$green',
+                '--button-background': '$colors$green'
             },
+            yellow: {
+                backgroundColor: '$yellow',
+                '--button-background': '$colors$yellow'
+            },
+            red: {
+                backgroundColor: '$red',
+                '--button-background': '$colors$red'
+            }
         },
         noEffect: {
             false: {
                 transition: 'all 150ms cubic-bezier(.42,.43,1,.53)',
                 
                 '&:hover': {
-                    $$shadowColor: '$colors$buttonBackground',
                     transform: 'translateY(-0.25em)',
-                    boxShadow: '0 0.5em 0.5em -0.4em inherit'
+                    boxShadow: '0 10px 10px -10px var(--button-background)'
                 },
+
+                '&:focus:before': {
+                    animationName: rippleOutAnimation,
+                }
             },
         },
     },
+
+    // '&:before': {
+    //     content: '',
+    //     position: 'absolute',
+    //     zIndex: '-2',
+    //     border: 'var(--button-background) solid 3px',
+    //     top: '0',
+    //     right: '0',
+    //     bottom: '0',
+    //     left: '0',
+    //     animationDuration: '1s'
+    // },
     
     '&:disabled': {
         cursor: 'not-allowed',
-        pointerEvents: 'none',
+        pointerEvents: 'auto',
         filter: 'brightness(70%)',
         userSelect: 'none',
         
         '&:hover': {
             transform: 'translateY(0)',
+            boxShadow: 'none'
         },
     },
 });
 
-const Icon = styled('div', {
+const Icon = styled('span', {
     display: 'inline',
+    position: 'relative',
     pointerEvents: 'inherit',
     variants: {
         position: {
@@ -85,7 +123,7 @@ const Icon = styled('div', {
     },
 });
 
-type Colors = 'primary' | 'secondary' | 'blue' | 'green';
+type Colors = 'primary' | 'secondary' | 'blue' | 'green' | 'yellow' | 'red';
 
 interface TButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     color?: Colors;
@@ -112,7 +150,7 @@ export const TButton: NextComponent<TButtonProps> = ({
     const [coordinates, setCoordinates] = useState<{ x: number; y: number; }>();
     const [isOnButton, setIsOnButton] = useState<boolean>(false);
 
-    const backgroundMagic = css({})
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const router = useRouter();
 
@@ -133,9 +171,12 @@ export const TButton: NextComponent<TButtonProps> = ({
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
         setIsOnButton(true);
 
-        const rect = e.target.getBoundingClientRect();
+        if(!buttonRef.current) return;
 
-        setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+        // We use the button itself, because we would get false readings due to child elements (icons)
+        const rect = buttonRef.current?.getBoundingClientRect();
+
+        setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     }
 
     return (
@@ -146,6 +187,7 @@ export const TButton: NextComponent<TButtonProps> = ({
             compact={compact}
             color={color}
             noEffect={noEffect}
+            ref={buttonRef}
             style={isOnButton ? { backgroundImage: `radial-gradient(circle at ${coordinates?.x}px ${coordinates?.y}px , rgba(255,255,255, 0.2) 10%, var(--button-background) 100% )`} : {}}
             {...props}>
             {leftIcon && (
@@ -155,7 +197,7 @@ export const TButton: NextComponent<TButtonProps> = ({
             )}
 
             {props.children}
-
+            
             {rightIcon && (
                 <Icon position='right' iconColor={rightIconColor}>
                     {rightIcon}

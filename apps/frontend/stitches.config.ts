@@ -29,6 +29,7 @@ export const {
             green: '#22c55e',
             white: '#fefffe',
             yellow: '#eab308',
+            red: '#D61C4E'
         },
         fonts: {
             primary: `'Roboto', sans-serif`,
