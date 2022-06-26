@@ -3,6 +3,11 @@ import MetatagConfig from '@components/MetatagManager';
 import type { NextPage } from 'next';
 import { TButton } from '@components/ui/Button';
 import { FaTwitterSquare } from 'react-icons/fa';
+import { CookieJar } from '@components/CookieBox';
+
+// export const getStaticProps = async () => {
+
+// }
 
 const Home: NextPage = () => {
     return (
@@ -13,7 +18,7 @@ const Home: NextPage = () => {
             <br></br>
             <br></br>
             <TButton
-                color='red' disabled>
+                color='blue' noEffect>
                 asdasd
             </TButton>
             <br></br>
@@ -28,6 +33,7 @@ const Home: NextPage = () => {
                 rightIcon={<FaTwitterSquare />}>
                 HI
             </TButton>
+            <CookieJar />
             <a href='#dsa'>sdads</a>
         </div>
     );

@@ -44,6 +44,7 @@ export const injectGlobalStyles = globalCss({
         '--colors-githubLink': '#f0f6fc',
         '--colors-hamburgerBackground': '#262626cc',
         '--colors-headerBackground': '#2626264d',
+        '--colors-cookieBoxBackground': '#111314',
         '--colors-text': colors.white,
     },
     '[data-theme=light]': {
@@ -54,6 +55,7 @@ export const injectGlobalStyles = globalCss({
         '--colors-githubLink': '#15181e',
         '--colors-hamburgerBackground': '#ffffffcc',
         '--colors-headerBackground': '#ffffff26',
+        '--colors-cookieBoxBackground': '#e0e0e0',
         '--colors-text': colors.black,
     },
 });

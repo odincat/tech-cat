@@ -1,7 +1,7 @@
 import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import { css, keyframes, styled } from '@stitches';
+import { ReactNode, useRef, useState } from 'react';
+import { keyframes, styled } from '@stitches';
 import { TokenVariant, tokenVariants } from '@styling/tokenVariants';
 
 // Resources:
@@ -169,9 +169,10 @@ export const TButton: NextComponent<TButtonProps> = ({
     }
 
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-        setIsOnButton(true);
-
+        if(noEffect) return;
         if(!buttonRef.current) return;
+
+        setIsOnButton(true);
 
         // We use the button itself, because we would get false readings due to child elements (icons)
         const rect = buttonRef.current?.getBoundingClientRect();

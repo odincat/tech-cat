@@ -20,6 +20,7 @@ export const {
             githubLink: 'var(--colors-githubLink, #f0f6fc)',
             hamburgerBackground: 'var(--colors-hamburgerBackground)',
             headerBackground: 'var(--colors-headerBackground)',
+            cookieBoxBackground: 'var(--colors-cookieBoxBackground)',
             text: `var(--colors-text)`,
 
             black: '#000000',
