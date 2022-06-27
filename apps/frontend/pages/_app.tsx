@@ -1,5 +1,5 @@
 import '../styles/globals.scss';
-import { Content, Footer, Header, PageContainer } from '@components/structure';
+
 import { IconContext } from 'react-icons/lib';
 import { useUserData } from '@lib/hooks';
 import { UserContext, userDataProperties } from '@lib/context';
@@ -11,6 +11,9 @@ import { injectGlobalStyles } from '@styling/global';
 
 import '@fontsource/maven-pro/700.css';
 import '@fontsource/roboto/index.css';
+
+import { Content, Footer, Header, PageContainer } from '@components/structure';
+import { CookieJar } from '@components/CookieBox';
 
 export const logger = new advancedConsoleLog('main');
 
@@ -40,6 +43,8 @@ const MyApp = ({ Component, pageProps }: AppProperties) => {
                         <Content>
                             <Component {...pageProps} />
                         </Content>
+
+                        <CookieJar />
 
                         <Footer />
                     </IconContext.Provider>

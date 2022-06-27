@@ -12,6 +12,7 @@ export const SkipNavigation: NextComponent = () => {
         transition: 'all 100ms ease-in',
         backgroundColor: '$gray',
         color: '$white',
+        zIndex: '5',
 
         '&:focus': {
             transform: 'translateX(0) translateY(0)',

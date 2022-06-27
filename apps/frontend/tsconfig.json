@@ -23,6 +23,9 @@
       ],
       "@pages/*": [
         "pages/*"
+      ],
+      "@locales/*": [
+        "locales/*"
       ]
     }
   },

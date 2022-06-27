@@ -19,7 +19,9 @@ const PageContent = styled('div', {
 const PageHeader = styled('header', {
     backgroundColor: '$headerBackground',
     backdropFilter: 'blur(5px)',
-    zIndex: '5'
+    zIndex: '5',
+    position: 'sticky',
+    top: '0'
 });
 
 const PageFooter = {

@@ -16,7 +16,7 @@ const Mobile = {
     NavLinks: styled('div', {
         backgroundColor: '$hamburgerBackground',
         backdropFilter: 'blur(5px)',
-        position: 'absolute',
+        position: 'fixed',
         left: '0',
         right: '0',
         top: '52px',
@@ -28,7 +28,7 @@ const Mobile = {
         '&.opened': {
             opacity: '1',
             visibility: 'visible',
-        },
+        }
     }),
     SingleNavLink: css({
         padding: '0.5rem',
