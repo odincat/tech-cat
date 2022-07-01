@@ -1,7 +1,11 @@
 import { NextComponent } from '@lib/types';
+import { SHARED_dictionary } from '@locales/global.dictionary';
+import { useTranslation } from '@locales/utils';
 import { styled } from '@stitches';
 
 export const SkipNavigation: NextComponent = () => {
+    const { translateString } = useTranslation();
+
     const SkipNavigationLink = styled('a', {
         position: 'absolute',
         transform: 'translateX(-200%) translateY(-200%)',
@@ -21,7 +25,7 @@ export const SkipNavigation: NextComponent = () => {
 
     return (
         <SkipNavigationLink href='#main-content'>
-            Skip Navigation
+            {translateString(SHARED_dictionary.skipNavigation)}
         </SkipNavigationLink>
     );
 };

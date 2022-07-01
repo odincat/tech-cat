@@ -1,5 +1,8 @@
 import '../styles/globals.scss';
 
+import '@fontsource/maven-pro/700.css';
+import '@fontsource/roboto/index.css';
+
 import { IconContext } from 'react-icons/lib';
 import { useUserData } from '@lib/hooks';
 import { UserContext, userDataProperties } from '@lib/context';
@@ -8,10 +11,6 @@ import { useEffect } from 'react';
 import utils from 'pacman/utils';
 import { NextComponentType } from 'next';
 import { injectGlobalStyles } from '@styling/global';
-
-import '@fontsource/maven-pro/700.css';
-import '@fontsource/roboto/index.css';
-
 import { Content, Footer, Header, PageContainer } from '@components/structure';
 import { CookieJar } from '@components/CookieBox';
 
@@ -22,15 +21,15 @@ interface AppProperties {
     pageProps: any;
 }
 
-const MyApp = ({ Component, pageProps }: AppProperties) => {
+const CatHotel = ({ Component, pageProps }: AppProperties) => {
     injectGlobalStyles();
 
     const userData: userDataProperties = useUserData();
 
     useEffect(() => {
-        if (!utils.isProduction()) {
-            logger.initialize();
-        }
+        // if (!utils.isProduction()) {
+        //     logger.initialize();
+        // }
     }, []);
 
     return (
@@ -54,4 +53,4 @@ const MyApp = ({ Component, pageProps }: AppProperties) => {
     );
 };
 
-export default MyApp;
+export default CatHotel;

@@ -10,7 +10,7 @@ import { styled } from '@stitches';
     This file is supposed to be edited. Rather change stuff in here than in _app.tsx.
 */
 
-const PageContent = styled('div', {
+const PageContent = styled('main', {
     flex: '1',
     marginInline: '10%',
     paddingTop: '2rem',

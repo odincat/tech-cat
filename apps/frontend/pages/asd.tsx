@@ -3,7 +3,6 @@ import MetatagConfig from '@components/MetatagManager';
 import type { NextPage } from 'next';
 import { TButton } from '@components/ui/Button';
 import { FaTwitterSquare } from 'react-icons/fa';
-import Link from 'next/link';
 
 // export const getStaticProps = async () => {
 
@@ -33,7 +32,7 @@ const Home: NextPage = () => {
                 rightIcon={<FaTwitterSquare />}>
                 HI
             </TButton>
-            <Link href='/asd' locale='de'>sdads</Link>
+            <a href='#dsa'>sdads</a>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aspernatur hic perspiciatis vero aliquid deserunt pariatur et doloremque dolor corporis perferendis eius laudantium possimus, totam, voluptas deleniti, omnis error nulla.
             Fugiat maiores quisquam corrupti cupiditate temporibus veniam reiciendis debitis possimus vel labore. Rerum eum mollitia provident, ipsa reiciendis ratione architecto? Neque ducimus iure sunt ipsum officiis, ratione fugiat architecto quas.
             Ullam voluptates dolores beatae. Cupiditate, nostrum earum! Molestias vitae cupiditate aperiam perferendis nisi soluta debitis sit aliquid? In voluptates numquam nesciunt doloribus sapiente consequuntur. Neque quis illo ad exercitationem sed.

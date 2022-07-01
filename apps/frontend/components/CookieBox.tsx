@@ -1,11 +1,12 @@
 import { SHARED_cookiesAccepted } from "@lib/store";
 import { NextComponent } from "@lib/types";
 import { css, keyframes, styled } from "@stitches";
-import { translateString } from "@locales/utils";
+import { useTranslation } from "@locales/utils";
 import { useEffect, useState } from "react";
 import { FaCookieBite } from "react-icons/fa";
 import { TButton } from "./ui/Button";
 import { SHARED_dictionary } from "@locales/global.dictionary";
+import { logger } from "@pages/_app";
 
 const fadeIn = keyframes({
     '0%': {
@@ -71,57 +72,48 @@ const ButtonContainer = styled('div', {
 })
 
 export const CookieJar: NextComponent = () => {
-    const [hasAsked, setHasAsked] = useState<boolean | null>(null);
-    // const [hasAccepted, setHasAccepted] = useState<boolean | null>(null);
-    const [lastAsked, setLastAsked] = useState<number | undefined>(undefined);
     const [hasFetched, setHasFetched] = useState<boolean>(false);
+    const [hasAsked, setHasAsked] = useState<boolean | null>(true);
+
+    const { translateString } = useTranslation();
 
     useEffect(() => {
         const asked = localStorage.getItem('cookiesAsked');
         const accepted = localStorage.getItem('cookiesAccepted');
         const whenAsked = localStorage.getItem('cookieLastAsked');
+    
+        setHasAsked(asked === 'true');
 
-        if(accepted || whenAsked || asked === null) {
-            setHasAsked(false);
-        }
-
-        if(asked === 'true') {
-            setHasAsked(true)
-        } else if(asked === 'false') {
-            setHasAsked(false)
-        }
-
-        if(accepted === 'true') {
-            SHARED_cookiesAccepted.set(true);
-        } else if(accepted === 'false') {
-            SHARED_cookiesAccepted.set(false);
-        }
-
-        const whenWasTheLastTimeTheUserHasBeenAnnoyed = new Date(parseInt(whenAsked!)).getTime();
-
-        setLastAsked(whenWasTheLastTimeTheUserHasBeenAnnoyed);
-
-        // Maybe we get them to accept them someday :3
-        if(accepted === 'false' && whenWasTheLastTimeTheUserHasBeenAnnoyed > whenWasTheLastTimeTheUserHasBeenAnnoyed + (30 * 24 * 60 * 60 * 1000)) {
-            setHasAsked(false);
-        }
+        SHARED_cookiesAccepted.set(accepted === 'true');
+        
         setHasFetched(true);
+        
+        // Maybe we get them to accept them someday :3
+
+        // const whenWasTheLastTimeTheUserHasBeenAnnoyed = new Date(parseInt(whenAsked!)).getTime();
+        // const annoyAgain = !SHARED_cookiesAccepted.get() && whenWasTheLastTimeTheUserHasBeenAnnoyed > whenWasTheLastTimeTheUserHasBeenAnnoyed + (30 * 24 * 60 * 60 * 1000);
+
+        // logger.log(`Last time: ${whenWasTheLastTimeTheUserHasBeenAnnoyed} --- Last time in 30 days: ${whenWasTheLastTimeTheUserHasBeenAnnoyed + (30 * 24 * 60 * 60 * 1000)}`, 'information')
+
+        // console.log(annoyAgain)
+
+        // // if(!annoyAgain) return;
+
+        // // setHasAsked(annoyAgain.valueOf());
+        // // console.log(hasAsked)
     }, []);
 
     const handleAction = (accepted: boolean) => {
         SHARED_cookiesAccepted.set(accepted);
-        localStorage.setItem('cookiesAccepted', accepted.toString());
+        localStorage.setItem('cookiesAccepted', accepted ? 'true' : 'false');
 
         setHasAsked(true);
         localStorage.setItem('cookiesAsked', 'true');
 
-        setLastAsked(new Date().getTime());
         localStorage.setItem('cookieLastAsked', new Date().getTime().toString());
     }
 
-    if(!hasFetched) return null;
-
-    if(hasAsked) return null;
+    if(!hasFetched || hasAsked === true) return null;
 
     return (
         <CookieJarContainer >
@@ -129,7 +121,6 @@ export const CookieJar: NextComponent = () => {
             <FaCookieBite className={cookieIcon()} />
             <Content>
                 <Heading>{translateString(SHARED_dictionary.cookieBox.title)}</Heading>
-                
                 {translateString(SHARED_dictionary.cookieBox.body)}
             </Content>
             </MessageContainer>
