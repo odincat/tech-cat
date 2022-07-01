@@ -13,7 +13,9 @@
     "start": "next start",
     "lint": "next lint",
     "buildDocker": "",
-    "storybook": "start-storybook -p 7003 --quiet"
+    "storybook": "start-storybook -p 7003 --quiet",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
   },
   "dependencies": {
     "@fontsource/maven-pro": "^4.5.10",
@@ -32,6 +34,7 @@
     "react-reverse-portal": "^2.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.23.1",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-controls": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",

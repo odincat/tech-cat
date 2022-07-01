@@ -82,6 +82,7 @@ importers:
       '@fontsource/maven-pro': ^4.5.10
       '@fontsource/roboto': ^4.5.7
       '@hookstate/core': ^3.0.13
+      '@playwright/test': ^1.23.1
       '@stitches/react': ^1.2.8
       '@storybook/addon-actions': ^6.5.9
       '@storybook/addon-controls': ^6.5.9
@@ -135,6 +136,7 @@ importers:
       react-icons: 4.4.0_react@18.2.0
       react-reverse-portal: 2.1.0_biqbaboplfbrettd7655fr4n2y
     devDependencies:
+      '@playwright/test': 1.23.1
       '@storybook/addon-actions': 6.5.9_biqbaboplfbrettd7655fr4n2y
       '@storybook/addon-controls': 6.5.9_scxhmbcwnay7fgl5u4mcdzbnsi
       '@storybook/addon-essentials': 6.5.9_ggzy4dqayzite6baoic5nniep4
@@ -3691,6 +3693,15 @@ packages:
       rimraf: 3.0.2
     dev: false
 
+  /@playwright/test/1.23.1:
+    resolution: {integrity: sha512-dKplLPSYPZgnsBk1xxOophhpx3ZVg8DveoNJgLPe096lDCfmaIIreLsYF+4hqzy3PG61IP+aEnG5VAOjC3bhbA==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dependencies:
+      '@types/node': 18.0.0
+      playwright-core: 1.23.1
+    dev: true
+
   /@pmmmwh/react-refresh-webpack-plugin/0.5.7_aumhct55s6lhceplyc622fxoum:
     resolution: {integrity: sha512-bcKCAzF0DV2IIROp9ZHkRJa6O4jy7NlnHdWL3GmcUxYWNjLXkK5kfELELwEfSP5hXPfVL/qOGMAROuMQb9GG8Q==}
     engines: {node: '>= 10.13'}
@@ -6866,7 +6877,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -12036,6 +12047,12 @@ packages:
     dependencies:
       find-up: 5.0.0
 
+  /playwright-core/1.23.1:
+    resolution: {integrity: sha512-9CXsE0gawph4KXl6oUaa0ehHRySZjHvly4TybcBXDvzK3N3o6L/eZ8Q6iVWUiMn0LLS5bRFxo1qEtOETlYJxjw==}
+    engines: {node: '>=14'}
+    hasBin: true
+    dev: true
+
   /plop/3.1.1:
     resolution: {integrity: sha512-NuctKmuNUACXBQn25bBr5oj/75nHxdKGwjA/+b7cVoj1sp+gTVqcc8eAr4QcNJgMPsZWRJBN2kMkgmsqbqV9gg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -12272,17 +12289,6 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
-    dev: false
-
-  /promise-inflight/1.0.1_bluebird@3.7.2:
-    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
-    peerDependencies:
-      bluebird: '*'
-    peerDependenciesMeta:
-      bluebird:
-        optional: true
-    dependencies:
-      bluebird: 3.7.2
 
   /promise-polyfill/8.1.3:
     resolution: {integrity: sha512-MG5r82wBzh7pSKDRa9y+vllNHz3e3d4CNj1PQE4BQYxLme0gKYYBm9YENq+UkEikyZ0XbiGWxYlVw3Rl9O/U8g==}
