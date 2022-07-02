@@ -20,10 +20,6 @@ export const parameters = {
     rootAttribute: {
         root: "body",
         attribute: "data-theme",
-        defaultState: {
-            name: "Default",
-            value: 'dark'
-        },
         states: [
             {
                 name: "Dark",

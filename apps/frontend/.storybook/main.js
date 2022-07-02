@@ -19,7 +19,7 @@ module.exports = {
     previewHead: (head) => `
         ${head}
     `,
-    webpackFinal: async (config, { configType }) => {
+    webpackFinal: async (config) => {
         config.resolve.plugins = config.resolve.plugins || [];
 
         config.resolve.plugins.push(new TsconfigPathsPlugin());

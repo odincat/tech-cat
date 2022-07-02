@@ -2,8 +2,9 @@ import SignIn from '@components/backend/SignIn';
 import MetatagConfig from '@components/MetatagManager';
 import type { NextPage } from 'next';
 import { TButton } from '@components/ui/Button';
-import { FaTwitterSquare } from 'react-icons/fa';
+import { FaCat, FaTwitterSquare } from 'react-icons/fa';
 import Link from 'next/link';
+import { TInput } from '@components/ui/Input';
 
 // export const getStaticProps = async () => {
 
@@ -33,6 +34,9 @@ const Home: NextPage = () => {
                 rightIcon={<FaTwitterSquare />}>
                 HI
             </TButton>
+            <br></br>
+            <br></br>
+            <TInput icon={<FaCat />} iconColor='green' />
             <Link href='/asd' locale='de'>sdads</Link>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aspernatur hic perspiciatis vero aliquid deserunt pariatur et doloremque dolor corporis perferendis eius laudantium possimus, totam, voluptas deleniti, omnis error nulla.
             Fugiat maiores quisquam corrupti cupiditate temporibus veniam reiciendis debitis possimus vel labore. Rerum eum mollitia provident, ipsa reiciendis ratione architecto? Neque ducimus iure sunt ipsum officiis, ratione fugiat architecto quas.

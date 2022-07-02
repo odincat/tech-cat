@@ -9,6 +9,12 @@ export const injectGlobalStyles = globalCss({
         fontSize: '16px',
         color: '$text'
     },
+
+    // Text selection color
+    '::selection': {
+        backgroundColor: '$blue'
+    },
+
     // Icons
     '.global-icon': {
         display: 'inline-block',
