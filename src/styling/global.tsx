@@ -27,6 +27,7 @@ export const injectGlobalStyles = globalCss({
         'h1, h2, h3': {
             marginBottom: '1rem',
             fontFamily: '$secondary',
+            textAlign: 'center',
             lineHeight: '1',
         },
 
@@ -52,6 +53,7 @@ export const injectGlobalStyles = globalCss({
         '--colors-headerBackground': '#2626264d',
         '--colors-cookieBoxBackground': '#111314',
         '--colors-text': colors.white,
+        '--colors-subtileText': '#d0d0d0'
     },
     '[data-theme=light]': {
         '--colors-pageBackground': '#f5f5f5',
@@ -63,5 +65,6 @@ export const injectGlobalStyles = globalCss({
         '--colors-headerBackground': '#ffffff26',
         '--colors-cookieBoxBackground': '#e0e0e0',
         '--colors-text': colors.black,
+        '--colors-subtileText': '#666'
     },
 });

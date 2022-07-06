@@ -4,7 +4,7 @@ import { addSeconds, differenceInSeconds } from "date-fns";
 import { IncomingMessage, ServerResponse } from "http";
 import { getIronSession, IronSession, IronSessionOptions } from "iron-session";
 
-const SESSION_LIFETIME = 15 * 24 * 3600;
+const SESSION_TTL = 15 * 24 * 3600;
 
 if(!process.env.COOKIE_SECRET) {
     console.warn('[TechCat Facility Management Headquarters] No Cookie secret is set in the ENV (you dumbass). This is a security risk btw.')
@@ -21,7 +21,7 @@ const SESSION_OPTIONS: IronSessionOptions = {
         1: process.env.COOKIE_SECRET as string
     },
     cookieName: 'session.info',
-    ttl: SESSION_LIFETIME,
+    ttl: SESSION_TTL,
     cookieOptions: {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
@@ -33,7 +33,7 @@ export const createSession = async (ironSession: IronSession, user: User) => {
     const session = await db.session.create({
         data: {
             userId: user.id,
-            expiresAt: addSeconds(new Date(), SESSION_LIFETIME)
+            expiresAt: addSeconds(new Date(), SESSION_TTL)
         }
     });
 
@@ -81,7 +81,7 @@ export const resolveSession = async (request: IncomingMessage, response: ServerR
         });
 
         if(session) {
-            const refreshSessionAmount = differenceInSeconds(session.expiresAt, new Date()) < 0.75 * SESSION_LIFETIME;
+            const refreshSessionAmount = differenceInSeconds(session.expiresAt, new Date()) < 0.75 * SESSION_TTL;
 
             if(refreshSessionAmount) {
                 await db.session.update({
@@ -89,7 +89,7 @@ export const resolveSession = async (request: IncomingMessage, response: ServerR
                         id: session.id
                     },
                     data: {
-                        expiresAt: addSeconds(new Date(), SESSION_LIFETIME)
+                        expiresAt: addSeconds(new Date(), SESSION_TTL)
                     }
                 });
 

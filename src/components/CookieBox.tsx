@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { FaCookieBite } from "react-icons/fa";
 import { TButton } from "./ui/Button";
 import { SHARED_dictionary } from "@locales/global.dictionary";
-import { logger } from "@pages/_app";
 
 const fadeIn = keyframes({
     '0%': {

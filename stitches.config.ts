@@ -22,6 +22,7 @@ export const {
             headerBackground: 'var(--colors-headerBackground)',
             cookieBoxBackground: 'var(--colors-cookieBoxBackground)',
             text: `var(--colors-text)`,
+            subtileText: 'var(--colors-subitleText)',
 
             black: '#000000',
             blue: '#1597E5',

@@ -37,7 +37,7 @@ const Home: NextPage = () => {
             </TButton>
             <br></br>
             <br></br>
-            <TInput label='Hi there!' icon={<FaCat />} iconColor='green' />
+            <TInput label='Hi there!' placeholder='email' icon={<FaCat />} iconColor='green' />
             <Link href='/asd' locale='de'>sdads</Link>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam aspernatur hic perspiciatis vero aliquid deserunt pariatur et doloremque dolor corporis perferendis eius laudantium possimus, totam, voluptas deleniti, omnis error nulla.
             Fugiat maiores quisquam corrupti cupiditate temporibus veniam reiciendis debitis possimus vel labore. Rerum eum mollitia provident, ipsa reiciendis ratione architecto? Neque ducimus iure sunt ipsum officiis, ratione fugiat architecto quas.

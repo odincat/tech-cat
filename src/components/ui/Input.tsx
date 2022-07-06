@@ -1,5 +1,5 @@
 import { NextComponent } from "@lib/types";
-import { styled } from "@stitches";
+import { CSS, styled } from "@stitches";
 import { TokenVariant, tokenVariants } from "@styling/tokenVariants";
 import { ReactNode } from "react";
 
@@ -39,22 +39,20 @@ const Container = styled('div', {
 
 const Input = styled('input', {
     width: '100%',
-    padding: '0.25rem 0',
     border: 'none',
     margin: '0',
     background: 'none',
-    color: '$white',
-    fontSize: '1.2em',
-    fontWeight: 'bold',
+    color: '$text',
     transition: 'border 500ms',
 
-    '&:valid': {
-        color: '$green'
-    },
-    '&:invalid': {
-        color: '$red'
+    '&::placeholder': {
+        color: '$subtileText'
     },
 
+    '&:focus': {
+        border: 'none',
+        outline: 'none'
+    }
 });
 
 const Label = styled('label', {
@@ -64,10 +62,8 @@ const Label = styled('label', {
     color: '$text',
     transform: 'translateY(0.25rem)',
     transformOrigin: '0%',
-    fontSize: '1.2rem',
     transition: 'transform 400ms'
 });
-
 
 export interface TInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     iconColor?: TokenVariant<'colors'>;
@@ -75,12 +71,13 @@ export interface TInputProps extends React.InputHTMLAttributes<HTMLInputElement>
     withButton?: ReactNode;
     icon?: ReactNode;
     label?: string;
+    containerClass: any;
 };
 
-export const TInput: NextComponent<TInputProps> = ({icon, iconColor, withButton, label, ...props}) => {
+export const TInput: NextComponent<TInputProps> = ({icon, iconColor, withButton, containerClass, label, ...props}) => {
 
     return (
-        <Container>
+        <Container className={containerClass}>
             <Input className='input' {...props}>{props.children}</Input>
             <Label className='label'>{label}</Label>
         </Container>
