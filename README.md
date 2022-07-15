@@ -40,7 +40,7 @@ PRs will be merged, but make sure you...:
 - ... write new tests / adjust existing tests for the changes you make
 - ... don't mess up the code style (4 spaces etc.). You can just run `pnpm prettier` just to be safe
 
-If a PR is denied, then I will try to make reasoning as clear as possible, that way the PR can be improved.
+If a PR is denied, then I will try to make the reason as clear as possible, that way the PR can be improved.
 
 ### Local development
 Requirements:
