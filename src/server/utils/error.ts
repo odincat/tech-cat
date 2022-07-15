@@ -1,9 +1,8 @@
-import { Role } from "@prisma/client";
+import { Role } from '@prisma/client';
 
-export class ValidationError extends Error {
+export class T_ValidationError extends Error {
     code = 'TC_VALIDATION';
     extensions: Record<string, Record<string, string>>;
-
 
     constructor(message: string, properties: Record<string, string>) {
         super(message);
@@ -12,12 +11,12 @@ export class ValidationError extends Error {
         Object.defineProperty(this, 'name', { value: 'ValidationError' });
 
         this.extensions = {
-            properties
-        }
+            properties,
+        };
     }
 }
 
-export class NotFoundError extends Error {
+export class T_NotFoundError extends Error {
     code = 'TC_NOT_FOUND';
 
     constructor(message: string) {
@@ -28,7 +27,7 @@ export class NotFoundError extends Error {
     }
 }
 
-export class FormatError extends Error {
+export class T_FormatError extends Error {
     code = 'TC_FORMAT_INVALID';
 
     constructor(message: string) {
@@ -39,13 +38,26 @@ export class FormatError extends Error {
     }
 }
 
-export class PermissionError extends Error {
+export class T_PermissionError extends Error {
     code = 'TC_PERMISSION_DENIED';
 
     constructor(requiredPermission: Role) {
-        super(`You must have to role "${requiredPermission}" to perform this action`);
+        super(
+            `You must have to role "${requiredPermission}" to perform this action`,
+        );
 
         this.name = 'PermissionError';
         Object.defineProperty(this, 'name', { value: 'PermissionError' });
+    }
+}
+
+export class T_ServerError extends Error {
+    code = 'TC_SERVER_ERROR';
+
+    constructor(message: string) {
+        super(`An internal server error occurred: ${message}`);
+
+        this.name = 'ServerError';
+        Object.defineProperty(this, 'name', { value: 'ServerError' });
     }
 }

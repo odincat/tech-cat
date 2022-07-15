@@ -28,7 +28,7 @@ const Mobile = {
         '&.opened': {
             opacity: '1',
             visibility: 'visible',
-        }
+        },
     }),
     SingleNavLink: css({
         padding: '0.5rem',
@@ -45,8 +45,8 @@ export const HamburgerMenu: NextComponent = () => {
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true)
-    }, [])
+        setMounted(true);
+    }, []);
 
     const handleButtonClick = () => {
         setOpen(!open);
@@ -57,18 +57,26 @@ export const HamburgerMenu: NextComponent = () => {
             <button onClick={handleButtonClick} className='nav-mobile-button'>
                 {open ? <FaTimes /> : <FaBars />}
             </button>
-            {mounted ? createPortal(
-            <Mobile.NavLinks className={`${open ? ' opened' : ''}`}>
-                {navMenuItems.map((entry) => (
-                    <NavLink
-                        className={Mobile.SingleNavLink()}
-                        key={entry.route}
-                        target={entry.route}
-                        displayName={entry.name}
-                        activeClassSelector={entry.activeClassSelector}
-                    />
-                ))}
-            </Mobile.NavLinks>, document.getElementById('hamburgerPortal') as HTMLDivElement) : ''}
+            {mounted
+                ? createPortal(
+                      <Mobile.NavLinks className={`${open ? ' opened' : ''}`}>
+                          {navMenuItems.map((entry) => (
+                              <NavLink
+                                  className={Mobile.SingleNavLink()}
+                                  key={entry.route}
+                                  target={entry.route}
+                                  displayName={entry.name}
+                                  activeClassSelector={
+                                      entry.activeClassSelector
+                                  }
+                              />
+                          ))}
+                      </Mobile.NavLinks>,
+                      document.getElementById(
+                          'hamburgerPortal',
+                      ) as HTMLDivElement,
+                  )
+                : ''}
         </Mobile.Menu>
     );
 };

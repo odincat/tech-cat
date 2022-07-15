@@ -33,15 +33,9 @@ const CatHotel = ({ Component, pageProps }: AppProperties) => {
         <>
             <PageContainer>
                 <IconContext.Provider value={{ className: 'global-icon' }}>
-                    <Header />
-
-                    <Content>
-                        <Component {...pageProps} />
-                    </Content>
+                    <Component {...pageProps} />
 
                     <CookieJar />
-
-                    <Footer />
                 </IconContext.Provider>
             </PageContainer>
         </>
@@ -49,26 +43,22 @@ const CatHotel = ({ Component, pageProps }: AppProperties) => {
 };
 
 export default withTRPC<AppRouter>({
-    config({ ctx }) {
-      /**
-       * If you want to use SSR, you need to use the server's full URL
-       * @link https://trpc.io/docs/ssr
-       */
-      const url = process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}/api/trpc`
-        : 'http://localhost:7000/api/trpc';
-  
-      return {
-        url,
-        transformer: superjson
-        /**
-         * @link https://react-query.tanstack.com/reference/QueryClient
-         */
-        // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-      };
+    config() {
+        const url = process.env.VERCEL_URL
+            ? `https://${process.env.VERCEL_URL}/api/trpc`
+            : `http://localhost:7000/api/trpc`;
+
+        return {
+            url,
+            transformer: superjson,
+            queryClientConfig: {
+                defaultOptions: {
+                    queries: {
+                        refetchOnWindowFocus: false,
+                    },
+                },
+            },
+        };
     },
-    /**
-     * @link https://trpc.io/docs/ssr
-     */
     ssr: true,
-  })(CatHotel);
+})(CatHotel);

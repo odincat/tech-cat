@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 export type LanguageShorthands = 'de' | 'en';
 
@@ -15,7 +15,7 @@ export interface Dictionary {
 
 export const createDictionary = <T extends Dictionary>(arg: T): T => {
     return arg;
-}
+};
 
 export const useTranslation = () => {
     const router = useRouter();
@@ -32,6 +32,6 @@ export const useTranslation = () => {
             } else {
                 return entry[locale];
             }
-        }
-    }
+        },
+    };
 };

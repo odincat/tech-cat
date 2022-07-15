@@ -13,8 +13,8 @@ const rippleOutAnimation = keyframes({
         right: '-12px',
         bottom: '-12px',
         left: '-12px',
-        opacity: '0'
-    }
+        opacity: '0',
+    },
 });
 
 const Button = styled('button', {
@@ -24,7 +24,7 @@ const Button = styled('button', {
     cursor: 'pointer',
     color: 'white',
     fontFamily: '$primary',
-    
+
     variants: {
         compact: {
             true: {
@@ -37,41 +37,41 @@ const Button = styled('button', {
         color: {
             primary: {
                 backgroundColor: '$buttonBackground',
-                '--button-background': '$colors$buttonBackground'
+                '--button-background': '$colors$buttonBackground',
             },
             secondary: {
                 backgroundColor: '$buttonBackground',
-                '--button-background': '$colors$buttonBackground'
+                '--button-background': '$colors$buttonBackground',
             },
             blue: {
                 backgroundColor: '$blue',
-                '--button-background': '$colors$blue'
+                '--button-background': '$colors$blue',
             },
             green: {
                 backgroundColor: '$green',
-                '--button-background': '$colors$green'
+                '--button-background': '$colors$green',
             },
             yellow: {
                 backgroundColor: '$yellow',
-                '--button-background': '$colors$yellow'
+                '--button-background': '$colors$yellow',
             },
             red: {
                 backgroundColor: '$red',
-                '--button-background': '$colors$red'
-            }
+                '--button-background': '$colors$red',
+            },
         },
         noEffect: {
             false: {
                 transition: 'all 150ms cubic-bezier(.42,.43,1,.53)',
-                
+
                 '&:hover': {
                     transform: 'translateY(-0.25em)',
-                    boxShadow: '0 10px 10px -10px var(--button-background)'
+                    boxShadow: '0 10px 10px -10px var(--button-background)',
                 },
 
                 '&:focus:before': {
                     animationName: rippleOutAnimation,
-                }
+                },
             },
         },
     },
@@ -87,16 +87,16 @@ const Button = styled('button', {
     //     left: '0',
     //     animationDuration: '1s'
     // },
-    
+
     '&:disabled': {
         cursor: 'not-allowed',
         pointerEvents: 'auto',
         filter: 'brightness(70%)',
         userSelect: 'none',
-        
+
         '&:hover': {
             transform: 'translateY(0)',
-            boxShadow: 'none'
+            boxShadow: 'none',
         },
     },
 });
@@ -123,9 +123,16 @@ const Icon = styled('span', {
     },
 });
 
-export type TButtonColors = 'primary' | 'secondary' | 'blue' | 'green' | 'yellow' | 'red';
+export type TButtonColors =
+    | 'primary'
+    | 'secondary'
+    | 'blue'
+    | 'green'
+    | 'yellow'
+    | 'red';
 
-export interface TButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface TButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     color?: TButtonColors;
     compact?: boolean;
     href?: string;
@@ -146,8 +153,8 @@ export const TButton: NextComponent<TButtonProps> = ({
     rightIcon = null,
     rightIconColor,
     ...props
-}) => { 
-    const [coordinates, setCoordinates] = useState<{ x: number; y: number; }>();
+}) => {
+    const [coordinates, setCoordinates] = useState<{ x: number; y: number }>();
     const [isOnButton, setIsOnButton] = useState<boolean>(false);
 
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -166,11 +173,11 @@ export const TButton: NextComponent<TButtonProps> = ({
 
     const handleMouseLeave = () => {
         setIsOnButton(false);
-    }
+    };
 
     const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-        if(noEffect) return;
-        if(!buttonRef.current) return;
+        if (noEffect) return;
+        if (!buttonRef.current) return;
 
         setIsOnButton(true);
 
@@ -178,7 +185,7 @@ export const TButton: NextComponent<TButtonProps> = ({
         const rect = buttonRef.current?.getBoundingClientRect();
 
         setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-    }
+    };
 
     return (
         <Button
@@ -189,7 +196,13 @@ export const TButton: NextComponent<TButtonProps> = ({
             color={color}
             noEffect={noEffect}
             ref={buttonRef}
-            style={isOnButton ? { backgroundImage: `radial-gradient(circle at ${coordinates?.x}px ${coordinates?.y}px , rgba(255,255,255, 0.2) 10%, var(--button-background) 100% )`} : {}}
+            style={
+                isOnButton
+                    ? {
+                          backgroundImage: `radial-gradient(circle at ${coordinates?.x}px ${coordinates?.y}px , rgba(255,255,255, 0.2) 10%, var(--button-background) 100% )`,
+                      }
+                    : {}
+            }
             {...props}>
             {leftIcon && (
                 <Icon position='left' iconColor={leftIconColor}>
@@ -198,7 +211,7 @@ export const TButton: NextComponent<TButtonProps> = ({
             )}
 
             {props.children}
-            
+
             {rightIcon && (
                 <Icon position='right' iconColor={rightIconColor}>
                     {rightIcon}

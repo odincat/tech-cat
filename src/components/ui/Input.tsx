@@ -1,7 +1,7 @@
-import { NextComponent } from "@lib/types";
-import { CSS, styled } from "@stitches";
-import { TokenVariant, tokenVariants } from "@styling/tokenVariants";
-import { ReactNode } from "react";
+import { NextComponent } from '@lib/types';
+import { CSS, styled } from '@stitches';
+import { TokenVariant } from '@styling/tokenVariants';
+import { ReactNode } from 'react';
 
 const Container = styled('div', {
     width: '100%',
@@ -15,12 +15,13 @@ const Container = styled('div', {
         display: 'block',
         height: '2px',
         width: '100%',
-        backgroundImage: 'linear-gradient(to right, $colors$blue, $colors$green)',
+        backgroundImage:
+            'linear-gradient(to right, $colors$blue, $colors$green)',
         transform: 'scaleX(0)',
         transformOrigin: '0%',
         opacity: '0',
         transition: 'all 250ms ease',
-        top: '2px'
+        top: '2px',
     },
 
     '&:focus-within': {
@@ -33,8 +34,8 @@ const Container = styled('div', {
 
     '&:focus-within::after': {
         transform: 'scaleX(1)',
-        opacity: '1'
-    }
+        opacity: '1',
+    },
 });
 
 const Input = styled('input', {
@@ -46,13 +47,13 @@ const Input = styled('input', {
     transition: 'border 500ms',
 
     '&::placeholder': {
-        color: '$subtileText'
+        color: '$subtileText',
     },
 
     '&:focus': {
         border: 'none',
-        outline: 'none'
-    }
+        outline: 'none',
+    },
 });
 
 const Label = styled('label', {
@@ -62,23 +63,32 @@ const Label = styled('label', {
     color: '$text',
     transform: 'translateY(0.25rem)',
     transformOrigin: '0%',
-    transition: 'transform 400ms'
+    transition: 'transform 400ms',
 });
 
-export interface TInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TInputProps
+    extends React.InputHTMLAttributes<HTMLInputElement> {
     iconColor?: TokenVariant<'colors'>;
     buttonContent?: JSX.Element | string;
     withButton?: ReactNode;
     icon?: ReactNode;
     label?: string;
-    containerClass: any;
-};
+    containerClass?: any;
+}
 
-export const TInput: NextComponent<TInputProps> = ({icon, iconColor, withButton, containerClass, label, ...props}) => {
-
+export const TInput: NextComponent<TInputProps> = ({
+    icon,
+    iconColor,
+    withButton,
+    containerClass,
+    label,
+    ...props
+}) => {
     return (
         <Container className={containerClass}>
-            <Input className='input' {...props}>{props.children}</Input>
+            <Input className='input' {...props}>
+                {props.children}
+            </Input>
             <Label className='label'>{label}</Label>
         </Container>
     );

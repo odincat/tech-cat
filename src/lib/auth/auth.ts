@@ -1,9 +1,9 @@
 import crypto from 'crypto';
 import { bcrypt, bcryptVerify } from 'hash-wasm';
 import { db } from '@backend/utils/db-client';
-import { FormatError, NotFoundError, ValidationError } from '@backend/utils/error';
+import { T_FormatError, T_ValidationError } from '@backend/utils/error';
 
-const PASSWORD_COST_FACTOR = 10;
+const PASSWORD_COST_FACTOR = 11;
 
 export const hashPassword = async (password: string) => {
     const salt = crypto.randomBytes(16);
@@ -12,60 +12,66 @@ export const hashPassword = async (password: string) => {
         password,
         salt,
         costFactor: PASSWORD_COST_FACTOR,
-        outputType: 'encoded'
+        outputType: 'encoded',
     });
 
     return key;
 };
 
-export const verifyPassword = async (hashedPassword: string, password: string,): Promise<boolean> => {
+export const verifyPassword = async (
+    hashedPassword: string,
+    password: string,
+): Promise<boolean> => {
     return bcryptVerify({
         password,
-        hash: hashedPassword
-    })
+        hash: hashedPassword,
+    });
 };
 
-export const authenticateUserWithEmail = async (email: string, password: string) => {
+export const authenticateUserWithEmail = async (
+    email: string,
+    password: string,
+) => {
     const user = await db.user.findFirst({
         where: {
             email: {
-                equals: email
-            }
-        }
+                equals: email,
+            },
+        },
     });
 
-    if(!user || !user.hashedPassword) {
-        throw new ValidationError('User not found', {
-            email: 'Email not found'
+    if (!user || !user.hashedPassword) {
+        throw new T_ValidationError('User not found', {
+            email: 'Email not found',
         });
     }
 
-    if(!(await verifyPassword(password, user.hashedPassword))) {
-        throw new ValidationError('Invalid password', {
-            password: 'Password is incorrect'
+    if (!(await verifyPassword(password, user.hashedPassword))) {
+        throw new T_ValidationError('Invalid password', {
+            password: 'Password is incorrect',
         });
     }
 
-    const [, _algo, costFactorString] = user.hashedPassword.split('$');
+    const [_algo, costFactorString] = user.hashedPassword.split('$');
 
     if (!costFactorString) {
-        throw new FormatError('Unknown password format :/');
+        throw new T_FormatError('Unknown password format :/');
     }
 
     const costFactor = parseInt(costFactorString, 10);
-    if(costFactor !== PASSWORD_COST_FACTOR) {
+    if (costFactor !== PASSWORD_COST_FACTOR) {
         const improvedHashedPassword = await hashPassword(password);
         await db.user.update({
-            where: { id: user.id},
-            data: { hashedPassword: improvedHashedPassword }
+            where: { id: user.id },
+            data: { hashedPassword: improvedHashedPassword },
         });
     }
 
     await db.passwordReset.deleteMany({
         where: {
-            userId: user.id
-        }
+            userId: user.id,
+        },
     });
 
     return user;
-}
+};

@@ -7,12 +7,12 @@ export const injectGlobalStyles = globalCss({
     body: {
         fontFamily: '$primary',
         fontSize: '16px',
-        color: '$text'
+        color: '$text',
     },
 
     // Text selection color
     '::selection': {
-        backgroundColor: '$blue'
+        backgroundColor: '$blue',
     },
 
     // Icons
@@ -53,7 +53,7 @@ export const injectGlobalStyles = globalCss({
         '--colors-headerBackground': '#2626264d',
         '--colors-cookieBoxBackground': '#111314',
         '--colors-text': colors.white,
-        '--colors-subtileText': '#d0d0d0'
+        '--colors-subtileText': '#d0d0d0',
     },
     '[data-theme=light]': {
         '--colors-pageBackground': '#f5f5f5',
@@ -65,6 +65,6 @@ export const injectGlobalStyles = globalCss({
         '--colors-headerBackground': '#ffffff26',
         '--colors-cookieBoxBackground': '#e0e0e0',
         '--colors-text': colors.black,
-        '--colors-subtileText': '#666'
+        '--colors-subtileText': '#666',
     },
 });

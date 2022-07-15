@@ -9,6 +9,10 @@ import { css, styled } from '@stitches';
 import { useEffect, useState } from 'react';
 
 const signInDictionary = createDictionary({
+    name: {
+        de: 'Name',
+        en: 'name',
+    },
     email: {
         de: 'Email-Adresse',
         en: 'email',
@@ -17,9 +21,9 @@ const signInDictionary = createDictionary({
         de: 'Passwort',
         en: 'password',
     },
-    signIn: {
-        de: 'Anmelden',
-        en: 'Sign in',
+    signUp: {
+        de: 'Konto erstellen',
+        en: 'Sign up',
     },
 });
 
@@ -46,9 +50,10 @@ const ErrorMessage = styled('span', {
     fontWeight: 'bold',
 });
 
-const SignIn: NextComponent = () => {
-    const signInContract = trpc.useMutation('auth.login');
+const SignUp: NextComponent = () => {
+    const signUpContract = trpc.useMutation('auth.register');
 
+    const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [passwordValid, setPasswordValid] = useState(false);
@@ -59,10 +64,15 @@ const SignIn: NextComponent = () => {
     const handleClick = () => {
         if (!email || !password || !passwordValid) return;
 
-        signInContract.mutate({
+        signUpContract.mutate({
+            name: name,
             email: email,
             password: password,
         });
+
+        console.log(name);
+        console.log(email);
+        console.log(password);
     };
 
     useEffect(() => {
@@ -72,13 +82,24 @@ const SignIn: NextComponent = () => {
     }, [password]);
 
     useEffect(() => {
-        if (signInContract.data) {
+        if (signUpContract.data) {
             authRedirect();
         }
-    }, [signInContract.data]);
+    }, [signUpContract.data]);
 
     return (
         <Container>
+            <TInput
+                autoFocus
+                type='email'
+                value={name}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setName(e.target.value);
+                }}
+                containerClass={signInField()}
+                placeholder={translateString(signInDictionary.name)}
+            />
+            <br />
             <TInput
                 autoFocus
                 type='email'
@@ -92,6 +113,7 @@ const SignIn: NextComponent = () => {
             <br />
             <TInput
                 value={password}
+                type='password'
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setPassword(e.target.value);
                 }}
@@ -100,8 +122,8 @@ const SignIn: NextComponent = () => {
             />
             <Spacer />
 
-            {signInContract.error && (
-                <ErrorMessage>{signInContract.error.message}</ErrorMessage>
+            {signUpContract.error && (
+                <ErrorMessage>{signUpContract.error.message}</ErrorMessage>
             )}
 
             <TButton
@@ -109,10 +131,10 @@ const SignIn: NextComponent = () => {
                 disabled={!passwordValid}
                 className={signInButton()}
                 color='green'>
-                {translateString(signInDictionary.signIn)}
+                {translateString(signInDictionary.signUp)}
             </TButton>
         </Container>
     );
 };
 
-export default SignIn;
+export default SignUp;

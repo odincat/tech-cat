@@ -1,20 +1,52 @@
-import { SHARED_cookiesAccepted } from "@lib/store";
-import { NextComponent } from "@lib/types";
-import { css, keyframes, styled } from "@stitches";
-import { useTranslation } from "@locales/utils";
-import { useEffect, useState } from "react";
-import { FaCookieBite } from "react-icons/fa";
-import { TButton } from "./ui/Button";
-import { SHARED_dictionary } from "@locales/global.dictionary";
+import { SHARED_cookiesAccepted } from '@lib/store';
+import { NextComponent } from '@lib/types';
+import { css, keyframes, styled } from '@stitches';
+import { createDictionary, useTranslation } from '@locales/utils';
+import { useEffect, useState } from 'react';
+import { FaCookieBite } from 'react-icons/fa';
+import { TButton } from './ui/Button';
+import Link from 'next/link';
+
+const cookieBoxDictionary = createDictionary({
+    title: {
+        de: 'Cookie-Hinweis',
+        en: 'Cookie notice',
+    },
+    body: {
+        de: (
+            <p>
+                Diese Website verwendet <u>Cookies</u> & <u>Analytiktools</u>{' '}
+                die dazu dienen dir eine <b>bessere Nutzererfahrung</b> zu
+                ermöglichen. Eine transparente Übersicht der verwendeten Cookies
+                & Tracker findest du <Link href='/cookies'>hier</Link>.
+            </p>
+        ),
+        en: (
+            <p>
+                This website uses <u>cookies</u> and <u>tracking tools</u> to{' '}
+                <b>improve</b> your experience. A detailed overview of the
+                trackers used can be found <Link href='/cookies'>here</Link>.
+            </p>
+        ),
+    },
+    accept: {
+        de: 'Akzeptieren',
+        en: 'Accept',
+    },
+    decline: {
+        de: 'Ablehnen',
+        en: 'Decline',
+    },
+});
 
 const fadeIn = keyframes({
     '0%': {
-        opacity: '0'
+        opacity: '0',
     },
     '100%': {
-        opacity: '1'
-    }
-})
+        opacity: '1',
+    },
+});
 
 const CookieJarContainer = styled('div', {
     position: 'fixed',
@@ -33,29 +65,26 @@ const CookieJarContainer = styled('div', {
         left: '50%',
         transform: 'translate(-50%, 0px)',
         width: '90%',
-
-    }
+    },
 });
 
 const MessageContainer = styled('div', {
     display: 'flex',
     gap: '1rem',
-})
+});
 
 const cookieIcon = css({
     color: '#DD8A15',
     fontSize: '1.2rem',
     marginTop: '5px',
-    minWidth: '10%'
+    minWidth: '10%',
 });
 
-const Content = styled('div', {
-    
-})
+const Content = styled('div', {});
 
 const Heading = styled('span', {
     fontSize: '17px',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
 });
 
 const ButtonContainer = styled('div', {
@@ -66,9 +95,9 @@ const ButtonContainer = styled('div', {
     marginTop: '1rem',
 
     '& > button': {
-        width: '100%'
-    }
-})
+        width: '100%',
+    },
+});
 
 export const CookieJar: NextComponent = () => {
     const [hasFetched, setHasFetched] = useState<boolean>(false);
@@ -79,14 +108,14 @@ export const CookieJar: NextComponent = () => {
     useEffect(() => {
         const asked = localStorage.getItem('cookiesAsked');
         const accepted = localStorage.getItem('cookiesAccepted');
-        const whenAsked = localStorage.getItem('cookieLastAsked');
-    
+        // const whenAsked = localStorage.getItem('cookieLastAsked');
+
         setHasAsked(asked === 'true');
 
         SHARED_cookiesAccepted.set(accepted === 'true');
-        
+
         setHasFetched(true);
-        
+
         // Maybe we get them to accept them someday :3
 
         // const whenWasTheLastTimeTheUserHasBeenAnnoyed = new Date(parseInt(whenAsked!)).getTime();
@@ -109,24 +138,39 @@ export const CookieJar: NextComponent = () => {
         setHasAsked(true);
         localStorage.setItem('cookiesAsked', 'true');
 
-        localStorage.setItem('cookieLastAsked', new Date().getTime().toString());
-    }
+        localStorage.setItem(
+            'cookieLastAsked',
+            new Date().getTime().toString(),
+        );
+    };
 
-    if(!hasFetched || hasAsked === true) return null;
+    if (!hasFetched || hasAsked === true) return null;
 
     return (
-        <CookieJarContainer >
+        <CookieJarContainer>
             <MessageContainer>
-            <FaCookieBite className={cookieIcon()} />
-            <Content>
-                <Heading>{translateString(SHARED_dictionary.cookieBox.title)}</Heading>
-                {translateString(SHARED_dictionary.cookieBox.body)}
-            </Content>
+                <FaCookieBite className={cookieIcon()} />
+                <Content>
+                    <Heading>
+                        {translateString(cookieBoxDictionary.title)}
+                    </Heading>
+                    {translateString(cookieBoxDictionary.body)}
+                </Content>
             </MessageContainer>
             <ButtonContainer>
-                <TButton onClick={() => handleAction(true)} color='blue' compact>{translateString(SHARED_dictionary.cookieBox.accept)}</TButton>
-                <TButton onClick={() => handleAction(false)} color='blue' compact>{translateString(SHARED_dictionary.cookieBox.decline)}</TButton>
+                <TButton
+                    onClick={() => handleAction(true)}
+                    color='blue'
+                    compact>
+                    {translateString(cookieBoxDictionary.accept)}
+                </TButton>
+                <TButton
+                    onClick={() => handleAction(false)}
+                    color='blue'
+                    compact>
+                    {translateString(cookieBoxDictionary.decline)}
+                </TButton>
             </ButtonContainer>
         </CookieJarContainer>
-    )
-}
+    );
+};

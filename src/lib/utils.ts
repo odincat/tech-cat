@@ -1,4 +1,5 @@
-import cacheData from "memory-cache";
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 
 class pUtils {
     /**
@@ -8,23 +9,7 @@ class pUtils {
     isProduction() {
         const env = process.env.NODE_ENV;
 
-        switch (env) {
-            case 'development':
-            case 'test':
-                return false;
-            case 'production':
-            default:
-                return true;
-        }
-    }
-
-    entryToJson(document: any) {
-        const data = document.data();
-        return {
-            ...data,
-            createdAt: data.createdAt.toMillis(),
-            updatedAt: data.updatedAt.toMillis(),
-        };
+        return env === 'production';
     }
 
     toSlug(string: string) {
@@ -68,17 +53,12 @@ class pUtils {
         return true;
     }
 
-    async cachedFetch(url: string, options?: any) {
-        const value = cacheData.get(url);
-        if (value) {
-            return value;
-        } else {
-            const hours = 24;
-            const res = await fetch(url, options);
-            const data = await res.json();
-            cacheData.put(url, data, hours * 1000 * 60 * 60);
-            return data;
-        }
+    useAuthRedirect() {
+        const router = useRouter();
+
+        return useCallback(() => {
+            router.push((router.query.redirect as string) ?? '/');
+        }, [router]);
     }
 }
 

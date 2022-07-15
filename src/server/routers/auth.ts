@@ -1,78 +1,106 @@
-import { createRouter } from "@backend/utils/createRouter";
-import { db } from "@backend/utils/db-client";
-import { sendEmail } from "@backend/utils/email";
-import { authenticateUserWithEmail, hashPassword, verifyPassword } from "@lib/auth/auth";
-import { createSession, removeSession } from "@lib/auth/sessions";
-import { addDays } from "date-fns";
-import { z } from "zod";
+import { createRouter } from '@backend/utils/createRouter';
+import { db } from '@backend/utils/db-client';
+import { sendEmail } from '@backend/utils/email';
+import {
+    authenticateUserWithEmail,
+    hashPassword,
+    verifyPassword,
+} from '@lib/auth/auth';
+import { createSession, removeSession } from '@lib/auth/sessions';
+import {
+    ENABLE_EMAIL_VERIFICATION,
+    sendVerificationEmail,
+    verifyEmailToken,
+} from '@lib/auth/verification';
+import { addDays } from 'date-fns';
+import { z } from 'zod';
 
 export const PASSWORD_MIN_LENGTH = 10;
-export const PUBLIC_URL = process.env.PUBLIC_URL || process.env.VERCEL_URL || '';
+export const PUBLIC_URL =
+    process.env.PUBLIC_URL || process.env.VERCEL_URL || '';
 
 export const authRouter = createRouter()
     .query('getMe', {
         async resolve({ ctx }) {
-            if(!ctx.session?.userId) {
+            if (!ctx.session?.userId) {
                 return null;
             }
 
             return db.user.findUnique({
                 where: { id: ctx.session.userId },
-                rejectOnNotFound: true
+                rejectOnNotFound: true,
             });
-        }
+        },
     })
     .mutation('login', {
         input: z.object({
             email: z.string().email(),
-            password: z.string().min(PASSWORD_MIN_LENGTH)
+            password: z.string().min(PASSWORD_MIN_LENGTH),
         }),
-        async resolve({ input, ctx}) {
-            const user = await authenticateUserWithEmail(input.email, input.password);
+        async resolve({ input, ctx }) {
+            const user = await authenticateUserWithEmail(
+                input.email,
+                input.password,
+            );
 
-            await createSession(ctx.ironSession, user);
+            if (ENABLE_EMAIL_VERIFICATION) {
+                if (user.emailVerified) {
+                    await createSession(ctx.ironSession, user);
+                } else {
+                    await sendVerificationEmail(user);
+                }
+            } else {
+                await createSession(ctx.ironSession, user);
+            }
 
             return user;
-        }
+        },
     })
     .mutation('logout', {
         async resolve({ ctx }) {
             await removeSession(ctx.ironSession, ctx.session);
-        }
+        },
     })
-    .mutation('signUp', {
+    .mutation('register', {
         input: z.object({
             name: z.string().min(1).max(100),
             email: z.string().email(),
-            password: z.string().min(PASSWORD_MIN_LENGTH)
+            password: z.string().min(PASSWORD_MIN_LENGTH),
         }),
         async resolve({ input, ctx }) {
             const user = await db.user.create({
                 data: {
                     name: input.name,
                     email: input.email,
-                    hashedPassword: await hashPassword(input.password)
-                }
+                    hashedPassword: await hashPassword(input.password),
+                },
             });
 
-            await createSession(ctx.ironSession, user);
+            if (ENABLE_EMAIL_VERIFICATION) {
+                await sendVerificationEmail(user);
+            } else {
+                await createSession(ctx.ironSession, user);
+            }
 
             return user;
-        }
+        },
     })
     .mutation('changePassword', {
         input: z.object({
             currentPassword: z.string().min(PASSWORD_MIN_LENGTH),
-            newPassword: z.string().min(PASSWORD_MIN_LENGTH)
+            newPassword: z.string().min(PASSWORD_MIN_LENGTH),
         }),
         async resolve({ input, ctx }) {
             const user = await db.user.findUnique({
                 where: { id: ctx.session?.userId },
             });
 
-            const isPasswordValid = await verifyPassword(user!.hashedPassword, input.currentPassword);
+            const isPasswordValid = await verifyPassword(
+                user!.hashedPassword,
+                input.currentPassword,
+            );
 
-            if(!isPasswordValid) {
+            if (!isPasswordValid) {
                 throw new Error('Current password is invalid');
             }
 
@@ -83,29 +111,29 @@ export const authRouter = createRouter()
                     sessions: {
                         deleteMany: {
                             id: {
-                                not: ctx.session!.id
-                            }
-                        }
-                    }
-                }
+                                not: ctx.session!.id,
+                            },
+                        },
+                    },
+                },
             });
-        }
+        },
     })
     .mutation('resetPasswordRequest', {
-        input: z.object({ email: z.string().email()}),
+        input: z.object({ email: z.string().email() }),
         async resolve({ input }) {
             const user = await db.user.findFirst({
                 where: {
-                    email: input.email
+                    email: input.email,
                 },
-                rejectOnNotFound: true
+                rejectOnNotFound: true,
             });
 
             const reset = await db.passwordReset.create({
                 data: {
                     userId: user.id,
-                    expiresAt: addDays(new Date(), 1)
-                }
+                    expiresAt: addDays(new Date(), 1),
+                },
             });
 
             await sendEmail({
@@ -122,44 +150,50 @@ export const authRouter = createRouter()
                     Cheers!
                     TechCat Headquarters
                     </p>
-                `
+                `,
             });
-        }
+        },
     })
     .mutation('fulfillPasswordResetRequest', {
         input: z.object({
             code: z.string(),
-            newPassword: z.string().min(PASSWORD_MIN_LENGTH)
+            newPassword: z.string().min(PASSWORD_MIN_LENGTH),
         }),
-        async resolve({ input, ctx}) {
+        async resolve({ input, ctx }) {
             const reset = await db.passwordReset.findFirst({
                 where: {
-                    id: input.code
+                    id: input.code,
                 },
-                rejectOnNotFound: true
+                rejectOnNotFound: true,
             });
 
-            if(reset.expiresAt < new Date()) {
+            if (reset.expiresAt < new Date()) {
                 throw new Error('Password reset code has expired');
             }
 
             const user = await db.user.update({
                 where: {
-                    id: reset.userId
+                    id: reset.userId,
                 },
                 data: {
                     hashedPassword: await hashPassword(input.newPassword),
                     sessions: {
-                        deleteMany: {}
-                    }
-                }
+                        deleteMany: {},
+                    },
+                },
             });
 
             await createSession(ctx.ironSession, user);
-        }
+        },
     })
-    .mutation('testEmail', {
-        async resolve({ ctx }) {
-            sendEmail({to: 'webtypecat@outlook.com', subject: 'Test Mail', content: 'Hi there!'});
-        }
-    })
+    .mutation('verifyEmail', {
+        input: z.object({
+            code: z.string(),
+        }),
+
+        async resolve({ input, ctx }) {
+            const user = await verifyEmailToken(input.code);
+
+            return await createSession(ctx.ironSession, user);
+        },
+    });
