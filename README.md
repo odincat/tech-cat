@@ -3,7 +3,7 @@
 ## Techstack
 **What technologies have been used to build this project?**
 
-![Techstack burger](https://raw.githubusercontent.com/techcat/techcat/main/images/techstack.png)
+![Techstack burger](https://raw.githubusercontent.com/odincat/tech-cat/main/public/techstack.png)
 
 Burger image https://www.thesoftwareguild.com/blog/build-your-own-technology-stack/
 
