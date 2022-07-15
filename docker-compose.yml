@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:latest
+    container_name: techcat-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'techcatnet'
+      MYSQL_USER: 'catowner'
+      MYSQL_PASSWORD: 'thisisasupersecurepasswordbutitsfineasitsonlyfordevelopmentpurposes'
+      MYSQL_ROOT_PASSWORD: 'thisisasupersecurepasswordbutitsfineasitsonlyfordevelopmentpurposes'
+    ports:
+      - '7011:3306'
+    expose:
+      - '3306'
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+  db-data:

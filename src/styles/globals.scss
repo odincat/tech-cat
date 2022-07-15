@@ -1,0 +1,53 @@
+@use 'reset';
+
+// @import "~@fontsource/roboto/index.css";
+// @import "~@fontsource/maven-pro/700.css";
+
+// @import 'fonts';
+@import 'utils';
+
+$font-face-primary: 'Roboto', sans-serif;
+$font-face-secondary: 'Maven Pro', sans-serif;
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+}
+
+.content {
+    // Text styling
+    h1, h2, h3 {
+      margin-bottom: 1rem;
+      font-family: $font-face-secondary;
+      line-height: 1;
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, calc(1.2613rem + 2.8387vw), 3rem);
+      font-weight: 700;
+    }
+
+    h2 {
+      font-size: clamp(1.6rem, calc(1.1935rem + 1.8065vw), 2.3rem);
+      font-weight: 600;
+    }
+
+    h3 {
+      font-size: clamp(1.5rem, calc(1.2097rem + 1.2903vw), 2rem);
+      font-weight: 600;
+    }
+
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+      transition: all 200ms ease-in-out;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+}

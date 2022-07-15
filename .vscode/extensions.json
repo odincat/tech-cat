@@ -1,0 +1,11 @@
+{
+	"recommendations": [
+		"ms-azuretools.vscode-docker",
+		"mikestead.dotenv",
+		"prisma.prisma",
+        "teledemic.branch-warnings",
+        "ms-playwright.playwright",
+        "gruntfuggly.todo-tree",
+        "pflannery.vscode-versionlens"
+	]
+}
