@@ -4,7 +4,7 @@ import MetatagConfig from './MetatagManager';
 import { Content, Header, PageContainer, Footer } from './structure';
 
 export const Shell: NextComponent<{
-    children: ReactNode;
+    children?: ReactNode;
     title?: string;
     description?: string;
     color?: string;

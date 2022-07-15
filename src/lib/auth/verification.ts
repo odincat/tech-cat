@@ -59,12 +59,11 @@ export const verifyEmailToken = async (token: string) => {
         JWT_SECRET,
     ) as VerificationPayload;
 
-    const user = await db.user.findFirst({
+    const user = await db.user.findFirstOrThrow({
         where: {
             id: payload.userId,
             email: payload.email,
-        },
-        rejectOnNotFound: true,
+        }
     });
 
     if (user.emailVerified) throw new T_ServerError('Email already verified');

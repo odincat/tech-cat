@@ -1,6 +1,7 @@
 import { createRouter } from '@backend/utils/createRouter';
 import { db } from '@backend/utils/db-client';
 import { sendEmail } from '@backend/utils/email';
+import { T_ValidationError } from '@backend/utils/error';
 import {
     authenticateUserWithEmail,
     hashPassword,
@@ -26,9 +27,8 @@ export const authRouter = createRouter()
                 return null;
             }
 
-            return db.user.findUnique({
-                where: { id: ctx.session.userId },
-                rejectOnNotFound: true,
+            return db.user.findUniqueOrThrow({
+                where: { id: ctx.session.userId }
             });
         },
     })
@@ -101,7 +101,7 @@ export const authRouter = createRouter()
             );
 
             if (!isPasswordValid) {
-                throw new Error('Current password is invalid');
+                throw new T_ValidationError('Password is invalid', { password: 'password invalid' });
             }
 
             await db.user.update({
@@ -122,11 +122,10 @@ export const authRouter = createRouter()
     .mutation('resetPasswordRequest', {
         input: z.object({ email: z.string().email() }),
         async resolve({ input }) {
-            const user = await db.user.findFirst({
+            const user = await db.user.findFirstOrThrow({
                 where: {
                     email: input.email,
-                },
-                rejectOnNotFound: true,
+                }
             });
 
             const reset = await db.passwordReset.create({
@@ -160,11 +159,10 @@ export const authRouter = createRouter()
             newPassword: z.string().min(PASSWORD_MIN_LENGTH),
         }),
         async resolve({ input, ctx }) {
-            const reset = await db.passwordReset.findFirst({
+            const reset = await db.passwordReset.findFirstOrThrow({
                 where: {
                     id: input.code,
-                },
-                rejectOnNotFound: true,
+                }
             });
 
             if (reset.expiresAt < new Date()) {

@@ -13,12 +13,7 @@ import { Shell } from '@components/Shell';
 // }
 
 const Home: NextPage = () => {
-    const linkq = trpc.useQuery([
-        'linkShortener.getRedirect',
-        {
-            slug: 'hi',
-        },
-    ]);
+    const profile = trpc.useQuery(['auth.getMe']);
 
     return (
         <Shell title='home'>
@@ -28,7 +23,7 @@ const Home: NextPage = () => {
             <br></br>
             <br></br>
             <br />
-            {linkq.data && linkq.data?.url}
+            {profile.data && profile.data.name}
             <TButton
                 color='blue'
                 href='https://www.google.com/'

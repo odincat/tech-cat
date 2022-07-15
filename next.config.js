@@ -67,11 +67,5 @@ module.exports = withBundleAnalyzer({
     i18n: {
         locales: ['de', 'en'],
         defaultLocale: 'de'
-    },
-
-	webpack: (config) => {
-		config.resolve.fallback = { fs: false };
-
-		return config;
-	}
+    }
 });
