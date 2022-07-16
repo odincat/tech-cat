@@ -1,5 +1,5 @@
-import { createRouter } from '@backend/utils/createRouter';
-import { db } from '@backend/utils/db-client';
+import { createRouter } from '@server/utils/createRouter';
+import { db } from '@server/utils/db-client';
 import { z } from 'zod';
 
 export const userRouter = createRouter().mutation('changeName', {

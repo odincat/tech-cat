@@ -1,6 +1,6 @@
-import { createRouter } from '@backend/utils/createRouter';
+import { createRouter } from '@server/utils/createRouter';
 import { z } from 'zod';
-import { db } from '@backend/utils/db-client';
+import { db } from '@server/utils/db-client';
 
 export const linkShortenerRouter = createRouter().query('getRedirect', {
     input: z.object({ slug: z.string() }),

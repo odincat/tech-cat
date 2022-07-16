@@ -1,4 +1,4 @@
-import { trpc } from '@backend/utils/trpc';
+import { trpc } from '@server/utils/trpc';
 import { Shell } from '@components/Shell';
 import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';

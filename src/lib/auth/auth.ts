@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import { bcrypt, bcryptVerify } from 'hash-wasm';
-import { db } from '@backend/utils/db-client';
-import { T_FormatError, T_ValidationError } from '@backend/utils/error';
+import { db } from '@server/utils/db-client';
+import { T_FormatError, T_ValidationError } from '@server/utils/error';
 
 const PASSWORD_COST_FACTOR = 11;
 

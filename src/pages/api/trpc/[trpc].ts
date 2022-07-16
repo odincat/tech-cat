@@ -1,6 +1,6 @@
 import * as trpcNext from '@trpc/server/adapters/next';
-import { appRouter } from '@backend/routers/root';
-import { createContext } from '@backend/utils/context';
+import { appRouter } from '@server/routers/root';
+import { createContext } from '@server/utils/context';
 import { withSessionRoute } from '@lib/auth/sessions';
 
 // export type definition of API

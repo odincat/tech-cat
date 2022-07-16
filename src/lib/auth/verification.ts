@@ -1,6 +1,6 @@
-import { db } from '@backend/utils/db-client';
-import { sendEmail } from '@backend/utils/email';
-import { T_ServerError } from '@backend/utils/error';
+import { db } from '@server/utils/db-client';
+import { sendEmail } from '@server/utils/email';
+import { T_ServerError } from '@server/utils/error';
 import { User } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 

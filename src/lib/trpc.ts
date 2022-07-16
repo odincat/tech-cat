@@ -1,4 +1,4 @@
-import { PUBLIC_URL } from '@backend/routers/auth';
+import { PUBLIC_URL } from '@server/routers/auth';
 import { createReactQueryHooks, createTRPCClient } from '@trpc/react';
 import type { AppRouter } from '../pages/api/trpc/[trpc]';
 

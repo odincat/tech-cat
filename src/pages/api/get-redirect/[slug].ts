@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { db } from '@backend/utils/db-client';
+import { db } from '@server/utils/db-client';
 
 export default async (request: NextApiRequest, response: NextApiResponse) => {
     const slug = request.query['slug'];

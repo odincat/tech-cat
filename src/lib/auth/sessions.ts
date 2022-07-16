@@ -1,4 +1,4 @@
-import { db } from '@backend/utils/db-client';
+import { db } from '@server/utils/db-client';
 import { Session, User } from '@prisma/client';
 import { addSeconds, differenceInSeconds } from 'date-fns';
 import { IncomingMessage, ServerResponse } from 'http';

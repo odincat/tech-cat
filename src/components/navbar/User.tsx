@@ -1,4 +1,4 @@
-import { trpc } from "@backend/utils/trpc";
+import { trpc } from "@server/utils/trpc";
 import { TButton } from "@components/ui/Button";
 import { NextComponent } from "@lib/types";
 import { css, keyframes, styled } from "@stitches";
@@ -76,7 +76,7 @@ export const UserControl: NextComponent = () => {
     return (
         <Container>
             {!profile.data && <LoginButton />}
-            {profile.data && <ProfilePicture src='https://placekitten.com/900/1280' />}
+            {profile.data && <ProfilePicture src={profile.data.photoUrl ?? 'https://avatars.dicebear.com/api/identicon/notavaible.png'} />}
         </Container>
     );
 };

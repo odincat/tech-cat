@@ -48,10 +48,11 @@ Requirements:
 - [NodeJs](https://nodejs.org/en/) (^16)
 - [Docker](https://www.docker.com/) Used for firing up the local database, if you prefer to use something different (e.g. MAMP), you don't need docker.
 
-1. Clone the repository (or your fork)
+1. Clone the repository (or your fork).
 2. Run `pnpm install` to install all dependencies.
 3. Copy the `.env.example` file to `.env` and fill in the values.
 4. Make sure that your database is running and reachable and run `pnpm dlx prisma db push` to push the existing schema to the database and generate the client.
-5. Run `pnpm dev`
+5. Run `pnpm seed` to seed the database with some data. (Quick tip: If you run the script again (at any given time) it will not add any new data to the database, instead it will log some user credentials and a shortlink to the console. Btw: all the passwords are the same, if you want, you can set a custom one in the .env file). 
+6. Run `pnpm dev`.
 
 You are done and should be able to open up http://localhost:7000 in your browser.

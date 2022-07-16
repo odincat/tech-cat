@@ -1,5 +1,5 @@
 import superjson from 'superjson';
-import { createRouter } from '@backend/utils/createRouter';
+import { createRouter } from '@server/utils/createRouter';
 import { linkShortenerRouter } from './linkShortener';
 import { authRouter } from './auth';
 import { userRouter } from './user';

@@ -1,7 +1,7 @@
-import { createRouter } from '@backend/utils/createRouter';
-import { db } from '@backend/utils/db-client';
-import { sendEmail } from '@backend/utils/email';
-import { T_ValidationError } from '@backend/utils/error';
+import { createRouter } from '@server/utils/createRouter';
+import { db } from '@server/utils/db-client';
+import { sendEmail } from '@server/utils/email';
+import { T_ValidationError } from '@server/utils/error';
 import {
     authenticateUserWithEmail,
     hashPassword,
@@ -14,7 +14,6 @@ import {
     verifyEmailToken,
 } from '@lib/auth/verification';
 import { addDays } from 'date-fns';
-import { userAgent } from 'next/server';
 import { z } from 'zod';
 
 export const PASSWORD_MIN_LENGTH = 10;
