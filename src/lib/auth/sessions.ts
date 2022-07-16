@@ -5,6 +5,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import { NextApiHandler } from 'next';
+import { UAParser } from 'ua-parser-js';
 
 const SESSION_TTL = 15 * 24 * 3600;
 
@@ -34,11 +35,15 @@ export const withSessionRoute = (handler: NextApiHandler) => {
     return withIronSessionApiRoute(handler, SESSION_OPTIONS);
 };
 
-export const createSession = async (ironSession: IronSession, user: User) => {
+export const createSession = async (ironSession: IronSession, user: User, userAgent: string) => {
+    const userAgentData = new UAParser(userAgent);
+
     const session = await db.session.create({
         data: {
             userId: user.id,
             expiresAt: addSeconds(new Date(), SESSION_TTL),
+            browser: userAgentData.getBrowser().name ?? 'Unknown browser',
+            operatingSystem: `${userAgentData.getOS().name} ${userAgentData.getOS().version}` ?? 'Unknown OS'
         },
     });
 

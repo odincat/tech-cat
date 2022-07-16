@@ -6,6 +6,7 @@ import { NextComponent } from '@lib/types';
 import utils from '@lib/utils';
 import { createDictionary, useTranslation } from '@locales/utils';
 import { css, styled } from '@stitches';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 const signInDictionary = createDictionary({
@@ -20,7 +21,7 @@ const signInDictionary = createDictionary({
     signIn: {
         de: 'Anmelden',
         en: 'Sign in',
-    },
+    }
 });
 
 const Container = styled('div', {
@@ -38,7 +39,7 @@ const signInField = css({
 });
 
 const signInButton = css({
-    margin: 'auto',
+    margin: 'auto'
 });
 
 const ErrorMessage = styled('span', {
@@ -62,13 +63,14 @@ const SignIn: NextComponent = () => {
         signInContract.mutate({
             email: email,
             password: password,
+            userAgent: navigator.userAgent
         });
     };
 
     useEffect(() => {
         if (!password) return;
 
-        setPasswordValid(password?.length > 7);
+        setPasswordValid(password?.length > 10);
     }, [password]);
 
     useEffect(() => {
@@ -92,17 +94,19 @@ const SignIn: NextComponent = () => {
             <br />
             <TInput
                 value={password}
+                type='password'
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setPassword(e.target.value);
                 }}
                 containerClass={signInField()}
-                placeholder={translateString(signInDictionary.password)}
-            />
+                placeholder={translateString(signInDictionary.password)}/>
+
             <Spacer />
 
             {signInContract.error && (
                 <ErrorMessage>{signInContract.error.message}</ErrorMessage>
             )}
+            
 
             <TButton
                 onClick={handleClick}
@@ -111,6 +115,7 @@ const SignIn: NextComponent = () => {
                 color='green'>
                 {translateString(signInDictionary.signIn)}
             </TButton>
+
         </Container>
     );
 };

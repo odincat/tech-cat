@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { NavLink } from './NavLink';
 import { navMenuItems } from './static';
 import { HamburgerMenu } from './HamburgerMenu';
+import { UserControl } from './User';
 
 const logoAnimation = keyframes({
     '0%': { backgroundPosition: '100% 0%' },
@@ -46,6 +47,7 @@ const Navigation = {
         }),
     },
     NavLinks: styled('nav', {
+        marginLeft: 'auto',
         '@small': {
             display: 'none',
         },
@@ -80,6 +82,7 @@ const Navigation = {
 };
 
 const Navbar: NextComponent = () => {
+    
     return (
         <Navigation.Container>
             <Link href='/'>
@@ -102,6 +105,7 @@ const Navbar: NextComponent = () => {
                     />
                 ))}
             </Navigation.NavLinks>
+            <UserControl />
             <HamburgerMenu />
         </Navigation.Container>
     );

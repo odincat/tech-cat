@@ -14,6 +14,18 @@ const PageContent = styled('main', {
     flex: '1',
     marginInline: '10%',
     paddingTop: '2rem',
+    variants: {
+        alignCenter: {
+            true: {
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column'
+            },
+            false: {
+                textAlign: 'left'
+            }
+        }
+    }
 });
 
 const PageHeader = styled('header', {
@@ -101,9 +113,9 @@ export const Header: NextComponent = () => {
  * Sets the content and / or logic of the main page container.
  * @returns JSX
  */
-export const Content: NextComponent<{ children: ReactNode }> = (props) => {
+export const Content: NextComponent<{ children: ReactNode, alignCenter?: boolean }> = (props) => {
     return (
-        <PageContent className='content' id='main-content'>
+        <PageContent className='content' id='main-content' alignCenter={props.alignCenter}>
             {props.children}
         </PageContent>
     );

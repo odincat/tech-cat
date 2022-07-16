@@ -17,6 +17,7 @@ specifiers:
   '@types/node': 18.0.3
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
+  '@types/ua-parser-js': ^0.7.36
   date-fns: ^2.28.0
   eslint: 8.18.0
   eslint-config-next: 12.2.0
@@ -33,6 +34,7 @@ specifiers:
   sass: 1.53.0
   superjson: ^1.9.1
   typescript: 4.7.4
+  ua-parser-js: ^1.0.2
   zod: ^3.17.3
 
 dependencies:
@@ -46,6 +48,7 @@ dependencies:
   '@trpc/next': 9.25.3_evco2cukuc5p3cdcbfvwx7abu4
   '@trpc/react': 9.25.3_ms3at4dqhndwrpx5xroirjehyy
   '@trpc/server': 9.25.3
+  '@types/ua-parser-js': 0.7.36
   date-fns: 2.28.0
   hash-wasm: 4.9.0
   iron-session: 6.1.3_next@12.2.2
@@ -57,6 +60,7 @@ dependencies:
   react-icons: 4.4.0_react@18.2.0
   react-query: 3.39.1_biqbaboplfbrettd7655fr4n2y
   superjson: 1.9.1
+  ua-parser-js: 1.0.2
   zod: 3.17.3
 
 devDependencies:
@@ -553,6 +557,10 @@ packages:
     dependencies:
       '@types/mime': 1.3.2
       '@types/node': 18.0.3
+    dev: false
+
+  /@types/ua-parser-js/0.7.36:
+    resolution: {integrity: sha512-N1rW+njavs70y2cApeIw1vLMYXRwfBy+7trgavGuuTfOd7j1Yh7QTRc/yqsPl6ncokt72ZXuxEU0PiCp9bSwNQ==}
     dev: false
 
   /@typescript-eslint/parser/5.30.4_b5e7v2qnwxfo6hmiq56u52mz3e:
@@ -2449,6 +2457,10 @@ packages:
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
+
+  /ua-parser-js/1.0.2:
+    resolution: {integrity: sha512-00y/AXhx0/SsnI51fTc0rLRmafiGOM4/O+ny10Ps7f+j/b8p/ZY11ytMgznXkOVo4GQ+KwQG5UQLkLGirsACRg==}
+    dev: false
 
   /unbox-primitive/1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}

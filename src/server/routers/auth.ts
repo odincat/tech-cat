@@ -14,6 +14,7 @@ import {
     verifyEmailToken,
 } from '@lib/auth/verification';
 import { addDays } from 'date-fns';
+import { userAgent } from 'next/server';
 import { z } from 'zod';
 
 export const PASSWORD_MIN_LENGTH = 10;
@@ -36,6 +37,7 @@ export const authRouter = createRouter()
         input: z.object({
             email: z.string().email(),
             password: z.string().min(PASSWORD_MIN_LENGTH),
+            userAgent: z.string()
         }),
         async resolve({ input, ctx }) {
             const user = await authenticateUserWithEmail(
@@ -45,12 +47,12 @@ export const authRouter = createRouter()
 
             if (ENABLE_EMAIL_VERIFICATION) {
                 if (user.emailVerified) {
-                    await createSession(ctx.ironSession, user);
+                    await createSession(ctx.ironSession, user, input.userAgent);
                 } else {
                     await sendVerificationEmail(user);
                 }
             } else {
-                await createSession(ctx.ironSession, user);
+                await createSession(ctx.ironSession, user, input.userAgent);
             }
 
             return user;
@@ -66,6 +68,7 @@ export const authRouter = createRouter()
             name: z.string().min(1).max(100),
             email: z.string().email(),
             password: z.string().min(PASSWORD_MIN_LENGTH),
+            userAgent: z.string()
         }),
         async resolve({ input, ctx }) {
             const user = await db.user.create({
@@ -79,7 +82,7 @@ export const authRouter = createRouter()
             if (ENABLE_EMAIL_VERIFICATION) {
                 await sendVerificationEmail(user);
             } else {
-                await createSession(ctx.ironSession, user);
+                await createSession(ctx.ironSession, user, input.userAgent);
             }
 
             return user;
@@ -157,6 +160,7 @@ export const authRouter = createRouter()
         input: z.object({
             code: z.string(),
             newPassword: z.string().min(PASSWORD_MIN_LENGTH),
+            userAgent: z.string()
         }),
         async resolve({ input, ctx }) {
             const reset = await db.passwordReset.findFirstOrThrow({
@@ -181,17 +185,18 @@ export const authRouter = createRouter()
                 },
             });
 
-            await createSession(ctx.ironSession, user);
+            await createSession(ctx.ironSession, user, input.userAgent);
         },
     })
     .mutation('verifyEmail', {
         input: z.object({
             code: z.string(),
+            userAgent: z.string()
         }),
 
         async resolve({ input, ctx }) {
             const user = await verifyEmailToken(input.code);
 
-            return await createSession(ctx.ironSession, user);
+            return await createSession(ctx.ironSession, user, input.userAgent);
         },
     });

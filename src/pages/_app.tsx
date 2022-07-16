@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons/lib';
 import { useEffect } from 'react';
 import { NextComponentType } from 'next';
 import { injectGlobalStyles } from '@styling/global';
-import { Content, Footer, Header, PageContainer } from '@components/structure';
+import { PageContainer } from '@components/structure';
 import { CookieJar } from '@components/CookieBox';
 import { withTRPC } from '@trpc/next';
 import { AppRouter } from '@api/trpc/[trpc]';
@@ -43,21 +43,43 @@ const CatHotel = ({ Component, pageProps }: AppProperties) => {
 };
 
 export default withTRPC<AppRouter>({
-    config() {
-        const url = process.env.VERCEL_URL
-            ? `https://${process.env.VERCEL_URL}/api/trpc`
-            : `http://localhost:7000/api/trpc`;
+    config({ ctx }) {
+        if (typeof window !== 'undefined') {
+            return {
+              transformer: superjson,
+              url: '/api/trpc',
+              queryClientConfig: {
+                    defaultOptions: {
+                        queries: {
+                            refetchOnWindowFocus: false,
+                        },
+                    },
+                }
+            };
+        }
+
+        const ONE_DAY_SECONDS = 60 * 60 * 24;
+
+        ctx?.res?.setHeader(
+          'Cache-Control',
+          `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`,
+        );
+
+        const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : `http://localhost:7000/api/trpc`;
 
         return {
             url,
             transformer: superjson,
+            headers: {
+                'x-ssr': '1'
+            },
             queryClientConfig: {
                 defaultOptions: {
                     queries: {
                         refetchOnWindowFocus: false,
                     },
                 },
-            },
+            }
         };
     },
     ssr: true,

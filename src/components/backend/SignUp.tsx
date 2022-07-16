@@ -24,7 +24,7 @@ const signInDictionary = createDictionary({
     signUp: {
         de: 'Konto erstellen',
         en: 'Sign up',
-    },
+    }
 });
 
 const Container = styled('div', {
@@ -68,6 +68,7 @@ const SignUp: NextComponent = () => {
             name: name,
             email: email,
             password: password,
+            userAgent: navigator.userAgent ?? ''
         });
 
         console.log(name);

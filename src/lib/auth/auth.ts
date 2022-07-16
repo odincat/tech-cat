@@ -46,7 +46,7 @@ export const authenticateUserWithEmail = async (
         });
     }
 
-    if (!(await verifyPassword(password, user.hashedPassword))) {
+    if (!(await verifyPassword(user.hashedPassword, password))) {
         throw new T_ValidationError('Invalid password', {
             password: 'Password is incorrect',
         });

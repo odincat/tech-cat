@@ -1,10 +1,11 @@
 import { NextComponent } from '@lib/types';
 import { ReactNode } from 'react';
 import MetatagConfig from './MetatagManager';
-import { Content, Header, PageContainer, Footer } from './structure';
+import { Content, Header, Footer } from './structure';
 
 export const Shell: NextComponent<{
     children?: ReactNode;
+    alignCenter?: boolean;
     title?: string;
     description?: string;
     color?: string;
@@ -21,7 +22,7 @@ export const Shell: NextComponent<{
             />
             <Header />
 
-            <Content>{props.children}</Content>
+            <Content alignCenter={props.alignCenter}>{props.children}</Content>
 
             <Footer />
         </>
