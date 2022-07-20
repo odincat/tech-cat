@@ -3,8 +3,6 @@ import { Session, User } from '@prisma/client';
 import { addSeconds, differenceInSeconds } from 'date-fns';
 import { IncomingMessage, ServerResponse } from 'http';
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
-import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-import { NextApiHandler } from 'next';
 import { UAParser } from 'ua-parser-js';
 
 const SESSION_TTL = 15 * 24 * 3600;
@@ -29,10 +27,6 @@ export const SESSION_OPTIONS: IronSessionOptions = {
         sameSite: 'strict',
         httpOnly: true,
     },
-};
-
-export const withSessionRoute = (handler: NextApiHandler) => {
-    return withIronSessionApiRoute(handler, SESSION_OPTIONS);
 };
 
 export const createSession = async (ironSession: IronSession, user: User, userAgent: string) => {

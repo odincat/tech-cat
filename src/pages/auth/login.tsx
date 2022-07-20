@@ -1,4 +1,4 @@
-import SignIn from '@components/backend/SignIn';
+import SignIn from '@components/backend/Login';
 import { Shell } from '@components/Shell';
 import { NextComponent } from '@lib/types';
 import { createDictionary, useTranslation } from '@locales/utils';
@@ -11,7 +11,7 @@ const loginPageDictionary = createDictionary({
     },
     createAccount: {
         de: <Link href='/auth/register'>Noch kein Konto?</Link>,
-        en: <Link href='/auth/register'>Don't have an account?</Link>
+        en: <Link href='/auth/register'>Don&apos;t have an account?</Link>
     }
 });
 

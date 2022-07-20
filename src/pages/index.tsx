@@ -1,29 +1,30 @@
-import SignIn from '@components/backend/SignIn';
-import MetatagConfig from '@components/MetatagManager';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import { TButton } from '@components/ui/Button';
 import { FaCat, FaTwitterSquare } from 'react-icons/fa';
 import Link from 'next/link';
 import { TInput } from '@components/ui/Input';
-import { trpc } from '@lib/trpc';
 import { Shell } from '@components/Shell';
+import { protectedRoute } from '@lib/routeProtection';
 
-// export const getStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const auth = await protectedRoute(ctx, 'ADMIN');
 
-// }
+    if(auth?.redirect) return auth;
+
+    return {
+        props: {}
+    };
+}
 
 const Home: NextPage = () => {
-    const profile = trpc.useQuery(['auth.getMe']);
 
     return (
         <Shell title='home'>
             <h1>Hello world!</h1>
-            <SignIn />
             <br></br>
             <br></br>
             <br></br>
             <br />
-            {profile.data && profile.data.name}
             <TButton
                 color='blue'
                 href='https://www.google.com/'

@@ -1,7 +1,7 @@
 import { NextComponent } from '@lib/types';
 import { CSS, styled } from '@stitches';
 import { TokenVariant } from '@styling/tokenVariants';
-import { ReactNode } from 'react';
+import { FC, forwardRef, ReactNode } from 'react';
 
 const Container = styled('div', {
     width: '100%',
@@ -76,20 +76,16 @@ export interface TInputProps
     containerClass?: any;
 }
 
-export const TInput: NextComponent<TInputProps> = ({
-    icon,
-    iconColor,
-    withButton,
-    containerClass,
-    label,
-    ...props
-}) => {
+export const TInput: NextComponent<TInputProps> = forwardRef<HTMLInputElement, TInputProps>(({icon, iconColor, withButton, containerClass, label, ...props}, ref) => {
+
     return (
         <Container className={containerClass}>
-            <Input className='input' {...props}>
+            <Input ref={ref} className='input' {...props}>
                 {props.children}
             </Input>
             <Label className='label'>{label}</Label>
         </Container>
     );
-};
+});
+
+TInput.displayName = 'Input';

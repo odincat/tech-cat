@@ -5,13 +5,14 @@ import '@fontsource/roboto/index.css';
 
 import { IconContext } from 'react-icons/lib';
 import { useEffect } from 'react';
-import { NextComponentType } from 'next';
+import { GetServerSideProps, InferGetServerSidePropsType, NextComponentType } from 'next';
 import { injectGlobalStyles } from '@styling/global';
 import { PageContainer } from '@components/structure';
 import { CookieJar } from '@components/CookieBox';
 import { withTRPC } from '@trpc/next';
 import { AppRouter } from '@api/trpc/[trpc]';
 import superjson from 'superjson';
+import { UserProvider } from '@lib/context';
 
 // export const logger = new advan('main');
 
@@ -23,21 +24,17 @@ interface AppProperties {
 const CatHotel = ({ Component, pageProps }: AppProperties) => {
     injectGlobalStyles();
 
-    useEffect(() => {
-        // if (!utils.isProduction()) {
-        //     logger.initialize();
-        // }
-    }, []);
-
     return (
         <>
+        <UserProvider>
             <PageContainer>
                 <IconContext.Provider value={{ className: 'global-icon' }}>
-                    <Component {...pageProps} />
+                        <Component {...pageProps} />
 
-                    <CookieJar />
+                        <CookieJar />
                 </IconContext.Provider>
             </PageContainer>
+        </UserProvider>
         </>
     );
 };

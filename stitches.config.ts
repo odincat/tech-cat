@@ -23,6 +23,9 @@ export const {
             cookieBoxBackground: 'var(--colors-cookieBoxBackground)',
             text: `var(--colors-text)`,
             subtileText: 'var(--colors-subitleText)',
+            dropdownBackground: 'var(--colors-dropdownBackground)',
+            dropdownItemBackground: 'var(--colors-dropdownItemBackground)',
+            dropdownIconBackground: 'var(--colors-dropdownIconBackground)',
 
             black: '#000000',
             blue: '#1597E5',

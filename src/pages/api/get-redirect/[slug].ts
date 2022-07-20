@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { db } from '@server/utils/db-client';
 
-export default async (request: NextApiRequest, response: NextApiResponse) => {
+const handleShortlinkRedirect = async (request: NextApiRequest, response: NextApiResponse) => {
     const slug = request.query['slug'];
 
     if (!slug || typeof slug !== 'string') {
@@ -41,3 +41,5 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
         )
         .send(data);
 };
+
+export default handleShortlinkRedirect; 

@@ -54,6 +54,9 @@ export const injectGlobalStyles = globalCss({
         '--colors-cookieBoxBackground': '#111314',
         '--colors-text': colors.white,
         '--colors-subtileText': '#d0d0d0',
+        '--colors-dropdownBackground': 'var(--colors-gray)',
+        '--colors-dropdownItemBackground': '#333333',
+        '--colors-dropdownIconBackground': '#484a4d'
     },
     '[data-theme=light]': {
         '--colors-pageBackground': '#f5f5f5',
@@ -66,5 +69,8 @@ export const injectGlobalStyles = globalCss({
         '--colors-cookieBoxBackground': '#e0e0e0',
         '--colors-text': colors.black,
         '--colors-subtileText': '#666',
+        '--colors-dropdownBackground': '#dfdfdf',
+        '--colors-dropdownItemBackground': '#cfcfcf',
+        '--colors-dropdownIconBackground': '#9c9fa5'
     },
 });

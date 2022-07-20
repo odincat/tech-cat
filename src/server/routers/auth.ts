@@ -57,7 +57,7 @@ export const authRouter = createRouter()
             return user;
         },
     })
-    .mutation('logout', {
+    .mutation('signOut', {
         async resolve({ ctx }) {
             await removeSession(ctx.ironSession, ctx.session);
         },
