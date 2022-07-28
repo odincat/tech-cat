@@ -29,7 +29,7 @@ const CatHotel = ({ Component, pageProps }: AppProperties) => {
         <UserProvider>
             <PageContainer>
                 <IconContext.Provider value={{ className: 'global-icon' }}>
-                        <Component {...pageProps} />
+                        <Component className='' {...pageProps} />
 
                         <CookieJar />
                 </IconContext.Provider>

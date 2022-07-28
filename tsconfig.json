@@ -61,7 +61,7 @@
     "../next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "../playwright.config.ts", "../stitches.config.ts"  ],
+, "../playwright.config.ts", "../stitches.config.ts", "tailwind.config.js"  ],
   "exclude": [
     "node_modules"
   ]

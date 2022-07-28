@@ -82,11 +82,22 @@ const Dropdown = {
         top: '48px',
         right: '10px',
         width: '300px',
+        maxHeight: '85vh',
+        overflowY: 'auto',
         background: '$dropdownBackground',
         color: '$text',
         padding: '1rem',
-        overflow: 'hidden',
-        borderRadius: '4px'
+        borderRadius: '4px',
+
+        '&::-webkit-scrollbar': {
+            width: '5px',
+            padding: '5px'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            background: '$dropdownIconBackground',
+            borderRadius: '4px',
+            backgroundClip: 'content-box'
+        }
     }),
     MenuItem: {
         Item: styled('a', {

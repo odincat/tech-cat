@@ -12,7 +12,6 @@ import { styled } from '@stitches';
 
 const PageContent = styled('main', {
     flex: '1',
-    marginInline: '10%',
     paddingTop: '2rem',
     variants: {
         alignCenter: {

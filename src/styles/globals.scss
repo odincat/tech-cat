@@ -1,9 +1,12 @@
-@use 'reset';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 // @import "~@fontsource/roboto/index.css";
 // @import "~@fontsource/maven-pro/700.css";
 
 // @import 'fonts';
+@import 'reset';
 @import 'utils';
 
 $font-face-primary: 'Roboto', sans-serif;

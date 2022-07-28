@@ -121,7 +121,8 @@ const SignIn: NextComponent = () => {
                 <TButton
                     className={signInButton()}
                     color='green'
-                    type='submit'>
+                    type='submit'
+                    >
                     {translateString(signInDictionary.signIn)}
                 </TButton>
             </form>
