@@ -39,6 +39,7 @@ export const {
         fonts: {
             primary: `'Roboto', sans-serif`,
             secondary: `'Maven Pro', sans-serif`,
+            tertiary: `'Press Start 2P', monospace`
         },
     },
     media: {

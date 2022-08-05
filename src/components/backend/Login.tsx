@@ -1,5 +1,5 @@
-import { TButton } from '@components/ui/Button';
-import { TInput } from '@components/ui/Input';
+import { CButton } from '@components/ui/Button';
+import { CInput } from '@components/ui/Input';
 import { trpc } from '@server/utils/trpc';
 import { NextComponent } from '@lib/types';
 import { useAuthRedirect } from '@lib/utils';
@@ -94,7 +94,7 @@ const SignIn: NextComponent = () => {
     return (
         <Container>
             <form onSubmit={handleSubmit(handleSignIn)}>
-                <TInput
+                <CInput
                     autoFocus
                     type='email'
                     containerClass={signInField()}
@@ -104,7 +104,7 @@ const SignIn: NextComponent = () => {
 
                 <br />
 
-                <TInput
+                <CInput
                     type='password'
                     containerClass={signInField()}
                     placeholder={translateString(signInDictionary.password)}
@@ -118,13 +118,13 @@ const SignIn: NextComponent = () => {
                     <ErrorMessage>{signInContract.error.message}</ErrorMessage>
                 )}  
                 
-                <TButton
+                <CButton
                     className={signInButton()}
                     color='green'
                     type='submit'
                     >
                     {translateString(signInDictionary.signIn)}
-                </TButton>
+                </CButton>
             </form>
         </Container>
     );

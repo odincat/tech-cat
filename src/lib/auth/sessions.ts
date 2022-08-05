@@ -3,7 +3,6 @@ import { Session, User } from '@prisma/client';
 import { addSeconds, differenceInSeconds } from 'date-fns';
 import { IncomingMessage, ServerResponse } from 'http';
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
-import { UAParser } from 'ua-parser-js';
 
 const SESSION_TTL = 15 * 24 * 3600;
 
@@ -30,14 +29,12 @@ export const SESSION_OPTIONS: IronSessionOptions = {
 };
 
 export const createSession = async (ironSession: IronSession, user: User, userAgent: string) => {
-    const userAgentData = new UAParser(userAgent);
 
     const session = await db.session.create({
         data: {
             userId: user.id,
             expiresAt: addSeconds(new Date(), SESSION_TTL),
-            browser: userAgentData.getBrowser().name ?? 'Unknown browser',
-            operatingSystem: `${userAgentData.getOS().name} ${userAgentData.getOS().version}` ?? 'Unknown OS'
+            userAgent: userAgent
         },
     });
 

@@ -1,7 +1,9 @@
 import '../styles/globals.scss';
 
 import '@fontsource/maven-pro/700.css';
-import '@fontsource/roboto/index.css';
+import '@fontsource/roboto';
+import '@fontsource/press-start-2p';
+import '@fontsource/neucha';
 
 import { IconContext } from 'react-icons/lib';
 import { useEffect } from 'react';
@@ -62,7 +64,7 @@ export default withTRPC<AppRouter>({
           `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`,
         );
 
-        const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : `http://localhost:7000/api/trpc`;
+        const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : `http://localhost:4700/api/trpc`;
 
         return {
             url,

@@ -1,5 +1,5 @@
-import { TButton } from '@components/ui/Button';
-import { TInput } from '@components/ui/Input';
+import { CButton } from '@components/ui/Button';
+import { CInput } from '@components/ui/Input';
 // import { useAuthRedirect } from '@lib/auth/auth';
 import { trpc } from '@server/utils/trpc';
 import { NextComponent } from '@lib/types';
@@ -108,7 +108,7 @@ const SignUp: NextComponent = () => {
     return (
         <Container>
             <form onSubmit={handleSubmit(handleSingUp)}>
-                <TInput
+                <CInput
                     autoFocus
                     containerClass={signInField()}
                     placeholder={translateString(signInDictionary.name)}
@@ -117,7 +117,7 @@ const SignUp: NextComponent = () => {
                 {errors.name?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.name.required)}</ErrorMessage>}
                 <br />
 
-                <TInput
+                <CInput
                     autoFocus
                     type='email'
                     containerClass={signInField()}
@@ -128,7 +128,7 @@ const SignUp: NextComponent = () => {
                 {errors.email?.type === 'pattern' && <ErrorMessage>{translateString(signInDictionary.email.pattern)}</ErrorMessage>}
                 <br />
 
-                <TInput
+                <CInput
                     type='password'
                     containerClass={signInField()}
                     placeholder={translateString(signInDictionary.password)}
@@ -138,7 +138,7 @@ const SignUp: NextComponent = () => {
                 {errors.password?.type === 'minLength' && <ErrorMessage>{translateString(signInDictionary.password.minLength)}</ErrorMessage>}
                 <br />
 
-                <TInput
+                <CInput
                     type='password'
                     containerClass={signInField()}
                     placeholder={translateString(signInDictionary.password.confirm)}
@@ -155,12 +155,12 @@ const SignUp: NextComponent = () => {
                     <ErrorMessage>{signUpContract.error.message}</ErrorMessage>
                 )}
 
-                <TButton
+                <CButton
                     type='submit'
                     className={signInButton()}
                     color='green'>
                     {translateString(signInDictionary.signUp)}
-                </TButton>
+                </CButton>
         </form>
         </Container>
     );

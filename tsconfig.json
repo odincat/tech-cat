@@ -46,8 +46,8 @@
       "@locales/*": [
         "locales/*"
       ],
-      "@db/*": [
-        "db/*"
+      "@sections/*": [
+        "sections/*"
       ],
       "@api/*": [
         "pages/api/*"

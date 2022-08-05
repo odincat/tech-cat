@@ -27,7 +27,7 @@ export const injectGlobalStyles = globalCss({
         'h1, h2, h3': {
             marginBottom: '1rem',
             fontFamily: '$secondary',
-            textAlign: 'center',
+            // textAlign: 'center',
             lineHeight: '1',
         },
 

@@ -1,10 +1,11 @@
 import { trpc } from "@server/utils/trpc";
-import { TButton } from "@components/ui/Button";
+import { CButton } from "@components/ui/Button";
 import { NextComponent } from "@lib/types";
 import { css, keyframes, styled } from "@stitches";
 import { FaSignInAlt } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { DropdownMenu } from "./Dropdown";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 const Container = styled('div', {
     marginLeft: '1rem'
@@ -52,7 +53,7 @@ const LoginButton: NextComponent = () => {
     })
 
     return (
-        <TButton className={buttonStyles()} href='/auth/login' compact color='blue'><FaSignInAlt className={iconStyles()} /> Login</TButton>
+        <CButton className={buttonStyles()} href='/auth/login' compact color='blue'><FaSignInAlt className={iconStyles()} /> Login</CButton>
     );
 };
 

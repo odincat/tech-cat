@@ -6,6 +6,7 @@ import { Content, Header, Footer } from './structure';
 export const Shell: NextComponent<{
     children?: ReactNode;
     alignCenter?: boolean;
+    topPadding?: boolean;
     title?: string;
     description?: string;
     color?: string;
@@ -22,7 +23,7 @@ export const Shell: NextComponent<{
             />
             <Header />
 
-            <Content alignCenter={props.alignCenter}>{props.children}</Content>
+            <Content alignCenter={props.alignCenter} topPadding={props.topPadding}>{props.children}</Content>
 
             <Footer />
         </>

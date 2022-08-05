@@ -66,7 +66,7 @@ const Label = styled('label', {
     transition: 'transform 400ms',
 });
 
-export interface TInputProps
+export interface CInputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
     iconColor?: TokenVariant<'colors'>;
     buttonContent?: JSX.Element | string;
@@ -76,7 +76,7 @@ export interface TInputProps
     containerClass?: any;
 }
 
-export const TInput: NextComponent<TInputProps> = forwardRef<HTMLInputElement, TInputProps>(({icon, iconColor, withButton, containerClass, label, ...props}, ref) => {
+export const CInput: NextComponent<CInputProps> = forwardRef<HTMLInputElement, CInputProps>(({icon, iconColor, withButton, containerClass, label, ...props}, ref) => {
 
     return (
         <Container className={containerClass}>
@@ -88,4 +88,4 @@ export const TInput: NextComponent<TInputProps> = forwardRef<HTMLInputElement, T
     );
 });
 
-TInput.displayName = 'Input';
+CInput.displayName = 'Input';

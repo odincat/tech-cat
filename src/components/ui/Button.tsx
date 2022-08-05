@@ -123,7 +123,7 @@ const Icon = styled('span', {
     },
 });
 
-export type TButtonColors =
+export type CButtonColors =
     | 'primary'
     | 'secondary'
     | 'blue'
@@ -131,9 +131,9 @@ export type TButtonColors =
     | 'yellow'
     | 'red';
 
-export interface TButtonProps
+export interface CButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    color?: TButtonColors;
+    color?: CButtonColors;
     compact?: boolean;
     href?: string;
     leftIcon?: ReactNode;
@@ -143,7 +143,7 @@ export interface TButtonProps
     rightIconColor?: TokenVariant<'colors'>;
 }
 
-export const TButton: NextComponent<TButtonProps> = ({
+export const CButton: NextComponent<CButtonProps> = ({
     color = 'primary',
     compact = false,
     href = '',

@@ -41,8 +41,7 @@ model Session {
   expiresAt       DateTime @default(now())
   user            User     @relation(fields: [userId], references: [id])
   userId          String
-  operatingSystem String
-  browser         String
+  userAgent       String
 }
 
 model PasswordReset {
