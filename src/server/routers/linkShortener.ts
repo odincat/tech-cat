@@ -20,4 +20,13 @@ export const linkShortenerRouter = createRouter().query('getRedirect', {
 
         return data;
     },
+})
+.query('test', {
+    meta: {
+        requiredRole: 'USER'
+    },
+    async resolve({ctx}) {
+        console.log(ctx.session?.userId);
+        return ctx.session?.userId;
+    }
 });

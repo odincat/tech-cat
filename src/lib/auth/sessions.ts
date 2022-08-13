@@ -58,8 +58,8 @@ export const removeSession = async (
 };
 
 interface CachedSession {
-    session: Session | null;
-    ironSession: IronSession;
+	session: Session | null;
+	ironSession: IronSession;
 }
 
 const sessionCache = new WeakMap<IncomingMessage, CachedSession>();
@@ -113,6 +113,8 @@ export const resolveSession = async (
             await ironSession.save();
         }
     }
+
+    if(!session) return { session: null, ironSession };
 
     sessionCache.set(request, { session, ironSession });
 

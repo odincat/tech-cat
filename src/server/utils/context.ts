@@ -1,6 +1,7 @@
 import { resolveSession } from '@lib/auth/sessions';
 import { inferAsyncReturnType } from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
+import { db } from './db-client';
 
 export const createContext = async ({
     req,
@@ -11,6 +12,7 @@ export const createContext = async ({
     return {
         session,
         ironSession,
+        db
     };
 };
 
