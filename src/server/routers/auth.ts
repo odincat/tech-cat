@@ -15,6 +15,7 @@ import {
 } from '@lib/auth/verification';
 import { addDays } from 'date-fns';
 import { z } from 'zod';
+import { TRPCError } from '@trpc/server';
 
 export const PASSWORD_MIN_LENGTH = 10;
 export const PUBLIC_URL =
@@ -198,4 +199,54 @@ export const authRouter = createRouter()
 
             return await createSession(ctx.ironSession, user, input.userAgent);
         },
-    });
+    })
+    .query('getSessions', {
+        meta: {
+            requiredRole: 'USER'
+        },
+        async resolve({ ctx }) {
+            const sessions = await ctx.db.session.findMany({
+                where: {
+                    userId: ctx.session?.userId,
+                }
+            });
+
+            return {
+                sessions,
+                currentId: ctx.session?.id,
+            }
+        }
+    })
+    .mutation('deleteSession', {
+        meta: {
+            requiredRole: 'USER'
+        },
+        input: z.object({
+            id: z.string()
+        }),
+        async resolve({ ctx, input }) {
+            if(ctx.session?.id === input.id) throw new TRPCError({ code: 'BAD_REQUEST', message: 'Can\'t delete the same session you are logged in with. Please use the logout endpoint instead.' });
+            // We use deleteMany here, because else we wouldn't be able to make sure that the user is deleting other sessions
+            await ctx.db.session.deleteMany({
+                where: {
+                    id: input.id,
+                    userId: ctx.session?.userId   
+                }
+            });
+        }
+    })
+    .mutation('signOutEverywhere', {
+        meta: {
+            requiredRole: 'USER'
+        },
+        async resolve({ ctx }) {
+            await ctx.db.session.deleteMany({
+                where: {
+                    userId: ctx.session?.userId,
+                    NOT: {
+                        id: ctx.session?.id
+                    }
+                }
+            })
+        }
+    })

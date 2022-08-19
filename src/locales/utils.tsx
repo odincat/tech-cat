@@ -33,5 +33,6 @@ export const useTranslation = () => {
                 return entry[locale];
             }
         },
+        routerLocale: locale
     };
 };

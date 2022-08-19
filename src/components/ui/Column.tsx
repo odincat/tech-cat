@@ -12,7 +12,13 @@ export const CColumn = styled('div', {
             },
             3: {
                 gridTemplateColumns: '1fr 1fr 1fr',
-            }
+            },
+            4: {
+                gridTemplateColumns: '1fr 1fr 1fr 1fr',
+            },
+            5: {
+                gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+            },
         }
     }
 })

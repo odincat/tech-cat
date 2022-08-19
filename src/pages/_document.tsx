@@ -41,6 +41,7 @@ class MyDocument extends Document {
                     <Main />
                     <NextScript />
                     <div id='hamburgerPortal'></div>
+                    <div id='modalPortal'></div>
                 </body>
             </Html>
         );
