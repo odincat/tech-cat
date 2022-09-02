@@ -110,8 +110,8 @@ export const SessionList: NextComponent = () => {
     const [transitionParent] = useAutoAnimate();
     const router = useRouter();
 
-    const signOutConfirmModal = useModal();
-    const deleteSessionConfirmModal = useModal();
+    const signOutConfirmationModal = useModal();
+    const deleteSessionConfirmationModal = useModal();
 
     const sessionQuery = trpc.useQuery(['auth.getSessions']);
     const deleteSession = trpc.useMutation(['auth.deleteSession']);
@@ -153,13 +153,13 @@ export const SessionList: NextComponent = () => {
 
     return (
         <div ref={transitionParent as RefObject<HTMLDivElement>}>
-            <CButton onClick={signOutConfirmModal.show}>Show</CButton>
+            <CButton onClick={signOutConfirmationModal.show}>Show</CButton>
             {renderedSessions.map((session: SessionType) => {
                 return <Session key={session.id} userAgent={session.userAgent} isCurrent={session.id === sessionQuery.data.currentId} expiresIn={session.expiresAt} deleteSession={() => handleSessionDelete(session.id)} signOut={() => handleSignOut()} />})
             }
-            <signOutConfirmModal.Render >
-                <button onClick={signOutConfirmModal.hide}>Close</button>
-            </signOutConfirmModal.Render>
+            <signOutConfirmationModal.Render >
+                <button onClick={signOutConfirmationModal.hide}>Close</button>
+            </signOutConfirmationModal.Render>
         </div>
     );
 }

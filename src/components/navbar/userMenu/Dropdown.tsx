@@ -279,7 +279,7 @@ export const DropdownMenu: NextComponent<{ userMenuRef: MutableRefObject<null | 
             //TODO
         },
         goToSettings: () => {
-            //TODO
+            router.push('/account/settings');
         },
         writeNewArticle: () => {
             //TODO

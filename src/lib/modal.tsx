@@ -1,4 +1,4 @@
-import { Modal, ModalProps } from "@components/ui/Modal";
+import { ModalWrapper, ModalProps } from "@components/ui/Modal";
 import { useState } from "react"
 
 export const useModal = () => {
@@ -9,9 +9,11 @@ export const useModal = () => {
     const toggle = () => setOpen(!open);
 
     const Render = (props: ModalProps) => {
-        return (<>
-            {open && <Modal {...props} />} 
-        </>);
+        return (
+        <>
+            {open && <ModalWrapper {...props} shown={open} />} 
+        </>
+        );
     };
 
     return {
