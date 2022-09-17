@@ -4,7 +4,7 @@ import { useModal } from "@lib/modal";
 import { NextComponent } from "@lib/types";
 import { createDictionary, useTranslation } from "@locales/utils";
 import { Session as SessionType } from "@prisma/client";
-import { trpc } from "@server/utils/trpc";
+import { trpc } from '@lib/trpc';
 import { formatDistanceToNow } from "date-fns";
 import { de, enUS } from "date-fns/locale";
 import { useRouter } from "next/router";
@@ -113,9 +113,9 @@ export const SessionList: NextComponent = () => {
     const signOutConfirmationModal = useModal();
     const deleteSessionConfirmationModal = useModal();
 
-    const sessionQuery = trpc.useQuery(['auth.getSessions']);
-    const deleteSession = trpc.useMutation(['auth.deleteSession']);
-    const signOut = trpc.useMutation(['auth.signOut']);
+    const sessionQuery = trpc.auth.getSessions.useQuery();
+    const deleteSession = trpc.auth.deleteSession.useMutation(); 
+    const signOut = trpc.auth.signOut.useMutation();
 
     const [renderedSessions, setRenderedSessions] = useState<SessionType[]>();
 

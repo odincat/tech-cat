@@ -1,13 +1,14 @@
 import superjson from 'superjson';
 import { createRouter } from '@server/utils/createRouter';
-import { linkShortenerRouter } from './linkShortener';
-import { authRouter } from './auth';
-import { userRouter } from './user';
+import { linkShortenerRouter, shortlinkRouter } from './linkShortener';
+import { authRouter, oldauthRouter } from './auth';
+import { olduserRouter, userRouter } from './user';
 import { TRPCError } from '@trpc/server';
 import { isPermitted } from '@lib/utils';
 import { db } from '@server/utils/db-client';
+import { t } from '@server/trpc';
 
-export const appRouter = createRouter()
+export const oldappRouter = createRouter()
     .transformer(superjson)
     .middleware(async ({ ctx, next, meta }) => {
         if(!meta?.requiredRole) return next();
@@ -23,6 +24,12 @@ export const appRouter = createRouter()
 
         return next();
     })
-    .merge('auth.', authRouter)
-    .merge('user.', userRouter)
+    .merge('auth.', oldauthRouter)
+    .merge('user.', olduserRouter)
     .merge('linkShortener.', linkShortenerRouter)
+
+export const appRouter = t.router({
+    auth: authRouter,
+    user: userRouter,
+    shortlink: shortlinkRouter
+});

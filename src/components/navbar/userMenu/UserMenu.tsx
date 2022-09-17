@@ -1,11 +1,10 @@
-import { trpc } from "@server/utils/trpc";
 import { CButton } from "@components/ui/Button";
 import { NextComponent } from "@lib/types";
 import { css, keyframes, styled } from "@stitches";
 import { FaSignInAlt } from "react-icons/fa";
 import { useRef, useState } from "react";
 import { DropdownMenu } from "./Dropdown";
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { trpc } from '@lib/trpc';
 
 const Container = styled('div', {
     marginLeft: '1rem'
@@ -71,7 +70,7 @@ export const UserMenu: NextComponent = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const userMenuRef = useRef<HTMLImageElement>(null);
     
-    const profile = trpc.useQuery(['auth.getMe']);
+    const profile = trpc.auth.getMe.useQuery(); 
 
     if(profile.isLoading || profile.isFetching && !profile.data) return (
         <Container>

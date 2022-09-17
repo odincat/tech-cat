@@ -29,7 +29,7 @@ export const sendEmail = async (email: Email) => {
         console.log(`CONTENT: ${email.content}`);
         console.log('-----');
 
-        // YEAH I REALLY SPENT ONE HOUR FIGURING OUT WHY THE MAIL WASNT ACTUALLY SENDING. I WONDER WHY... :) (forced smile)
+        // Yes, I really spent at least an hour why I wasn't receiving any mails. I WONDER WHY... :)))
         return;
     }
 

@@ -1,10 +1,9 @@
 import { CButton } from '@components/ui/Button';
 import { CInput } from '@components/ui/Input';
-// import { useAuthRedirect } from '@lib/auth/auth';
-import { trpc } from '@server/utils/trpc';
 import { NextComponent } from '@lib/types';
 import { useAuthRedirect } from '@lib/utils';
 import { createDictionary, useTranslation } from '@locales/utils';
+import { trpc } from '@lib/trpc';
 import { css, styled } from '@stitches';
 import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -83,7 +82,7 @@ interface SignUpForm {
 }
 
 const SignUp: NextComponent = () => {
-    const signUpContract = trpc.useMutation('auth.register');
+    const signUpContract = trpc.auth.register.useMutation();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<SignUpForm>();
     const { translateString } = useTranslation();

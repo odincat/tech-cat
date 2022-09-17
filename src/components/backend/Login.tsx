@@ -1,6 +1,6 @@
 import { CButton } from '@components/ui/Button';
 import { CInput } from '@components/ui/Input';
-import { trpc } from '@server/utils/trpc';
+import { trpc } from '@lib/trpc';
 import { NextComponent } from '@lib/types';
 import { useAuthRedirect } from '@lib/utils';
 import { createDictionary, useTranslation } from '@locales/utils';
@@ -67,7 +67,7 @@ interface SignInForm {
 }
 
 const SignIn: NextComponent = () => {
-    const signInContract = trpc.useMutation('auth.login');
+    const signInContract = trpc.auth.login.useMutation(); 
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<SignInForm>();
 

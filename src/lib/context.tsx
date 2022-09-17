@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
-import { trpc } from "@server/utils/trpc";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { trpc } from "./trpc";
 import { NextComponent } from "./types";
 
 export const UserContext = createContext<User | null>(null);
@@ -8,7 +8,7 @@ export const UserContext = createContext<User | null>(null);
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider: NextComponent<{ children: ReactNode }> = ({ children }) => {
-    const dbUser = trpc.useQuery(['auth.getMe']);
+    const dbUser = trpc.auth.getMe.useQuery();
 
     const [user, setUser] = useState<User | null>(null);
 

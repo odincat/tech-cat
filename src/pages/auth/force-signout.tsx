@@ -1,11 +1,11 @@
-import { trpc } from '@server/utils/trpc';
 import { Shell } from '@components/Shell';
+import { trpc } from '@lib/trpc';
 import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 const Login: NextComponent = () => {
-    const signOutMutation = trpc.useMutation('auth.signOut');
+    const signOutMutation = trpc.auth.signOut.useMutation();
     const router = useRouter();
 
     useEffect(() => {

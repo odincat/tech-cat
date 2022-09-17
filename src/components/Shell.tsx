@@ -1,7 +1,7 @@
 import { NextComponent } from '@lib/types';
 import { ReactNode } from 'react';
 import MetatagConfig from './MetatagManager';
-import { Content, Header, Footer } from './structure';
+import { Content, Header, Footer } from './Structure';
 
 export const Shell: NextComponent<{
     children?: ReactNode;

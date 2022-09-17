@@ -3,7 +3,7 @@ import { NextComponent } from "@lib/types";
 import { isPermitted } from "@lib/utils";
 import { createDictionary, useTranslation } from "@locales/utils";
 import { Role } from "@prisma/client";
-import { trpc } from "@server/utils/trpc";
+import { trpc } from '@lib/trpc';
 import { styled } from "@stitches";
 import { useRouter } from "next/router";
 import { Dispatch, MutableRefObject, ReactNode, SetStateAction, useEffect, useRef } from "react";
@@ -182,7 +182,7 @@ const Dropdown = {
                         color: '$red',
                         borderColor: '$red',
                     },
-                    'AUHTOR': {
+                    'AUTHOR': {
                         color: '$green',
                         borderColor: '$green'
                     },
@@ -213,7 +213,7 @@ const RoleDisplay: NextComponent<{ role: Role }> = ({ role }) => {
         case 'ADMIN':
             return <Dropdown.ProfileItem.RoleTag role='ADMIN'><RiAdminFill /> {translateString(dropdownDictionary.profileItem.roleTag.admin)}</Dropdown.ProfileItem.RoleTag>;
         case 'AUTHOR':
-            return <Dropdown.ProfileItem.RoleTag role='AUHTOR'><RiQuillPenFill /> {translateString(dropdownDictionary.profileItem.roleTag.author)}</Dropdown.ProfileItem.RoleTag>;
+            return <Dropdown.ProfileItem.RoleTag role='AUTHOR'><RiQuillPenFill /> {translateString(dropdownDictionary.profileItem.roleTag.author)}</Dropdown.ProfileItem.RoleTag>;
         case 'FRIEND':
             return <Dropdown.ProfileItem.RoleTag role='FRIEND'><RiVipDiamondFill /> {translateString(dropdownDictionary.profileItem.roleTag.friend)}</Dropdown.ProfileItem.RoleTag>;
         case 'USER':
@@ -269,7 +269,7 @@ export const DropdownMenu: NextComponent<{ userMenuRef: MutableRefObject<null | 
     }, [dropDownMenuRef, userMenuRef, setDropDownOpen]);
 
     // Mutations / Queries
-    const signOut = trpc.useMutation('auth.signOut');
+    const signOut = trpc.auth.signOut.useMutation();
 
     const actions = {
         goToUserProfile: () => {
