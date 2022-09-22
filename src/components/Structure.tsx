@@ -12,8 +12,6 @@ import { styled } from '@stitches';
 
 const PageContent = styled('main', {
     flex: '1',
-    marginInline: '10%',
-    paddingTop: '2rem',
     variants: {
         alignCenter: {
             true: {
@@ -24,7 +22,19 @@ const PageContent = styled('main', {
             false: {
                 textAlign: 'left'
             }
+        },
+        topPadding: {
+            true: {
+                paddingTop: '2rem'
+            },
+            false: {
+                paddingTop: '0'
+            }
         }
+    },
+    defaultVariants: {
+        alignCenter: true,
+        topPadding: true
     }
 });
 
@@ -113,9 +123,9 @@ export const Header: NextComponent = () => {
  * Sets the content and / or logic of the main page container.
  * @returns JSX
  */
-export const Content: NextComponent<{ children: ReactNode, alignCenter?: boolean }> = (props) => {
+export const Content: NextComponent<{ children: ReactNode, alignCenter?: boolean; topPadding?: boolean }> = (props) => {
     return (
-        <PageContent className='content' id='main-content' alignCenter={props.alignCenter}>
+        <PageContent className='content' id='main-content' alignCenter={props.alignCenter} topPadding={props.topPadding}>
             {props.children}
         </PageContent>
     );

@@ -1,19 +1,19 @@
 import '../styles/globals.scss';
 
 import '@fontsource/maven-pro/700.css';
-import '@fontsource/roboto/index.css';
+import '@fontsource/roboto';
+import '@fontsource/roboto/900.css';
+import '@fontsource/press-start-2p';
+import '@fontsource/neucha';
+import '@styles/fonts.css';
 
 import { IconContext } from 'react-icons/lib';
-import { useEffect } from 'react';
 import { NextComponentType } from 'next';
 import { injectGlobalStyles } from '@styling/global';
-import { PageContainer } from '@components/structure';
+import { PageContainer } from '@components/Structure';
 import { CookieJar } from '@components/CookieBox';
-import { withTRPC } from '@trpc/next';
-import { AppRouter } from '@api/trpc/[trpc]';
-import superjson from 'superjson';
-
-// export const logger = new advan('main');
+import { UserProvider } from '@lib/context';
+import { trpc } from '@lib/trpc';
 
 interface AppProperties {
     Component: NextComponentType | any;
@@ -23,64 +23,19 @@ interface AppProperties {
 const CatHotel = ({ Component, pageProps }: AppProperties) => {
     injectGlobalStyles();
 
-    useEffect(() => {
-        // if (!utils.isProduction()) {
-        //     logger.initialize();
-        // }
-    }, []);
-
     return (
         <>
+        <UserProvider>
             <PageContainer>
                 <IconContext.Provider value={{ className: 'global-icon' }}>
-                    <Component {...pageProps} />
+                        <Component className='' {...pageProps} />
 
-                    <CookieJar />
+                        <CookieJar />
                 </IconContext.Provider>
             </PageContainer>
+        </UserProvider>
         </>
     );
 };
 
-export default withTRPC<AppRouter>({
-    config({ ctx }) {
-        if (typeof window !== 'undefined') {
-            return {
-              transformer: superjson,
-              url: '/api/trpc',
-              queryClientConfig: {
-                    defaultOptions: {
-                        queries: {
-                            refetchOnWindowFocus: false,
-                        },
-                    },
-                }
-            };
-        }
-
-        const ONE_DAY_SECONDS = 60 * 60 * 24;
-
-        ctx?.res?.setHeader(
-          'Cache-Control',
-          `s-maxage=1, stale-while-revalidate=${ONE_DAY_SECONDS}`,
-        );
-
-        const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/trpc` : `http://localhost:7000/api/trpc`;
-
-        return {
-            url,
-            transformer: superjson,
-            headers: {
-                'x-ssr': '1'
-            },
-            queryClientConfig: {
-                defaultOptions: {
-                    queries: {
-                        refetchOnWindowFocus: false,
-                    },
-                },
-            }
-        };
-    },
-    ssr: true,
-})(CatHotel);
+export default trpc.withTRPC(CatHotel);

@@ -54,7 +54,7 @@ export const HamburgerMenu: NextComponent = () => {
 
     return (
         <Mobile.Menu>
-            <button onClick={handleButtonClick} className='nav-mobile-button'>
+            <button onClick={handleButtonClick} className='nav-mobile-button bg-transparent'>
                 {open ? <FaTimes /> : <FaBars />}
             </button>
             {mounted

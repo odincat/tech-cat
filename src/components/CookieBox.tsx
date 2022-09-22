@@ -4,7 +4,7 @@ import { css, keyframes, styled } from '@stitches';
 import { createDictionary, useTranslation } from '@locales/utils';
 import { useEffect, useState } from 'react';
 import { FaCookieBite } from 'react-icons/fa';
-import { TButton } from './ui/Button';
+import { CButton } from './ui/Button';
 import Link from 'next/link';
 
 const cookieBoxDictionary = createDictionary({
@@ -158,18 +158,18 @@ export const CookieJar: NextComponent = () => {
                 </Content>
             </MessageContainer>
             <ButtonContainer>
-                <TButton
+                <CButton
                     onClick={() => handleAction(true)}
                     color='blue'
                     compact>
                     {translateString(cookieBoxDictionary.accept)}
-                </TButton>
-                <TButton
+                </CButton>
+                <CButton
                     onClick={() => handleAction(false)}
                     color='blue'
                     compact>
                     {translateString(cookieBoxDictionary.decline)}
-                </TButton>
+                </CButton>
             </ButtonContainer>
         </CookieJarContainer>
     );

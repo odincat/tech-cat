@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'dotenv/config';
 import { hashPassword } from "@lib/auth/auth";
-import { randCompanyName, randEmail, randFirstName, randFullName, randSkill, randSlug, randUrl } from '@ngneat/falso';
+import { randCompanyName, randEmail, randFirstName, randFullName, randSkill, randSlug, randUrl, randUserName } from '@ngneat/falso';
 import { PrismaClient } from '@prisma/client';
 
 const db = new PrismaClient({
@@ -74,15 +74,15 @@ const seed = async () => {
     await db.user.createMany({
         data: [
             // --- User with no role, but an verified email ---
-            { name: randFullName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
+            { name: randFullName(), username: randUserName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
             // --- User with no role, but an unverified email ---
-            { name: randFullName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: false, bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
+            { name: randFullName(), username: randUserName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: false, bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
             // --- User with FRIEND Role and an verified email ---
-            { name: randFullName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, role: 'FRIEND', bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
+            { name: randFullName(), username: randUserName() ,email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, role: 'FRIEND', bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
             // --- User with AUTHOR role and an verified email ---
-            { name: randFullName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, role: 'AUTHOR', bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
+            { name: randFullName(), username: randUserName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, role: 'AUTHOR', bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
             // --- User with ADMIN role and an verified email. ---
-            { name: randFullName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, role: 'ADMIN', bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
+            { name: randFullName(), username: randUserName(), email: randEmail(), hashedPassword: await hashPassword(userPassword), emailVerified: true, role: 'ADMIN', bio: `Working @${randCompanyName()} I'm really good at ${randSkill()}`, photoUrl: `https://avatars.dicebear.com/api/bottts/${randFirstName()}.png` },
         ]
     }).then(() => {
         logChange('users');

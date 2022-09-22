@@ -40,7 +40,6 @@ export const NavLink: NextComponent<NavLinkArgs> = ({
 
                 path.forEach((item, index) => {
                     if (index == 0) return;
-                    console.log(item + ' =' + routeTarget[index]);
 
                     if (item === routeTarget[index]) {
                         matches = true;

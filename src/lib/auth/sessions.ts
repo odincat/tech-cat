@@ -3,9 +3,6 @@ import { Session, User } from '@prisma/client';
 import { addSeconds, differenceInSeconds } from 'date-fns';
 import { IncomingMessage, ServerResponse } from 'http';
 import { getIronSession, IronSession, IronSessionOptions } from 'iron-session';
-import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-import { NextApiHandler } from 'next';
-import { UAParser } from 'ua-parser-js';
 
 const SESSION_TTL = 15 * 24 * 3600;
 
@@ -31,19 +28,13 @@ export const SESSION_OPTIONS: IronSessionOptions = {
     },
 };
 
-export const withSessionRoute = (handler: NextApiHandler) => {
-    return withIronSessionApiRoute(handler, SESSION_OPTIONS);
-};
-
 export const createSession = async (ironSession: IronSession, user: User, userAgent: string) => {
-    const userAgentData = new UAParser(userAgent);
 
     const session = await db.session.create({
         data: {
             userId: user.id,
             expiresAt: addSeconds(new Date(), SESSION_TTL),
-            browser: userAgentData.getBrowser().name ?? 'Unknown browser',
-            operatingSystem: `${userAgentData.getOS().name} ${userAgentData.getOS().version}` ?? 'Unknown OS'
+            userAgent: userAgent
         },
     });
 
@@ -67,8 +58,8 @@ export const removeSession = async (
 };
 
 interface CachedSession {
-    session: Session | null;
-    ironSession: IronSession;
+	session: Session | null;
+	ironSession: IronSession;
 }
 
 const sessionCache = new WeakMap<IncomingMessage, CachedSession>();
@@ -122,6 +113,8 @@ export const resolveSession = async (
             await ironSession.save();
         }
     }
+
+    if(!session) return { session: null, ironSession };
 
     sessionCache.set(request, { session, ironSession });
 

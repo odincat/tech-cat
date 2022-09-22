@@ -20,8 +20,13 @@ export const navMenuItems: MenuItems = [
         activeClassSelector: 'exact',
     },
     {
-        name: 'Projekte',
+        name: 'Projects',
         route: '/projects',
         activeClassSelector: 'exact',
     },
+    {
+        name: 'Articles',
+        route: '/blog',
+        activeClassSelector: 'containsexact',
+    }
 ];

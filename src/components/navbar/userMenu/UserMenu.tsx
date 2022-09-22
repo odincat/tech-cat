@@ -1,8 +1,10 @@
-import { trpc } from "@server/utils/trpc";
-import { TButton } from "@components/ui/Button";
+import { CButton } from "@components/ui/Button";
 import { NextComponent } from "@lib/types";
 import { css, keyframes, styled } from "@stitches";
 import { FaSignInAlt } from "react-icons/fa";
+import { useRef, useState } from "react";
+import { DropdownMenu } from "./Dropdown";
+import { trpc } from '@lib/trpc';
 
 const Container = styled('div', {
     marginLeft: '1rem'
@@ -17,7 +19,7 @@ const shimmerAnimation = keyframes({
     }
 });
 
-const fadeInAnimation = keyframes({
+export const fadeInAnimation = keyframes({
     '0%': {
         opacity: '0'
     },
@@ -50,7 +52,7 @@ const LoginButton: NextComponent = () => {
     })
 
     return (
-        <TButton className={buttonStyles()} href='/auth/login' compact color='blue'><FaSignInAlt className={iconStyles()} /> Login</TButton>
+        <CButton className={buttonStyles()} href='/auth/login' compact color='blue'><FaSignInAlt className={iconStyles()} /> Login</CButton>
     );
 };
 
@@ -64,19 +66,28 @@ const ProfilePicture = styled('img', {
     cursor: 'pointer'
 });
 
-export const UserControl: NextComponent = () => {
-    const profile = trpc.useQuery(['auth.getMe']);
+export const UserMenu: NextComponent = () => {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const userMenuRef = useRef<HTMLImageElement>(null);
+    
+    const profile = trpc.auth.getMe.useQuery(); 
 
-    if(profile.isFetching && !profile.isRefetching) return (
+    if(profile.isLoading || profile.isFetching && !profile.data) return (
         <Container>
             <LoadingShimmer />
         </Container>
     );
 
+    if(!profile.data) return (
+        <Container>
+            <LoginButton />
+        </Container>
+    )
+
     return (
         <Container>
-            {!profile.data && <LoginButton />}
-            {profile.data && <ProfilePicture src={profile.data.photoUrl ?? 'https://avatars.dicebear.com/api/identicon/notavaible.png'} />}
+            <ProfilePicture ref={userMenuRef} onClick={() => setDropdownOpen(!dropdownOpen)} src={profile.data.photoUrl ?? 'https://avatars.dicebear.com/api/identicon/notavaible.png'} />
+            {dropdownOpen && <DropdownMenu userMenuRef={userMenuRef} setDropDownOpen={setDropdownOpen} />}
         </Container>
     );
 };
