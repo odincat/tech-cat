@@ -13,6 +13,9 @@ export const postRouter = t.router({
         const post = await ctx.db.post.findUnique({
             where: {
                 slug: input.slug
+            },
+            include: {
+                category: true,
             }
         });
 
@@ -33,6 +36,9 @@ export const postRouter = t.router({
             take: input.amount,
             orderBy: {
                 createdAt: 'desc'
+            },
+            include: {
+                category: true
             }
         }).catch((reason) => {
             throw new TRPCError({ code: 'NOT_FOUND', message: `Unable to fetch posts: ${reason}`})

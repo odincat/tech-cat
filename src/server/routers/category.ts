@@ -14,6 +14,6 @@ export const categoryRouter = t.router({
             }
         }).catch((reason) => {
             throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: `Unable to create category: ${reason}`})
-        })
+        });
     })
 });

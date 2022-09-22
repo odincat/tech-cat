@@ -2,8 +2,10 @@ import '../styles/globals.scss';
 
 import '@fontsource/maven-pro/700.css';
 import '@fontsource/roboto';
+import '@fontsource/roboto/900.css';
 import '@fontsource/press-start-2p';
 import '@fontsource/neucha';
+import '@styles/fonts.css';
 
 import { IconContext } from 'react-icons/lib';
 import { NextComponentType } from 'next';

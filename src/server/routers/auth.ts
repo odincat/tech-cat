@@ -19,7 +19,7 @@ export const PASSWORD_MIN_LENGTH = 10;
 export const PUBLIC_URL = process.env.PUBLIC_URL || process.env.VERCEL_URL || '';
 
 export const authRouter = t.router({
-    getMe: guardedProcedure.meta({ requiredRole: 'USER' }).query(({ ctx }) => {
+    getMe: guardedProcedure.query(({ ctx }) => {
         if (!ctx.session?.userId) {
             return null;
         }
