@@ -86,7 +86,7 @@ const seed = async () => {
         ]
     }).then(() => {
         logChange('users');
-    }).catch((error) => {
+    }).catch((error: any) => {
         logError('users', error);
     });
     // --- END: Add example users ---
@@ -100,7 +100,7 @@ const seed = async () => {
             }
         }).then(() => {
             logChange('shortlink');
-        }).catch((error) => {
+        }).catch((error: any) => {
             logError('shortlink', error);
         });
     }

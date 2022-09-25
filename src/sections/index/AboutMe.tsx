@@ -12,9 +12,9 @@ export const AboutMe = () => {
     return (
         <div className="m-auto mt-10 w-[75%]">
             <h2 className="font-[Neucha]">Hi there! 👋</h2>
-            <img src='/img-22.jpeg' className="rounded-[50%] w-[300px] h-[300px] object-cover object-top m-auto my-10 shadow-md"></img>
+            <img src='/img-22.jpeg' alt="Photo of me" className="rounded-[50%] w-[300px] h-[300px] object-cover object-top m-auto my-10 shadow-md"></img>
             <p className="md:max-w-[40%] max-w-[90%] m-auto dark:border-white border-2 p-5 rounded-md">
-                My name is <b>Florian</b> and I'm some dude from Germany (Hamburg) that is really interested in computers and tech in general. Here are some <i>Facts</i> about me so that you can get to know me a little better:
+                My name is <b>Florian</b> and I&apos;m some dude from Germany (Hamburg) that is really interested in computers and tech in general. Here are some <i>Facts</i> about me so that you can get to know me a little better:
             </p>
             <div className="grid grid-cols-auto">
                 <div className="mt-10">
@@ -36,11 +36,11 @@ export const AboutMe = () => {
                 <div className="mt-10">
                     <h3>Tech related</h3>
                     <div className={`bg-green-500 ${FactContainer}`}>
-                        <FactCard description='favorite language' fact={<div className="flex flex-col items-center"><img src="/typescript.png" className="block max-w-[1em]"/> Typescript</div>} />
+                        <FactCard description='favorite language' fact={<div className="flex flex-col items-center"><img src="/typescript.png" alt="Typescript logo" className="block max-w-[1em]"/> Typescript</div>} />
                         <hr></hr>
-                        <FactCard description='language I want to get good at' fact={<div className="flex flex-col items-center"><img src="/rust.png" className="block max-w-[1em]"/> Rust</div>} />
+                        <FactCard description='language I want to get good at' fact={<div className="flex flex-col items-center"><img src="/rust.png" alt="Rust logo" className="block max-w-[1em]"/> Rust</div>} />
                         <hr></hr>
-                        <FactCard description='operating system' fact={<div className="flex flex-col items-center"><img src="/arch.png" className="block max-w-[1em]"/> Arch Linux (btw!)</div>} /> 
+                        <FactCard description='operating system' fact={<div className="flex flex-col items-center"><img src="/arch.png" alt="Arch Linux logArch Linux logo" className="block max-w-[1em]"/> Arch Linux (btw!)</div>} /> 
                         <hr></hr>
                         <FactCard description='favorite tool' fact={<div className="flex flex-col items-center"><FaDocker className="block" /> Docker</div>} />
                         <a className="text-white underline">Check out my setup</a> 

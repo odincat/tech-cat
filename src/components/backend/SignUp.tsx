@@ -18,6 +18,14 @@ const signInDictionary = createDictionary({
             en: 'Your name is required',
         }
     },
+    username: {
+        de: 'Benutzername',
+        en: 'Username',
+        required: {
+            de: 'Aber aber, Sie brauchen doch einen Benutzernamen!',
+            en: 'A username is required'
+        }
+    },
     email: {
         de: 'Email-Adresse',
         en: 'Email',
@@ -76,6 +84,7 @@ const signInButton = css({
 
 interface SignUpForm {
     name: string;
+    username: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -100,13 +109,14 @@ const SignUp: NextComponent = () => {
             name: data.name,
             email: data.email,
             password: data.password,
-            userAgent: navigator.userAgent
+            userAgent: navigator.userAgent,
+            username: data.username
         });
     }
 
     return (
         <Container>
-            <form onSubmit={handleSubmit(handleSingUp)}>
+            <form id='sign-up' onSubmit={handleSubmit(handleSingUp)}>
                 <CInput
                     autoFocus
                     containerClass={signInField()}
@@ -114,6 +124,15 @@ const SignUp: NextComponent = () => {
                     {...register('name', { required: true})}
                 />
                 {errors.name?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.name.required)}</ErrorMessage>}
+                <br />
+
+                <CInput
+                    autoFocus
+                    containerClass={signInField()}
+                    placeholder={translateString(signInDictionary.username)}
+                    {...register('username', { required: true})}
+                />
+                {errors.name?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.username.required)}</ErrorMessage>}
                 <br />
 
                 <CInput

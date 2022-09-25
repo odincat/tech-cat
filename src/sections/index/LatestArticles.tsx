@@ -13,7 +13,7 @@ export const PostCard: NextComponent<{ post: Post }> = ({ post }) => {
     const { routerLocale } = useTranslation();      
     return(
         <div className="max-w-[300px] bg-gradient-to-b dark:from-gray-700 dark:to-[#212121] rounded">
-            <img src={post.thumbnailUrl} />
+            <img alt="Post thumbnail" src={post.thumbnailUrl} />
             <div className="p-5">
                 <h3>{post.title}</h3>
                 <span className="block mb-2"><FaCalendarAlt className="mr-1" /> {format(post.createdAt, 'PPP', { locale: routerLocale === 'de' ? de : enUS } )}</span>

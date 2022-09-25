@@ -4,12 +4,6 @@ import { type PlaywrightTestConfig, devices } from '@playwright/test';
 const config: PlaywrightTestConfig = {
     projects: [
         {
-            name: 'Microsoft Edge',
-            use: { 
-                channel: 'msedge'
-            },
-        },
-        {
             name: 'Chrome',
             use: { ...devices['Desktop Chrome'] },
         },
@@ -22,6 +16,10 @@ const config: PlaywrightTestConfig = {
             use: { ...devices['Desktop Safari'] },
         },
     ],
+    workers: 1,
+    use: {
+        baseURL: 'http://localhost:4700'
+    }
 };
 
 export default config;

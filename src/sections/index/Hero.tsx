@@ -39,7 +39,7 @@ const Artist: NextComponent<{ name: string; url: string; index: number; length: 
     const isSecondLast = index === length - 2;
     return (
         <>
-            <a href={url} target='_blank'>{name}</a>{isLast ? '' : isSecondLast ? ' & ' : ', '}
+            <a href={url} target='_blank' rel="noreferrer">{name}</a>{isLast ? '' : isSecondLast ? ' & ' : ', '}
         </>
     );
 }
@@ -62,7 +62,7 @@ const StatusWindow = () => {
                 <div className="flex items-center"><FaSpotify className="text-[#1ccc5b] text-2xl" />
                     <span className="ml-2 mt-[2px]">
                     Currently vibing to: &nbsp;
-                    <a href={spotify.data.songUrl} target='_blank'>{spotify.data.songName}</a>&nbsp;
+                    <a href={spotify.data.songUrl} target='_blank' rel="noreferrer">{spotify.data.songName}</a>&nbsp;
                     by &nbsp;
                     {spotify.data.artists.map((artist, index) =>(
                             <Artist key={index} name={artist.name} url={artist.url} index={index} length={spotify.data.artists.length} />
