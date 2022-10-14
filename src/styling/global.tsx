@@ -59,7 +59,7 @@ export const injectGlobalStyles = globalCss({
         '--colors-dropdownIconBackground': '#484a4d'
     },
     '[data-theme=light]': {
-        '--colors-pageBackground': '#f5f5f5',
+        '--colors-pageBackground': '#eee',
         '--colors-buttonBackground': '#777777',
         '--colors-buttonText': colors.white,
         '--colors-footerBackground': colors.white,
@@ -67,7 +67,7 @@ export const injectGlobalStyles = globalCss({
         '--colors-hamburgerBackground': '#ffffffcc',
         '--colors-headerBackground': '#ffffff26',
         '--colors-cookieBoxBackground': '#e0e0e0',
-        '--colors-text': colors.black,
+        '--colors-text': '#151313',
         '--colors-subtileText': '#666',
         '--colors-dropdownBackground': '#dfdfdf',
         '--colors-dropdownItemBackground': '#cfcfcf',

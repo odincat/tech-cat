@@ -30,6 +30,8 @@ export const protectedRoute = async (ctx: GetServerSidePropsContext, requiredRol
     }
 
     if(returnEmptyProps) return {
-        props: {}
+        props: {},
+        user,
+        session
     };
 }

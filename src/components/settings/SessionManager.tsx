@@ -1,6 +1,6 @@
 import { CButton } from "@components/ui/Button";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useModal } from "@lib/modal";
+import { useModal } from "@components/ui/Modal";
 import { NextComponent } from "@lib/types";
 import { createDictionary, useTranslation } from "@locales/utils";
 import { Session as SessionType } from "@prisma/client";
@@ -10,6 +10,10 @@ import { de, enUS } from "date-fns/locale";
 import { useRouter } from "next/router";
 import { RefObject, useEffect, useState } from "react";
 import { UAParser } from "ua-parser-js";
+import { Message } from "@components/ui/Modal";
+import { SessionQuery } from "@pages/account/settings";
+import { Loader } from "@components/ui/Loader";
+import { RiDeleteBin6Fill, RiDoorOpenFill } from "react-icons/ri";
 
 const sessionDictionary = createDictionary({
     expiresIn: {
@@ -47,7 +51,7 @@ const sessionDictionary = createDictionary({
 });
 
 const BrowserDisplay: NextComponent<{ browser: string; className?: string }> = (props) => {
-    var src;
+    let src;
     const BASE_URL = '/browsers/'
 
     switch(props.browser) {
@@ -83,14 +87,23 @@ interface SessionProps {
     userAgent: string;
     isCurrent: boolean;
     expiresIn: Date;
-    deleteSession: () => void;
+    deleteSession: (id: string) => void;
     signOut: () => void;
+    id: string;
 }
 
 export const Session: NextComponent<SessionProps> = (props) => {
     const ua = new UAParser(props.userAgent);
 
     const { translateString, routerLocale } = useTranslation();
+
+    const signOutConfirmationModal = useModal();
+    const deleteSessionConfirmationModal = useModal();
+
+    const deleteSession = () => {
+        props.deleteSession(props.id);
+        deleteSessionConfirmationModal.close();
+    }
 
     return (<div className="flex items-center bg-slate-200 dark:bg-gray-600 p-5 rounded-md mb-4">
         <BrowserDisplay className="w-[50px] mr-5" browser={ua.getBrowser().name ?? ''} />
@@ -100,50 +113,51 @@ export const Session: NextComponent<SessionProps> = (props) => {
         </div>
         <div className="ml-auto">
             {props.isCurrent && <span className="mr-5 font-bold text-green-400">{translateString(sessionDictionary.current)}</span>}
-            {props.isCurrent ? <CButton color="blue" onClick={props.signOut} compact noEffect>{translateString(sessionDictionary.signOut)}</CButton> : <CButton color="red" onClick={props.deleteSession} compact noEffect>{translateString(sessionDictionary.delete)}</CButton>}
+            {props.isCurrent ? <CButton color="blue" onClick={signOutConfirmationModal.show} compact noEffect>{translateString(sessionDictionary.signOut)}</CButton> : <CButton color="red" onClick={deleteSessionConfirmationModal.show} compact noEffect>{translateString(sessionDictionary.delete)}</CButton>}
         </div>
+
+        <signOutConfirmationModal.Render>
+                <Message title="Sign out" description="Are you sure that you want to sign out?" icon={<RiDoorOpenFill />}>
+                    <div className="flex">
+                        <CButton className="w-max" color="red" onClick={signOutConfirmationModal.close} compact>Cancel</CButton>
+                        <CButton className="ml-auto w-max" color="green" onClick={props.signOut} compact>Sign out</CButton>
+                    </div>
+                </Message>
+        </signOutConfirmationModal.Render>
+
+        <deleteSessionConfirmationModal.Render>
+            <Message title="Revoke session access" description="Do you really want to eliminate that session?" icon={<RiDeleteBin6Fill />}>
+                <div className="flex">
+                    <CButton className="w-max" color="red" onClick={deleteSessionConfirmationModal.close} compact>Cancel</CButton>
+                    <CButton className="ml-auto w-max" color="green" onClick={deleteSession} compact>Revoke access</CButton>
+                </div>
+            </Message>
+        </deleteSessionConfirmationModal.Render>
    </div>); 
 }
 
-export const SessionList: NextComponent = () => {
-    const { translateString } = useTranslation();
+export const SessionList: NextComponent<{ sessionQuery: SessionQuery }> = ({ sessionQuery }) => {
     const [transitionParent] = useAutoAnimate();
     const router = useRouter();
 
-    const signOutConfirmationModal = useModal();
-    const deleteSessionConfirmationModal = useModal();
-
-    const sessionQuery = trpc.auth.getSessions.useQuery();
     const deleteSession = trpc.auth.deleteSession.useMutation(); 
     const signOut = trpc.auth.signOut.useMutation();
 
     const [renderedSessions, setRenderedSessions] = useState<SessionType[]>();
 
     useEffect(() => {
-        if(!sessionQuery.data) return;
+        if(!sessionQuery) return;
 
-        setRenderedSessions(sessionQuery.data.sessions.sort((a) => {
-            if(a.id === sessionQuery.data.currentId) return -1;
-            return 0;
+        setRenderedSessions(sessionQuery.sessions.sort((a, b) => {
+            return a.id === sessionQuery.currentId ? -1 : b.id === sessionQuery.currentId ? 1 : 0;
         }));
-    }, [sessionQuery.data]);
-
-    if(!renderedSessions || !sessionQuery.data) {
-        return (
-            <div className="animate-pulse">
-                <div className="h-20 bg-gray-200 rounded-md dark:bg-slate-500 mb-4"></div>
-                <div className="h-20 bg-gray-200 rounded-md dark:bg-slate-500 mb-4"></div>
-                <div className="h-20 bg-gray-200 rounded-md dark:bg-slate-500 mb-4"></div>
-                <div className="h-20 bg-gray-200 rounded-md dark:bg-slate-500 mb-4"></div>
-            </div>
-        )
-    }
+    }, [sessionQuery]);
 
     const handleSessionDelete = (id: string) => {
         deleteSession.mutate({
             id
-        })
-    }
+        });
+    };
 
     const handleSignOut = async () => {
         await signOut.mutateAsync().then(() => {
@@ -151,15 +165,19 @@ export const SessionList: NextComponent = () => {
         })
     };
 
+    if(!renderedSessions || !sessionQuery) {
+        return (
+            <div className="flex flex-col items-center">
+                <Loader />
+            </div>
+        );
+    }
+
     return (
         <div ref={transitionParent as RefObject<HTMLDivElement>}>
-            <CButton onClick={signOutConfirmationModal.show}>Show</CButton>
             {renderedSessions.map((session: SessionType) => {
-                return <Session key={session.id} userAgent={session.userAgent} isCurrent={session.id === sessionQuery.data.currentId} expiresIn={session.expiresAt} deleteSession={() => handleSessionDelete(session.id)} signOut={() => handleSignOut()} />})
+                return <Session key={session.id} id={session.id} userAgent={session.userAgent} isCurrent={session.id === sessionQuery.currentId} expiresIn={session.expiresAt} deleteSession={() => handleSessionDelete(session.id)} signOut={handleSignOut} />})
             }
-            <signOutConfirmationModal.Render >
-                <button onClick={signOutConfirmationModal.hide}>Close</button>
-            </signOutConfirmationModal.Render>
         </div>
     );
 }

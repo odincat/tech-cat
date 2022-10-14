@@ -1,5 +1,4 @@
 import { guardedProcedure, t } from "@server/trpc";
-import { TRPCError } from "@trpc/server";
 import { addSeconds, isBefore } from "date-fns";
 
 var spotifyToken: string = '';
@@ -63,6 +62,11 @@ const refreshToken = async () => {
     spotifyToken = refreshData.access_token;
 }
 
+const returnNothing = () => {
+    cachedData = { isPlaying: false, songName: '', artistName: [], artists: [], songUrl: '', cached: false } as SpotifyStatus;
+    return cachedData;
+}
+
 export const spotifyRouter = t.router({
     getPlayingTrack: guardedProcedure.query(async () => {
         if(isBefore(Date.now(), addSeconds(lastUpdated, 15)) && cachedData !== null) return { ...cachedData, cached: true } as SpotifyStatus;
@@ -78,11 +82,12 @@ export const spotifyRouter = t.router({
             res = await fetchCurrentlyPlaying();
         }
 
-        const data = await res.json() as SpotifyResponse;
+        const data = await res.json().catch(() => {
+            returnNothing();
+        }) as SpotifyResponse;
 
         if(!data || data.is_playing === false || data.error /* In prod, we'll ignore errors and just say that there isn't any music playing right now */) {
-            cachedData = { isPlaying: false, songName: '', artistName: [], artists: [], songUrl: '', cached: false } as SpotifyStatus;
-            return cachedData;
+            returnNothing();
         }
 
         const artists: FormattedArtist[] = [];

@@ -8,14 +8,18 @@ import { css, keyframes, styled } from "@stitches";
 import { useEffect } from "react";
 import { FaAngleDoubleDown, FaHeadphones, FaSpotify } from "react-icons/fa";
 
-const homeHeaderDictionary = createDictionary({
-    title: {
-        de: 'Hi',
-        en: "Hi"
+const homeHeroDictionary = createDictionary({
+    headline: {
+        en: <>Having <u>fun</u> <br /> building & exploring <i>cool</i> stuff</>,
+        de: <></>
     },
-    introduction: {
-        de: 'asd',
-        en: 'hi'
+    intro: {
+        en: 'In my opinion, the web is the one most fascinating things that have ever been created. A place all about making information uncensored accessible, providing help, getting in touch with people and so much more. And the best part: Everyone can be a part of it and make a difference! These days there are no execuses for not having a website or a blog.',
+        de: 'Das Internet ist eines der faszinierendsten Plattformen, die jemals erschaffen wurde. Ein Ort, an der es ermöglicht Informationen unzensiert zu teilen, sich gegenseitig zu helfen und mit Mitmenschen in Kontakt zu treten. Und das Beste: Jeder kann ein Teil davon sein und einen Unterschied machen! Heutzutage gibt es keine Ausreden mehr, keine Website oder einen Blog zu haben!'
+    },
+    exploreProjects: {
+        en: 'Explore my projects',
+        de: 'Meine Projekte'
     }
 });
 
@@ -45,7 +49,7 @@ const Artist: NextComponent<{ name: string; url: string; index: number; length: 
 }
 
 const StatusWindow = () => {
-    const spotify = trpc.spotify.getPlayingTrack.useQuery(undefined, { refetchInterval: 30 * 1000 });
+    const spotify = trpc.spotify.getPlayingTrack.useQuery(undefined, { refetchInterval: 15 * 1000, refetchOnWindowFocus: true });
     
     useEffect(() => {
         console.log(spotify.data)
@@ -81,12 +85,11 @@ export const Hero = () => {
         <div className="min-h-[calc(100vh-52px)] bg-gradient-to-r from-green-400 to-blue-600 flex flex-col">
             <div className='grid grid-cols-1 md:grid-cols-2'>
                 <div className='px-10 pt-20 md:pt-60'>
-                    <h1>Having <u>fun</u><br />building and exploring <i>cool</i> stuff</h1>
+                    <h1>{translateString(homeHeroDictionary.headline)}</h1>
                     <p className='mb-5'>
-                        In my opinion, the web is the one most fascinating things that have ever been created. A place all about making uncensored information accessible, providing help, getting in touch with people and so much more!
-                        And the best part: Everyone can participate! These days there are no execuses for not having a website or a blog (apart from being lazy of course).
+                        {translateString(homeHeroDictionary.intro)}
                     </p>
-                    <CButton className='' color="blue">Explore my projects</CButton>
+                    <CButton className='' color="blue">{translateString(homeHeroDictionary.exploreProjects)}</CButton>
                 </div>
                 <div className='pt-10 md:pt-40'>
                     <div className={`${slideIn()} text-left w-[85%] md:w-[75%] m-auto mb-10 md:mb-0`}>
