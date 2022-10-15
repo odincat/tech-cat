@@ -11,7 +11,6 @@ import { useRouter } from "next/router";
 import { RefObject, useEffect, useState } from "react";
 import { UAParser } from "ua-parser-js";
 import { Message } from "@components/ui/Modal";
-import { SessionQuery } from "@pages/account/settings";
 import { Loader } from "@components/ui/Loader";
 import { RiDeleteBin6Fill, RiDoorOpenFill } from "react-icons/ri";
 
@@ -136,20 +135,21 @@ export const Session: NextComponent<SessionProps> = (props) => {
    </div>); 
 }
 
-export const SessionList: NextComponent<{ sessionQuery: SessionQuery }> = ({ sessionQuery }) => {
+export const SessionList: NextComponent = (props) => {
     const [transitionParent] = useAutoAnimate();
     const router = useRouter();
 
+    const sessionQuery = trpc.auth.getSessions.useQuery();
     const deleteSession = trpc.auth.deleteSession.useMutation(); 
     const signOut = trpc.auth.signOut.useMutation();
 
     const [renderedSessions, setRenderedSessions] = useState<SessionType[]>();
 
     useEffect(() => {
-        if(!sessionQuery) return;
+        if(!sessionQuery.data) return;
 
-        setRenderedSessions(sessionQuery.sessions.sort((a, b) => {
-            return a.id === sessionQuery.currentId ? -1 : b.id === sessionQuery.currentId ? 1 : 0;
+        setRenderedSessions(sessionQuery.data.sessions.sort((a, b) => {
+            return a.id === sessionQuery.data.currentId ? -1 : b.id === sessionQuery.data.currentId ? 1 : 0;
         }));
     }, [sessionQuery]);
 
@@ -165,7 +165,7 @@ export const SessionList: NextComponent<{ sessionQuery: SessionQuery }> = ({ ses
         })
     };
 
-    if(!renderedSessions || !sessionQuery) {
+    if(!renderedSessions || !sessionQuery.data) {
         return (
             <div className="flex flex-col items-center">
                 <Loader />
@@ -176,7 +176,7 @@ export const SessionList: NextComponent<{ sessionQuery: SessionQuery }> = ({ ses
     return (
         <div ref={transitionParent as RefObject<HTMLDivElement>}>
             {renderedSessions.map((session: SessionType) => {
-                return <Session key={session.id} id={session.id} userAgent={session.userAgent} isCurrent={session.id === sessionQuery.currentId} expiresIn={session.expiresAt} deleteSession={() => handleSessionDelete(session.id)} signOut={handleSignOut} />})
+                return <Session key={session.id} id={session.id} userAgent={session.userAgent} isCurrent={session.id === sessionQuery.data.currentId} expiresIn={session.expiresAt} deleteSession={() => handleSessionDelete(session.id)} signOut={handleSignOut} />})
             }
         </div>
     );

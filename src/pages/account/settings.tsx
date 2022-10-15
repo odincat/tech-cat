@@ -8,28 +8,15 @@ import { useUser } from "@lib/context";
 import { protectedRoute } from "@lib/routeProtection";
 import { NextComponent } from "@lib/types";
 import { createDictionary, useTranslation } from "@locales/utils";
-import { appRouter } from "@server/routers/root";
-import { createContext } from "@server/utils/context";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { useEffect } from "react";
 import { RiSettings5Line } from "react-icons/ri";
-import { AppRouter } from "@pages/api/trpc/[trpc]";
-
-export type SessionQuery = inferProcedureOutput<AppRouter['auth']['getSessions']>;
 
 export const getServerSideProps: GetServerSideProps = async (ctx: GetServerSidePropsContext) => {
     const auth = await protectedRoute(ctx, "USER");
     if (auth?.redirect) return auth;
-
-    const context = await createContext(ctx);
-    const caller = appRouter.createCaller(context);
-
-    const result = await caller.auth.getSessions();
-
     return {
-        props: {
-            sessionQuery: result
-        }
+        props: {}
     };
 }
 
@@ -62,13 +49,9 @@ const settingsDictionary = createDictionary({
     },
 })
 
-const Settings: NextComponent<{ sessionQuery: SessionQuery }> = (props) => {
+const Settings: NextComponent = () => {
     const { translateString } = useTranslation();
     const user = useUser();
-
-    useEffect(() => {
-        console.log(props.sessionQuery);
-    }, [props.sessionQuery]);
 
     return (
         <Shell alignCenter={false}>
@@ -89,7 +72,7 @@ const Settings: NextComponent<{ sessionQuery: SessionQuery }> = (props) => {
                 </section>
 
                 <section className="pl-5">
-                    <SessionList sessionQuery={props.sessionQuery} />
+                    <SessionList />
                 </section>
             </CColumn>
         </Shell>
