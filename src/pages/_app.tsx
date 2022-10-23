@@ -14,6 +14,7 @@ import { PageContainer } from '@components/Structure';
 import { CookieJar } from '@components/CookieBox';
 import { UserProvider } from '@lib/context';
 import { trpc } from '@lib/trpc';
+import { Toaster } from 'react-hot-toast';
 
 interface AppProperties {
     Component: NextComponentType | any;
@@ -31,6 +32,7 @@ const CatHotel = ({ Component, pageProps }: AppProperties) => {
                         <Component className='' {...pageProps} />
 
                         <CookieJar />
+                        <Toaster position='top-center' containerStyle={{ borderRadius: '4px' }} toastOptions={{ className: 'rounded-[4px] dark:bg-zinc-900 dark:text-neutral-50' }} />
                 </IconContext.Provider>
             </PageContainer>
         </UserProvider>

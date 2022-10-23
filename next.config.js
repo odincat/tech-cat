@@ -63,17 +63,6 @@ module.exports = withBundleAnalyzer({
             headers: securityHeaders
         }
     ],
- 
-	experimental: {
-		swcPlugins: [
-			[
-				'next-superjson-plugin',
-				{
-					excluded: [],
-				},
-			],
-		],
-	},
 
     i18n: {
         locales: ['de', 'en'],

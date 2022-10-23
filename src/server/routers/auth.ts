@@ -190,9 +190,7 @@ export const authRouter = t.router({
             currentId: ctx.session?.id,
         }
     }),
-    deleteAllSessions: guardedProcedure.meta({ requiredRole: 'USER' }).input(z.object({
-        id: z.string()
-    })).mutation(async ({ ctx }) => {
+    deleteAllSessions: guardedProcedure.meta({ requiredRole: 'USER' }).input(z.object({ id: z.string() })).mutation(async ({ ctx }) => {
         await ctx.db.session.deleteMany({
             where: {
                 userId: ctx.session?.userId,
@@ -211,6 +209,6 @@ export const authRouter = t.router({
                     id: ctx.session?.id
                 }
             }
-        })
+        });
     })
 });

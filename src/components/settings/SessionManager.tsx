@@ -13,6 +13,7 @@ import { UAParser } from "ua-parser-js";
 import { Message } from "@components/ui/Modal";
 import { Loader } from "@components/ui/Loader";
 import { RiDeleteBin6Fill, RiDoorOpenFill } from "react-icons/ri";
+import toast from "react-hot-toast";
 
 const sessionDictionary = createDictionary({
     expiresIn: {
@@ -153,16 +154,21 @@ export const SessionList: NextComponent = (props) => {
         }));
     }, [sessionQuery]);
 
-    const handleSessionDelete = (id: string) => {
-        deleteSession.mutate({
+    const handleSessionDelete = async (id: string) => {
+        await deleteSession.mutateAsync({
             id
+        }).then(() => {
+            toast.success('Session has been revoked');
+            // setRenderedSessions(renderedSessions?.filter(session => session.id !== id));
         });
     };
 
     const handleSignOut = async () => {
         await signOut.mutateAsync().then(() => {
-            router.push('/auth/login')
-        })
+            router.push('/')
+        }).then(() => {
+            toast.success('You have been signed out');
+        });
     };
 
     if(!renderedSessions || !sessionQuery.data) {
@@ -174,10 +180,10 @@ export const SessionList: NextComponent = (props) => {
     }
 
     return (
-        <div ref={transitionParent as RefObject<HTMLDivElement>}>
+        <>
             {renderedSessions.map((session: SessionType) => {
                 return <Session key={session.id} id={session.id} userAgent={session.userAgent} isCurrent={session.id === sessionQuery.data.currentId} expiresIn={session.expiresAt} deleteSession={() => handleSessionDelete(session.id)} signOut={handleSignOut} />})
             }
-        </div>
+        </>
     );
 }
