@@ -48,7 +48,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 	enabled: process.env.ANALYZE === 'true',
 });
 
-module.exports = withBundleAnalyzer({
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
+const config = {
     reactStrictMode: true,
     swcMinify: true,
 	poweredByHeader: false,
@@ -68,4 +71,6 @@ module.exports = withBundleAnalyzer({
         locales: ['de', 'en'],
         defaultLocale: 'de'
     }
-});
+};
+
+module.exports = withBundleAnalyzer(config);

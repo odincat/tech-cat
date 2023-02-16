@@ -71,7 +71,7 @@ const SignIn: NextComponent = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<SignInForm>();
 
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
     const authRedirect = useAuthRedirect();
 
     useEffect(() => {
@@ -98,19 +98,19 @@ const SignIn: NextComponent = () => {
                     autoFocus
                     type='email'
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.email)}
+                    placeholder={ts(signInDictionary.email)}
                     {...register('email', { required: true })}/>
-                {errors.email?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.email.required)}</ErrorMessage>}
+                {errors.email?.type === 'required' && <ErrorMessage>{ts(signInDictionary.email.required)}</ErrorMessage>}
 
                 <br />
 
                 <CInput
                     type='password'
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.password)}
+                    placeholder={ts(signInDictionary.password)}
                     {...register('password', { required: true, minLength: 10 })}/>
-                {errors.password?.type === 'minLength' && <ErrorMessage>{translateString(signInDictionary.password.minLength)}</ErrorMessage>}
-                {errors.password?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.password.required)}</ErrorMessage>}
+                {errors.password?.type === 'minLength' && <ErrorMessage>{ts(signInDictionary.password.minLength)}</ErrorMessage>}
+                {errors.password?.type === 'required' && <ErrorMessage>{ts(signInDictionary.password.required)}</ErrorMessage>}
 
                 <Spacer />
 
@@ -123,7 +123,7 @@ const SignIn: NextComponent = () => {
                     color='green'
                     type='submit'
                     >
-                    {translateString(signInDictionary.signIn)}
+                    {ts(signInDictionary.signIn)}
                 </CButton>
             </form>
         </Container>

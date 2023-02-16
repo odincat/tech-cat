@@ -103,7 +103,7 @@ export const CookieJar: NextComponent = () => {
     const [hasFetched, setHasFetched] = useState<boolean>(false);
     const [hasAsked, setHasAsked] = useState<boolean | null>(true);
 
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
 
     useEffect(() => {
         const asked = localStorage.getItem('cookiesAsked');
@@ -152,9 +152,9 @@ export const CookieJar: NextComponent = () => {
                 <FaCookieBite className={cookieIcon()} />
                 <Content>
                     <Heading>
-                        {translateString(cookieBoxDictionary.title)}
+                        {ts(cookieBoxDictionary.title)}
                     </Heading>
-                    {translateString(cookieBoxDictionary.body)}
+                    {ts(cookieBoxDictionary.body)}
                 </Content>
             </MessageContainer>
             <ButtonContainer>
@@ -162,13 +162,13 @@ export const CookieJar: NextComponent = () => {
                     onClick={() => handleAction(true)}
                     color='blue'
                     compact>
-                    {translateString(cookieBoxDictionary.accept)}
+                    {ts(cookieBoxDictionary.accept)}
                 </CButton>
                 <CButton
                     onClick={() => handleAction(false)}
                     color='blue'
                     compact>
-                    {translateString(cookieBoxDictionary.decline)}
+                    {ts(cookieBoxDictionary.decline)}
                 </CButton>
             </ButtonContainer>
         </CookieJarContainer>

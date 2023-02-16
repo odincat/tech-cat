@@ -1,3 +1,4 @@
+import { Post } from "@prisma/client";
 import { guardedProcedure, t } from "@server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
@@ -24,7 +25,7 @@ export const postRouter = t.router({
 
         return post;
     }),
-    getFeed: guardedProcedure.input(z.object({
+    feed: guardedProcedure.input(z.object({
         amount: z.number().optional().default(5),
         offset: z.number().optional().default(0)
     })).query(async ({ ctx, input }) => {
@@ -56,12 +57,12 @@ export const postRouter = t.router({
                 slug: input.slug,
                 categorySlug: '',
                 userId: ctx.session?.userId,
-                title: `New Post (${Date.now()}`,
+                title: `New Post (${Date.now()})`,
                 content: '',
                 exerpt: '',
                 thumbnailUrl: ''
             }
-        })
+        });
     }),
     update: guardedProcedure.meta({ requiredRole: 'AUTHOR' }).input(z.object({
         slug: z.string(),

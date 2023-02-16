@@ -54,10 +54,10 @@ const logUsefulData = async () => {
 const checkDb = async () => {
     var isEmpty = true;
 
-    if (await db.passwordReset.count() !== 0) isEmpty = false;
-    if (await db.session.count() !== 0) isEmpty = false;
-    if (await db.shortLink.count() !== 0) isEmpty = false;
-    if (await db.user.count() !== 0) isEmpty = false;
+    if ((await db.passwordReset.count()) !== 0) isEmpty = false;
+    if ((await db.session.count()) !== 0) isEmpty = false;
+    if ((await db.shortLink.count()) !== 0) isEmpty = false;
+    if ((await db.user.count()) !== 0) isEmpty = false;
 
     if(isEmpty === false) {
         console.log();

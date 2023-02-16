@@ -8,7 +8,7 @@ import { trpc } from '@lib/trpc';
 import { formatDistanceToNow } from "date-fns";
 import { de, enUS } from "date-fns/locale";
 import { useRouter } from "next/router";
-import { RefObject, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { UAParser } from "ua-parser-js";
 import { Message } from "@components/ui/Modal";
 import { Loader } from "@components/ui/Loader";
@@ -95,7 +95,7 @@ interface SessionProps {
 export const Session: NextComponent<SessionProps> = (props) => {
     const ua = new UAParser(props.userAgent);
 
-    const { translateString, routerLocale } = useTranslation();
+    const { ts, routerLocale } = useTranslation();
 
     const signOutConfirmationModal = useModal();
     const deleteSessionConfirmationModal = useModal();
@@ -109,11 +109,11 @@ export const Session: NextComponent<SessionProps> = (props) => {
         <BrowserDisplay className="w-[50px] mr-5" browser={ua.getBrowser().name ?? ''} />
         <div className="">
             <span className="text-xl font-bold">{ua.getBrowser().name} (V. {ua.getBrowser().version?.split('.')[0]})</span>
-            <span className="block">{formatDistanceToNow(props.expiresIn, { locale: routerLocale === 'de' ? de : enUS })} {translateString(sessionDictionary.expiresIn)}</span>
+            <span className="block">{formatDistanceToNow(props.expiresIn, { locale: routerLocale === 'de' ? de : enUS })} {ts(sessionDictionary.expiresIn)}</span>
         </div>
         <div className="ml-auto">
-            {props.isCurrent && <span className="mr-5 font-bold text-green-400">{translateString(sessionDictionary.current)}</span>}
-            {props.isCurrent ? <CButton color="blue" onClick={signOutConfirmationModal.show} compact noEffect>{translateString(sessionDictionary.signOut)}</CButton> : <CButton color="red" onClick={deleteSessionConfirmationModal.show} compact noEffect>{translateString(sessionDictionary.delete)}</CButton>}
+            {props.isCurrent && <span className="mr-5 font-bold text-green-400">{ts(sessionDictionary.current)}</span>}
+            {props.isCurrent ? <CButton color="blue" onClick={signOutConfirmationModal.show} compact noEffect>{ts(sessionDictionary.signOut)}</CButton> : <CButton color="red" onClick={deleteSessionConfirmationModal.show} compact noEffect>{ts(sessionDictionary.delete)}</CButton>}
         </div>
 
         <signOutConfirmationModal.Render>
@@ -137,7 +137,6 @@ export const Session: NextComponent<SessionProps> = (props) => {
 }
 
 export const SessionList: NextComponent = (props) => {
-    const [transitionParent] = useAutoAnimate();
     const router = useRouter();
 
     const sessionQuery = trpc.auth.getSessions.useQuery();

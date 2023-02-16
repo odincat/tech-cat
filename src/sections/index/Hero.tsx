@@ -1,12 +1,11 @@
 import { CButton } from "@components/ui/Button";
-import { CColumn } from "@components/ui/Column";
 import { CWindow } from "@components/ui/Window";
 import { trpc } from "@lib/trpc";
 import { NextComponent } from "@lib/types";
 import { createDictionary, useTranslation } from "@locales/utils";
-import { css, keyframes, styled } from "@stitches";
+import { css, keyframes, theme } from "@stitches";
 import { useEffect } from "react";
-import { FaAngleDoubleDown, FaHeadphones, FaSpotify } from "react-icons/fa";
+import { FaAngleDoubleDown, FaSpotify } from "react-icons/fa";
 
 const homeHeroDictionary = createDictionary({
     headline: {
@@ -79,17 +78,17 @@ const StatusWindow = () => {
 }
 
 export const Hero = () => {
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
 
     return (
         <div className="min-h-[calc(100vh-52px)] bg-gradient-to-r from-green-400 to-blue-600 flex flex-col">
             <div className='grid grid-cols-1 md:grid-cols-2'>
                 <div className='px-10 pt-20 md:pt-60'>
-                    <h1>{translateString(homeHeroDictionary.headline)}</h1>
+                    <h1>{ts(homeHeroDictionary.headline)}</h1>
                     <p className='mb-5'>
-                        {translateString(homeHeroDictionary.intro)}
+                        {ts(homeHeroDictionary.intro)}
                     </p>
-                    <CButton className='' color="blue">{translateString(homeHeroDictionary.exploreProjects)}</CButton>
+                    <CButton color={theme.colors.blue.value} rightIcon={<>I'm a icon</>} rightIconColor={theme.colors.yellow.value}>{ts(homeHeroDictionary.exploreProjects)}</CButton>
                 </div>
                 <div className='pt-10 md:pt-40'>
                     <div className={`${slideIn()} text-left w-[85%] md:w-[75%] m-auto mb-10 md:mb-0`}>

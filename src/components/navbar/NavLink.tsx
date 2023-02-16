@@ -58,8 +58,8 @@ export const NavLink: NextComponent<NavLinkArgs> = ({
     const isActive = assignActiveClassname();
 
     return (
-        <Link href={target} passHref>
-            <a className={`${className} ${isActive ?? ''}`}>{displayName}</a>
+        <Link href={target} passHref className={`${className} ${isActive ?? ''}`}>
+            {displayName}
         </Link>
     );
 };

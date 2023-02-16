@@ -10,7 +10,7 @@ const skipLinkDictionary = createDictionary({
 });
 
 export const SkipNavigation: NextComponent = () => {
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
 
     const SkipNavigationLink = styled('a', {
         position: 'absolute',
@@ -31,7 +31,7 @@ export const SkipNavigation: NextComponent = () => {
 
     return (
         <SkipNavigationLink href='#main-content'>
-            {translateString(skipLinkDictionary.label)}
+            {ts(skipLinkDictionary.label)}
         </SkipNavigationLink>
     );
 };

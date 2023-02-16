@@ -33,11 +33,10 @@ const ThemeSwitcher: NextComponent = () => {
         setTheme(localStorageItem);
     }, []);
 
-    const setSiteTheme = (newTheme: Themes, save: boolean) => {
+    const setSiteTheme = (newTheme: Themes) => {
         document.body.dataset.theme = newTheme;
         setTheme(newTheme);
 
-        if (!save) return;
         if (localStorage.getItem('theme') === newTheme) {
             return;
         }
@@ -48,11 +47,11 @@ const ThemeSwitcher: NextComponent = () => {
     const handleButtonClick = () => {
         switch (theme) {
             case 'dark':
-                setSiteTheme('light', true);
+                setSiteTheme('light');
                 break;
 
             case 'light':
-                setSiteTheme('dark', true);
+                setSiteTheme('dark');
                 break;
         }
     };

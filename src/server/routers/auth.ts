@@ -210,5 +210,13 @@ export const authRouter = t.router({
                 }
             }
         });
+    }),
+    deleteAccount: guardedProcedure.meta({ requiredRole: 'USER' }).mutation(async ({ ctx }) => {
+        // TODO: Get confirmation email
+        await ctx.db.user.delete({
+            where: {
+                id: ctx.session?.userId
+            }
+        })
     })
 });

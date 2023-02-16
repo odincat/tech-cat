@@ -85,7 +85,7 @@ const Navbar: NextComponent = () => {
     
     return (
         <Navigation.Container>
-            <Link href='/'>
+            <Link href='/' legacyBehavior>
                 <Navigation.Logo.Container>
                     <Navigation.Logo.Image
                         src='/logo-cropped.png'

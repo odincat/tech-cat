@@ -16,12 +16,12 @@ const loginPageDictionary = createDictionary({
 });
 
 const Login: NextComponent = () => {
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
 
     return (
         <Shell alignCenter>
-            <h2>{translateString(loginPageDictionary.title)}</h2>
-            {translateString(loginPageDictionary.createAccount)}
+            <h2>{ts(loginPageDictionary.title)}</h2>
+            {ts(loginPageDictionary.createAccount)}
             <br />
             <SignIn />
         </Shell>

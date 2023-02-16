@@ -1,146 +1,20 @@
 import { NextComponent } from '@lib/types';
 import { useRouter } from 'next/router';
 import { ReactNode, useRef, useState } from 'react';
-import { keyframes, styled } from '@stitches';
-import { TokenVariant, tokenVariants } from '@styling/tokenVariants';
+import { Button, buttonBackground, Icon, iconColor } from './Button.style';
 
 // Resources:
 // https://dev.to/jashgopani/windows-10-button-hover-effect-using-css-and-vanilla-js-1io4#additional-resources (amazing article)
 
-const rippleOutAnimation = keyframes({
-    '100%': {
-        top: '-12px',
-        right: '-12px',
-        bottom: '-12px',
-        left: '-12px',
-        opacity: '0',
-    },
-});
-
-const Button = styled('button', {
-    backgroundColor: '$buttonBackground',
-    borderRadius: '3px',
-    position: 'relative',
-    cursor: 'pointer',
-    color: 'white',
-    fontFamily: '$primary',
-
-    variants: {
-        compact: {
-            true: {
-                padding: '0.15em 0.8em',
-            },
-            false: {
-                padding: '0.3em 1em',
-            },
-        },
-        color: {
-            primary: {
-                backgroundColor: '$buttonBackground',
-                '--button-background': '$colors$buttonBackground',
-            },
-            secondary: {
-                backgroundColor: '$buttonBackground',
-                '--button-background': '$colors$buttonBackground',
-            },
-            blue: {
-                backgroundColor: '$blue',
-                '--button-background': '$colors$blue',
-            },
-            green: {
-                backgroundColor: '$green',
-                '--button-background': '$colors$green',
-            },
-            yellow: {
-                backgroundColor: '$yellow',
-                '--button-background': '$colors$yellow',
-            },
-            red: {
-                backgroundColor: '$red',
-                '--button-background': '$colors$red',
-            },
-        },
-        noEffect: {
-            false: {
-                transition: 'all 150ms cubic-bezier(.42,.43,1,.53)',
-
-                '&:hover': {
-                    transform: 'translateY(-0.25em)',
-                    boxShadow: '0 10px 10px -10px var(--button-background)',
-                },
-
-                '&:focus:before': {
-                    animationName: rippleOutAnimation,
-                },
-            },
-        },
-    },
-
-    // '&:before': {
-    //     content: '',
-    //     position: 'absolute',
-    //     zIndex: '-2',
-    //     border: 'var(--button-background) solid 3px',
-    //     top: '0',
-    //     right: '0',
-    //     bottom: '0',
-    //     left: '0',
-    //     animationDuration: '1s'
-    // },
-
-    '&:disabled': {
-        cursor: 'not-allowed',
-        pointerEvents: 'auto',
-        filter: 'brightness(70%)',
-        userSelect: 'none',
-
-        '&:hover': {
-            transform: 'translateY(0)',
-            boxShadow: 'none',
-        },
-    },
-});
-
-const Icon = styled('span', {
-    display: 'inline',
-    position: 'relative',
-    pointerEvents: 'inherit',
-    variants: {
-        position: {
-            left: {
-                marginRight: '0.5em',
-            },
-            right: {
-                marginLeft: '0.5em',
-            },
-        },
-        iconColor: tokenVariants({
-            token: 'colors',
-            css: (value) => ({
-                color: value,
-            }),
-        }),
-    },
-});
-
-export type CButtonColors =
-    | 'primary'
-    | 'secondary'
-    | 'blue'
-    | 'green'
-    | 'yellow'
-    | 'red';
-
-export interface CButtonProps
-    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    color?: CButtonColors;
+export interface CButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    color?: string;
     compact?: boolean;
     href?: string;
     leftIcon?: ReactNode;
-    leftIconColor?: TokenVariant<'colors'>;
+    leftIconColor?: string;
     noEffect?: boolean;
     rightIcon?: ReactNode;
-    rightIconColor?: TokenVariant<'colors'>;
+    rightIconColor?: string;
 }
 
 export const CButton: NextComponent<CButtonProps> = ({
@@ -148,10 +22,10 @@ export const CButton: NextComponent<CButtonProps> = ({
     compact = false,
     href = '',
     leftIcon = null,
-    leftIconColor,
+    leftIconColor = "white",
     noEffect = false,
     rightIcon = null,
-    rightIconColor,
+    rightIconColor = "white",
     ...props
 }) => {
     const [coordinates, setCoordinates] = useState<{ x: number; y: number }>();
@@ -187,25 +61,26 @@ export const CButton: NextComponent<CButtonProps> = ({
         setCoordinates({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
 
+    const buttonStyle = {
+        [buttonBackground.setter as any]: color,
+        // This is required, because else React will complain that there's a server-client mismatch
+        ...(isOnButton && {
+            backgroundImage: `radial-gradient(circle at ${coordinates?.x}px ${coordinates?.y}px , rgba(255,255,255, 0.2) 10%, ${buttonBackground.getter} 100% )` }
+        )
+    }
+
     return (
         <Button
             onClick={openLink}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
             compact={compact}
-            color={color}
             noEffect={noEffect}
             ref={buttonRef}
-            style={
-                isOnButton
-                    ? {
-                          backgroundImage: `radial-gradient(circle at ${coordinates?.x}px ${coordinates?.y}px , rgba(255,255,255, 0.2) 10%, var(--button-background) 100% )`,
-                      }
-                    : {}
-            }
+            style={buttonStyle}
             {...props}>
             {leftIcon && (
-                <Icon position='left' iconColor={leftIconColor}>
+                <Icon position='left' style={{ [iconColor.setter as any]: leftIconColor }}>
                     {leftIcon}
                 </Icon>
             )}
@@ -213,7 +88,7 @@ export const CButton: NextComponent<CButtonProps> = ({
             {props.children}
 
             {rightIcon && (
-                <Icon position='right' iconColor={rightIconColor}>
+                <Icon position='right' style={{ [iconColor.setter as any]: rightIconColor }}>
                     {rightIcon}
                 </Icon>
             )}

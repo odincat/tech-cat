@@ -3,6 +3,7 @@ import { trpc } from "@lib/trpc";
 import { NextComponent } from "@lib/types";
 import { useTranslation } from "@locales/utils";
 import { Post } from "@prisma/client";
+import { theme } from "@stitches";
 import { format } from "date-fns";
 import { de, enUS } from "date-fns/locale";
 import Link from "next/link";
@@ -11,7 +12,7 @@ import { FaCalendarAlt, FaTag } from "react-icons/fa";
 
 export const PostCard: NextComponent<{ post: Post }> = ({ post }) => {
     const { routerLocale } = useTranslation();      
-    return(
+    return (
         <div className="max-w-[300px] bg-gradient-to-b dark:from-gray-700 dark:to-[#212121] rounded">
             <img alt="Post thumbnail" src={post.thumbnailUrl} />
             <div className="p-5">
@@ -22,13 +23,17 @@ export const PostCard: NextComponent<{ post: Post }> = ({ post }) => {
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores vitae distinctio qui. Mollitia similique voluptatibus ducimus laboriosam, exercitationem quas temporibus debitis, quisquam esse fugiat a culpa nesciunt tenetur sed dolore.
                 </p>
-                <Link href={`/blog/${post.slug}`} passHref> 
-                    <a className="bold text-xl text-white mt-3 block">
+                <Link
+                    href={`/blog/${post.slug}`}
+                    passHref
+                    className="bold text-xl text-white mt-3 block"> 
+                    
                         Read more
-                    </a>
+                    
                 </Link>
             </div>
-        </div>);
+        </div>
+    );
 }
 
 const testPost: Post = {
@@ -65,7 +70,7 @@ export const LatestArticles: NextComponent<{ posts?: Post[] }> = () => {
             <p className="mb-5">
                 You can find all my articles on my blog. There you can also find a search function to find articles about specific topics.
             </p>
-            <CButton color="blue">Go to blog</CButton>
+            <CButton color={theme.colors.blue.value}>Go to blog</CButton>
             </div>
         </div>
     );

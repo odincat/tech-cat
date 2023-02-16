@@ -11,8 +11,8 @@ interface OptionProps {
 
 export const Option: NextComponent<OptionProps> = (props) => {
     return (<div className="mb-10">
-        <h3 className="font-[Roboto]">{props.name} {props.public && <RiEarthLine className="align-[-0.2em]" />}</h3>
-        {props.description}
+        <h3 className="font-[Roboto] mb-1">{props.name} {props.public && <RiEarthLine className="align-[-0.2em]" />}</h3>
+        <p className="mb-5">{props.description}</p>
         {props.children}
-        </div>);
+    </div>);
 }

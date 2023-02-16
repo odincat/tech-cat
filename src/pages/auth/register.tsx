@@ -34,18 +34,18 @@ const icon = css({
 });
 
 const Register: NextComponent = () => {
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
 
     return (
-        <Shell alignCenter title={translateString(signupPageDictionary.windowTitle)}>
+        <Shell alignCenter title={ts(signupPageDictionary.windowTitle)}>
             <Container>
                 <h2>
                     <FaUserPlus className={icon()} />{' '}
-                    {translateString(signupPageDictionary.heading)}
+                    {ts(signupPageDictionary.heading)}
                 </h2>
                 <p>
-                    {translateString(signupPageDictionary.heading.moreInfo)} <br />
-                    {translateString(signupPageDictionary.alreadyHaveAnAccount)}
+                    {ts(signupPageDictionary.heading.moreInfo)} <br />
+                    {ts(signupPageDictionary.alreadyHaveAnAccount)}
                 </p>
                 <br />
                 <SignUp />

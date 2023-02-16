@@ -207,17 +207,17 @@ const Dropdown = {
 
 // Child components
 const RoleDisplay: NextComponent<{ role: Role }> = ({ role }) => {
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
 
     switch (role) {
         case 'ADMIN':
-            return <Dropdown.ProfileItem.RoleTag role='ADMIN'><RiAdminFill /> {translateString(dropdownDictionary.profileItem.roleTag.admin)}</Dropdown.ProfileItem.RoleTag>;
+            return <Dropdown.ProfileItem.RoleTag role='ADMIN'><RiAdminFill /> {ts(dropdownDictionary.profileItem.roleTag.admin)}</Dropdown.ProfileItem.RoleTag>;
         case 'AUTHOR':
-            return <Dropdown.ProfileItem.RoleTag role='AUTHOR'><RiQuillPenFill /> {translateString(dropdownDictionary.profileItem.roleTag.author)}</Dropdown.ProfileItem.RoleTag>;
+            return <Dropdown.ProfileItem.RoleTag role='AUTHOR'><RiQuillPenFill /> {ts(dropdownDictionary.profileItem.roleTag.author)}</Dropdown.ProfileItem.RoleTag>;
         case 'FRIEND':
-            return <Dropdown.ProfileItem.RoleTag role='FRIEND'><RiVipDiamondFill /> {translateString(dropdownDictionary.profileItem.roleTag.friend)}</Dropdown.ProfileItem.RoleTag>;
+            return <Dropdown.ProfileItem.RoleTag role='FRIEND'><RiVipDiamondFill /> {ts(dropdownDictionary.profileItem.roleTag.friend)}</Dropdown.ProfileItem.RoleTag>;
         case 'USER':
-            return <Dropdown.ProfileItem.RoleTag role='USER'><RiUser3Fill /> {translateString(dropdownDictionary.profileItem.roleTag.normie)}</Dropdown.ProfileItem.RoleTag>;
+            return <Dropdown.ProfileItem.RoleTag role='USER'><RiUser3Fill /> {ts(dropdownDictionary.profileItem.roleTag.normie)}</Dropdown.ProfileItem.RoleTag>;
     }
 }
 
@@ -245,7 +245,7 @@ const DropdownItem: NextComponent<{ children: ReactNode; leftIcon?: JSX.Element;
 // Actual dropdown component
 export const DropdownMenu: NextComponent<{ userMenuRef: MutableRefObject<null | HTMLImageElement>; setDropDownOpen: Dispatch<SetStateAction<boolean>>; }> = ({ userMenuRef, setDropDownOpen }) => {
     const user = useUser();
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
     const router = useRouter();
 
     const dropDownMenuRef = useRef<HTMLDivElement>(null);
@@ -309,30 +309,30 @@ export const DropdownMenu: NextComponent<{ userMenuRef: MutableRefObject<null | 
         <Dropdown.Container ref={dropDownMenuRef}>
             {/* Menuitems for all users */}
             <UserProfileItem onClick={() => actions.goToUserProfile()} profilePictureUrl={user?.photoUrl ?? 'https://avatars.dicebear.com/api/identicon/notavaible.png'}>
-                <span>{translateString(dropdownDictionary.profileItem.loggedInAs)} <b>{ user?.name.split(' ')[0] }</b></span>
+                <span>{ts(dropdownDictionary.profileItem.loggedInAs)} <b>{ user?.name.split(' ')[0] }</b></span>
                 <span><RoleDisplay role={user?.role ?? 'USER'} /></span>
             </UserProfileItem>
-            <DropdownItem onClick={() => actions.goToDashboard()} leftIcon={<RiDashboard2Fill />}>{translateString(dropdownDictionary.items.goToDashboard)}</DropdownItem>
-            <DropdownItem onClick={() => actions.goToSettings()} leftIcon={<RiSettings5Fill />}>{translateString(dropdownDictionary.items.goToSettings)}</DropdownItem>
+            <DropdownItem onClick={() => actions.goToDashboard()} leftIcon={<RiDashboard2Fill />}>{ts(dropdownDictionary.items.goToDashboard)}</DropdownItem>
+            <DropdownItem onClick={() => actions.goToSettings()} leftIcon={<RiSettings5Fill />}>{ts(dropdownDictionary.items.goToSettings)}</DropdownItem>
             <Dropdown.Spacer />
 
             {/* Menuitems for authors */}
-            {isPermitted('AUTHOR', user?.role || 'USER') && <DropdownItem onClick={() => actions.writeNewArticle()} leftIcon={<RiQuillPenFill />}>{translateString(dropdownDictionary.items.newArticle)}</DropdownItem>}
-            {isPermitted('AUTHOR', user?.role || 'USER') && <DropdownItem onClick={() => actions.viewArticles()} leftIcon={<RiBookOpenFill />}>{translateString(dropdownDictionary.items.viewArticles)}</DropdownItem>}
-            {isPermitted('AUTHOR', user?.role || 'USER') && <DropdownItem onClick={() => actions.viewComments()} leftIcon={<RiHammerFill />}>{translateString(dropdownDictionary.items.viewComments)}</DropdownItem>}
+            {isPermitted('AUTHOR', user?.role || 'USER') && <DropdownItem onClick={() => actions.writeNewArticle()} leftIcon={<RiQuillPenFill />}>{ts(dropdownDictionary.items.newArticle)}</DropdownItem>}
+            {isPermitted('AUTHOR', user?.role || 'USER') && <DropdownItem onClick={() => actions.viewArticles()} leftIcon={<RiBookOpenFill />}>{ts(dropdownDictionary.items.viewArticles)}</DropdownItem>}
+            {isPermitted('AUTHOR', user?.role || 'USER') && <DropdownItem onClick={() => actions.viewComments()} leftIcon={<RiHammerFill />}>{ts(dropdownDictionary.items.viewComments)}</DropdownItem>}
             {isPermitted('AUTHOR', user?.role || 'USER') && <Dropdown.Spacer />}
 
             {/* Menuitems for Friends */}
-            {isPermitted('FRIEND', user?.role || 'USER') && <DropdownItem onClick={() => actions.goToAdminPanel()} leftIcon={<RiLinkM />}>{translateString(dropdownDictionary.items.createShortlink)}</DropdownItem>}
+            {isPermitted('FRIEND', user?.role || 'USER') && <DropdownItem onClick={() => actions.goToAdminPanel()} leftIcon={<RiLinkM />}>{ts(dropdownDictionary.items.createShortlink)}</DropdownItem>}
             {isPermitted('FRIEND', user?.role || 'USER') && <Dropdown.Spacer />}
 
             {/* Menuitems for admins */}
-            {isPermitted('ADMIN', user?.role || 'USER') && <DropdownItem onClick={() => actions.goToAdminPanel()} leftIcon={<RiTerminalBoxFill />}>{translateString(dropdownDictionary.items.goToAdminPanel)}</DropdownItem>}
-            {isPermitted('ADMIN', user?.role || 'USER') && <DropdownItem onClick={() => actions.modifyUser()} leftIcon={<RiShieldUserFill />}>{translateString(dropdownDictionary.items.modifyUser)}</DropdownItem>}
+            {isPermitted('ADMIN', user?.role || 'USER') && <DropdownItem onClick={() => actions.goToAdminPanel()} leftIcon={<RiTerminalBoxFill />}>{ts(dropdownDictionary.items.goToAdminPanel)}</DropdownItem>}
+            {isPermitted('ADMIN', user?.role || 'USER') && <DropdownItem onClick={() => actions.modifyUser()} leftIcon={<RiShieldUserFill />}>{ts(dropdownDictionary.items.modifyUser)}</DropdownItem>}
             {isPermitted('ADMIN', user?.role || 'USER') && <Dropdown.Spacer />}
 
             {/* Signout Link */}
-            <DropdownItem onClick={() => actions.signOut()} leftIcon={<RiDoorOpenFill />}>{translateString(dropdownDictionary.items.signOut)}</DropdownItem>
+            <DropdownItem onClick={() => actions.signOut()} leftIcon={<RiDoorOpenFill />}>{ts(dropdownDictionary.items.signOut)}</DropdownItem>
 
         </Dropdown.Container>
     );

@@ -1,4 +1,4 @@
-import { theme, css } from '@stitches';
+import { theme } from '@stitches';
 import type { CSS, config as stitchesConfig } from '@stitches';
 import type * as Stitches from '@stitches/react';
 
@@ -18,3 +18,11 @@ export const tokenVariants = <T extends keyof typeof theme>(config: {
     );
 
 export type TokenVariant<T extends keyof typeof theme> = keyof typeof theme[T];
+
+export const cssVar = (variableName: string, fallback?: string) => {
+  return {
+    getter: `var(--${variableName}${fallback ? `, ${fallback}` : ""})`,
+    setter: `--${variableName}`
+  };
+};
+

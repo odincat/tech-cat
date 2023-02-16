@@ -26,4 +26,5 @@ const guardMiddleware = t.middleware(async ({ ctx, meta, next }) => {
 
     return next();
 });
+
 export const guardedProcedure = t.procedure.use(guardMiddleware);

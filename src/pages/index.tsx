@@ -1,12 +1,8 @@
-import type { GetServerSideProps, NextPage } from 'next';
+import type { NextPage } from 'next';
 import { Shell } from '@components/Shell';
-import { protectedRoute } from '@lib/routeProtection';
 import { Hero } from '@sections/index/Hero';
 import { AboutMe } from '@sections/index/AboutMe';
 import { LatestArticles } from '@sections/index/LatestArticles';
-import { Experience } from '@sections/index/Experience';
-import { trpc } from '@lib/trpc';
-import { NextComponent } from '@lib/types';
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
 //     const auth = await protectedRoute(ctx, 'ADMIN');

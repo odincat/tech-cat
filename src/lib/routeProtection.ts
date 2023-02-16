@@ -4,12 +4,12 @@ import { GetServerSidePropsContext } from "next"
 import { resolveSession } from "./auth/sessions"
 import { isPermitted } from "./utils";
 
-export const protectedRoute = async (ctx: GetServerSidePropsContext, requiredRole: Role, redirect: string = '/auth/login', returnEmptyProps: boolean = true) => {
+export const protectedRoute = async (ctx: GetServerSidePropsContext, requiredRole: Role, redirect?: string, returnEmptyProps: boolean = true) => {
     const { session } = await resolveSession(ctx.req, ctx.res);
 
     if (!session) return {
         redirect: {
-            destination: `${redirect}?redirect=${encodeURIComponent(ctx.resolvedUrl)}`,
+            destination: redirect ? redirect : `/auth/login?redirect=${encodeURIComponent(ctx.resolvedUrl)}`,
             permanent: false
         }
     };

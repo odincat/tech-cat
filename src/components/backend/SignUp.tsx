@@ -94,7 +94,7 @@ const SignUp: NextComponent = () => {
     const signUpContract = trpc.auth.register.useMutation();
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm<SignUpForm>();
-    const { translateString } = useTranslation();
+    const { ts } = useTranslation();
     const authRedirect = useAuthRedirect();
 
 
@@ -120,51 +120,51 @@ const SignUp: NextComponent = () => {
                 <CInput
                     autoFocus
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.name)}
+                    placeholder={ts(signInDictionary.name)}
                     {...register('name', { required: true})}
                 />
-                {errors.name?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.name.required)}</ErrorMessage>}
+                {errors.name?.type === 'required' && <ErrorMessage>{ts(signInDictionary.name.required)}</ErrorMessage>}
                 <br />
 
                 <CInput
                     autoFocus
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.username)}
+                    placeholder={ts(signInDictionary.username)}
                     {...register('username', { required: true})}
                 />
-                {errors.name?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.username.required)}</ErrorMessage>}
+                {errors.name?.type === 'required' && <ErrorMessage>{ts(signInDictionary.username.required)}</ErrorMessage>}
                 <br />
 
                 <CInput
                     autoFocus
                     type='email'
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.email)}
+                    placeholder={ts(signInDictionary.email)}
                     {...register('email', { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i }) }
                 />
-                {errors.email?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.email.required)}</ErrorMessage>}
-                {errors.email?.type === 'pattern' && <ErrorMessage>{translateString(signInDictionary.email.pattern)}</ErrorMessage>}
+                {errors.email?.type === 'required' && <ErrorMessage>{ts(signInDictionary.email.required)}</ErrorMessage>}
+                {errors.email?.type === 'pattern' && <ErrorMessage>{ts(signInDictionary.email.pattern)}</ErrorMessage>}
                 <br />
 
                 <CInput
                     type='password'
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.password)}
+                    placeholder={ts(signInDictionary.password)}
                     {...register('password', { required: true, minLength: 10 }) }
                 />
-                {errors.password?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.password.required)}</ErrorMessage>}
-                {errors.password?.type === 'minLength' && <ErrorMessage>{translateString(signInDictionary.password.minLength)}</ErrorMessage>}
+                {errors.password?.type === 'required' && <ErrorMessage>{ts(signInDictionary.password.required)}</ErrorMessage>}
+                {errors.password?.type === 'minLength' && <ErrorMessage>{ts(signInDictionary.password.minLength)}</ErrorMessage>}
                 <br />
 
                 <CInput
                     type='password'
                     containerClass={signInField()}
-                    placeholder={translateString(signInDictionary.password.confirm)}
+                    placeholder={ts(signInDictionary.password.confirm)}
                     {...register('confirmPassword', { required: true, minLength: 10, validate: (value) => {
                         return value === watch('password')}
                     })}/>
-                {errors.confirmPassword?.type === 'required' && <ErrorMessage>{translateString(signInDictionary.password.confirm.required)}</ErrorMessage>}
-                {errors.confirmPassword?.type === 'validate' && <ErrorMessage>{translateString(signInDictionary.password.confirm.match)}</ErrorMessage>}
+                {errors.confirmPassword?.type === 'required' && <ErrorMessage>{ts(signInDictionary.password.confirm.required)}</ErrorMessage>}
+                {errors.confirmPassword?.type === 'validate' && <ErrorMessage>{ts(signInDictionary.password.confirm.match)}</ErrorMessage>}
                 <br />
                 
                 <Spacer />
@@ -177,7 +177,7 @@ const SignUp: NextComponent = () => {
                     type='submit'
                     className={signInButton()}
                     color='green'>
-                    {translateString(signInDictionary.signUp)}
+                    {ts(signInDictionary.signUp)}
                 </CButton>
         </form>
         </Container>

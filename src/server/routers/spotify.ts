@@ -27,6 +27,7 @@ interface Artist {
 }
 
 interface SpotifyResponse {
+    currently_playing_type: string;
     is_playing: boolean;
     error?: string;
     error_description?: string;
@@ -63,18 +64,21 @@ const refreshToken = async () => {
 }
 
 const returnNothing = () => {
-    cachedData = { isPlaying: false, songName: '', artistName: [], artists: [], songUrl: '', cached: false } as SpotifyStatus;
+    cachedData = { isPlaying: false, songName: '', artists: [], songUrl: '', cached: false };
     return cachedData;
 }
 
 export const spotifyRouter = t.router({
     getPlayingTrack: guardedProcedure.query(async () => {
-        if(isBefore(Date.now(), addSeconds(lastUpdated, 15)) && cachedData !== null) return { ...cachedData, cached: true } as SpotifyStatus;
+        // if(isBefore(Date.now(), addSeconds(lastUpdated, 15)) && cachedData !== null) {
+        //     return { ...cachedData, cached: true } as SpotifyStatus;
+        // }
 
         // Cache is older than 15 seconds, or doesn't exist -> fetch new data
         if(spotifyToken === '') await refreshToken();
 
         var res = await fetchCurrentlyPlaying(); 
+
 
         if(res.status === 401 || 400){
             await refreshToken();
@@ -82,16 +86,18 @@ export const spotifyRouter = t.router({
             res = await fetchCurrentlyPlaying();
         }
 
-        const data = await res.json().catch(() => {
-            returnNothing();
-        }) as SpotifyResponse;
+        let data: SpotifyResponse = await res.json().catch((e) => console.log(e));
 
-        if(!data || data.is_playing === false || data.error /* In prod, we'll ignore errors and just say that there isn't any music playing right now */) {
-            returnNothing();
+        if(data.item === null) {
+            return returnNothing();
+        }
+
+        if(data.is_playing === false || data.error || data.currently_playing_type === "episode") {
+            return returnNothing();
         }
 
         const artists: FormattedArtist[] = [];
-        for(const artist of data.item.artists) {
+        for(const artist of data?.item.artists) {
             artists.push({
                 name: artist.name,
                 url: artist.external_urls.spotify
@@ -99,9 +105,9 @@ export const spotifyRouter = t.router({
         }
 
         const formattedData: SpotifyStatus = {
-            isPlaying: data.is_playing,
-            songName: data.item.name,
-            songUrl: data.item.external_urls.spotify,
+            isPlaying: data?.is_playing,
+            songName: data?.item?.name,
+            songUrl: data?.item?.external_urls?.spotify,
             artists: artists,
             cached: false 
         };
@@ -109,6 +115,7 @@ export const spotifyRouter = t.router({
         cachedData = formattedData;
         lastUpdated = Date.now();
 
+        console.log(formattedData)
         return formattedData;
     })
 });
