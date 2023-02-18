@@ -1,16 +1,19 @@
-import { User } from "@prisma/client";
+import { AppRouterOutput } from "@pages/api/trpc/[trpc]";
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { trpc } from "./trpc";
 import { NextComponent } from "./types";
 
-export const UserContext = createContext<User | null>(null);
+type PublicUser = AppRouterOutput["auth"]["getMe"];
+
+export const UserContext = createContext<PublicUser | null>(null);
 
 export const useUser = () => useContext(UserContext);
+
 
 export const UserProvider: NextComponent<{ children: ReactNode }> = ({ children }) => {
     const dbUser = trpc.auth.getMe.useQuery();
 
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<PublicUser | null>(null);
 
     useEffect(() => {
         if (dbUser.data) {
@@ -21,6 +24,6 @@ export const UserProvider: NextComponent<{ children: ReactNode }> = ({ children 
     }, [dbUser]);
 
 
-    return <UserContext.Provider value={user}> { children } </UserContext.Provider>;
+    return <UserContext.Provider value={user}>{ children }</UserContext.Provider>;
 }
 

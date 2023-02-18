@@ -25,7 +25,16 @@ export const authRouter = t.router({
         }
 
         return ctx.db.user.findUniqueOrThrow({
-            where: { id: ctx.session.userId }
+            where: { id: ctx.session.userId },
+            select: {
+                name: true,
+                bio: true,
+                photoUrl: true,
+                role: true,
+                username: true,
+                email: true,
+                emailVerified: true,
+            }
         });
     }),
     login: guardedProcedure.input(z.object({

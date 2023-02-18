@@ -1,5 +1,5 @@
 import { createTRPCNext } from "@trpc/next";
-import { httpBatchLink, httpLink } from "@trpc/client";
+import { httpBatchLink } from "@trpc/client";
 import type { AppRouter } from "@pages/api/trpc/[trpc]";
 import superjson from 'superjson';
 
@@ -7,6 +7,7 @@ const getBaseUrl = () => {
     if (typeof window !== 'undefined') return '';
     if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
     if (process.env.RENDER_INTERNAL_HOSTNAME) return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
+    if (process.env.PUBLIC_URL) return process.env.PUBLIC_URL;
     return `http://localhost:${process.env.PORT ?? 4700}`;
 }
 

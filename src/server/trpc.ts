@@ -1,9 +1,12 @@
+import { resolveSession } from '@lib/auth/sessions';
 import { isPermitted } from '@lib/utils';
 import { Role } from '@prisma/client';
-import { initTRPC } from '@trpc/server';
+import { inferAsyncReturnType, initTRPC } from '@trpc/server';
 import { TRPCError } from '@trpc/server';
+import { GetServerSidePropsContext } from 'next';
 import superjson from 'superjson';
-import { Context } from './utils/context';
+import * as trpcNext from '@trpc/server/adapters/next';
+import { db } from './utils/db-client';
 
 export const t = initTRPC
     .context<Context>()
@@ -11,6 +14,21 @@ export const t = initTRPC
     .create({
         transformer: superjson
     });
+
+export const createContext = async ({
+    req,
+    res,
+}: trpcNext.CreateNextContextOptions | GetServerSidePropsContext) => {
+    const { ironSession, session } = await resolveSession(req, res);
+
+    return {
+        session,
+        ironSession,
+        db
+    };
+};
+
+export type Context = inferAsyncReturnType<typeof createContext>;
 
 const guardMiddleware = t.middleware(async ({ ctx, meta, next }) => {
     if(!meta?.requiredRole) return next();
@@ -28,3 +46,4 @@ const guardMiddleware = t.middleware(async ({ ctx, meta, next }) => {
 });
 
 export const guardedProcedure = t.procedure.use(guardMiddleware);
+

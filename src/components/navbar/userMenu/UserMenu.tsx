@@ -80,12 +80,6 @@ export const UserMenu: NextComponent = () => {
         }
     }, [profile.isLoading]);
 
-    // if((profile.isLoading || profile.isFetching) && !hasLoaded) return (
-    //     <Container>
-    //         <LoadingShimmer />
-    //     </Container>
-    // );
-
     if (profile.isLoading || (!profile.data && !hasLoaded)) {
         return (
             <Container>
