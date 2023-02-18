@@ -88,7 +88,7 @@ export const Hero = () => {
                     <p className='mb-5'>
                         {ts(homeHeroDictionary.intro)}
                     </p>
-                    <CButton color={theme.colors.blue.value} rightIcon={<>I'm a icon</>} rightIconColor={theme.colors.yellow.value}>{ts(homeHeroDictionary.exploreProjects)}</CButton>
+                    <CButton color={theme.colors.blue.value} rightIcon={<>Icon</>} rightIconColor={theme.colors.yellow.value}>{ts(homeHeroDictionary.exploreProjects)}</CButton>
                 </div>
                 <div className='pt-10 md:pt-40'>
                     <div className={`${slideIn()} text-left w-[85%] md:w-[75%] m-auto mb-10 md:mb-0`}>

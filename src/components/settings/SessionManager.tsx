@@ -1,5 +1,4 @@
 import { CButton } from "@components/ui/Button";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useModal } from "@components/ui/Modal";
 import { NextComponent } from "@lib/types";
 import { createDictionary, useTranslation } from "@locales/utils";

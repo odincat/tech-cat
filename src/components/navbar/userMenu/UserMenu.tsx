@@ -1,10 +1,11 @@
 import { CButton } from "@components/ui/Button";
 import { NextComponent } from "@lib/types";
-import { css, keyframes, styled } from "@stitches";
+import { css, keyframes, styled, theme } from "@stitches";
 import { FaSignInAlt } from "react-icons/fa";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DropdownMenu } from "./Dropdown";
 import { trpc } from '@lib/trpc';
+import { useUser } from "@lib/context";
 
 const Container = styled('div', {
     marginLeft: '1rem'
@@ -52,7 +53,7 @@ const LoginButton: NextComponent = () => {
     })
 
     return (
-        <CButton className={buttonStyles()} href='/auth/login' compact color='blue'><FaSignInAlt className={iconStyles()} /> Login</CButton>
+        <CButton className={buttonStyles()} href='/auth/login' compact color={theme.colors.blue.value}><FaSignInAlt className={iconStyles()} /> Login</CButton>
     );
 };
 
@@ -67,16 +68,31 @@ const ProfilePicture = styled('img', {
 });
 
 export const UserMenu: NextComponent = () => {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
+    const [hasLoaded, setHasLoaded] = useState<boolean>(false);
     const userMenuRef = useRef<HTMLImageElement>(null);
-    
+
     const profile = trpc.auth.getMe.useQuery(); 
 
-    if(profile.isLoading || profile.isFetching && !profile.data) return (
-        <Container>
-            <LoadingShimmer />
-        </Container>
-    );
+    useEffect(() => {
+        if (!profile.isLoading) {
+            setHasLoaded(true);
+        }
+    }, [profile.isLoading]);
+
+    // if((profile.isLoading || profile.isFetching) && !hasLoaded) return (
+    //     <Container>
+    //         <LoadingShimmer />
+    //     </Container>
+    // );
+
+    if (profile.isLoading || (!profile.data && !hasLoaded)) {
+        return (
+            <Container>
+                <LoadingShimmer />
+            </Container>
+        );
+    }
 
     if(!profile.data) return (
         <Container>

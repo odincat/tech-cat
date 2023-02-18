@@ -49,7 +49,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin');
-const withVanillaExtract = createVanillaExtractPlugin();
 
 const config = {
     reactStrictMode: true,
